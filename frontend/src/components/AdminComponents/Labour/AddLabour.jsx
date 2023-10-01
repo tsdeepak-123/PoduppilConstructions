@@ -108,7 +108,8 @@ function AddLabour() {
       },
      
     }).then((response)=>{
-      console.log(response,'response for adding labour');
+      alert(response?.data?.message);
+      console.log(response?.data?.message,'response for adding labour');
       navigate('/admin/labourdetails')
     }).catch((error)=>{
       console.log(error);
