@@ -106,29 +106,11 @@ function StaffDisplay() {
 
 }
                   <td class="px-6 py-4">{obj.adhar}</td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      View
-                    </a>
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>navigate('/admin/staffsalary')}>View
                   </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      View
-                    </a>
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
                   </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      View
-                    </a>
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>navigate('/admin/staffprofile')}>View
                   </td>
                 </tr>
               ))

@@ -5,7 +5,7 @@ import UtilityBills from '../../../components/AdminComponents/Office/UtilityBill
 const UtilityBill = () => {
   return (
     <div>
-     <Header headers="Office Utility Bills"/>
+     <Header headers="OFFICE UTILITY BILLS"/>
      <UtilityBills/>
     </div>
   )

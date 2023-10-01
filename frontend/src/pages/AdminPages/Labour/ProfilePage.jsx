@@ -1,17 +1,16 @@
 import React from 'react'
 import Header from '../../../components/AdminComponents/Header/Header'
 import Footer from '../../../components/AdminComponents/Footer/Footer'
-import Salary from '../../../components/AdminComponents/Viewsalary/Salary'
+import Profile from '../../../components/AdminComponents/Labour/Profile'
 
-function ViewSalary() {
+function ProfilePage() {
   return (
-    
     <div>
-      <Header headers='LABOUR SALARY'/>
-      <Salary/>
-      <Footer/>
+        <Header headers='LABOUR PROFILE'/>
+        <Profile/>
+        <Footer/>
     </div>
   )
 }
 
-export default ViewSalary
+export default ProfilePage

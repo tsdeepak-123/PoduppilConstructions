@@ -3,15 +3,15 @@ import Header from '../../../components/AdminComponents/Header/Header'
 import Footer from '../../../components/AdminComponents/Footer/Footer'
 import Salary from '../../../components/AdminComponents/Viewsalary/Salary'
 
-function ViewSalary() {
+
+function StaffSalary() {
   return (
-    
     <div>
-      <Header headers='LABOUR SALARY'/>
-      <Salary/>
-      <Footer/>
+        <Header headers='STAFF SALARY DETAILS'/>
+        <Salary/>
+        <Footer/>
     </div>
   )
 }
 
-export default ViewSalary
+export default StaffSalary

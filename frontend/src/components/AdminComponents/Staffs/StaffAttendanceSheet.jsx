@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {TiArrowBackOutline} from 'react-icons/ti'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useNavigate } from 'react-router-dom'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from "../../../Api/Api";
@@ -59,17 +59,17 @@ const StaffAttendanceSheet = () => {
   return (
     <div className='me-7 mt-32'>
     <div className='flex justify-between me-7 mb-24'>
-      <TiArrowBackOutline className='ms-11 mt-4 cursor-pointer text-3xl' onClick={handleBackArrowClick} />
+    <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
     
 <nav className="w-full sm:flex justify-center gap-2 sm:ml-32">
-        <div onClick={()=> navigate('/admin/labourattendance')} className="flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#e4ece5] hover:text-black transition duration-500">
+        <div onClick={()=> navigate('/admin/labourattendance')} className="flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#e4ece5] hover:text-black transition duration-500 ">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 cursor-pointer"
           >
             <path
               strokeLinecap="round"
@@ -96,18 +96,11 @@ const StaffAttendanceSheet = () => {
           </svg>
           Staff-Attendance
         </div>
-       
+       <div className='mt-5'>
+       <Buttons name="+ ADD NEW STAFF" click={handleAddStaff} classes={'w-90'}/>
+       </div>
       </nav>
-
-
-
-
-      <div className='relative top-20 block sm:hidden mt-24'>
-        <Buttons name="+" click={handleAddStaff} />
-      </div>
-      <div className='relative top-20 hidden sm:block w-auto'>
-        <Buttons name="+ ADD NEW LABOUR" click={handleAddStaff} />
-      </div>
+      
     </div>
     <div className='grid grid-cols-1 ml-3 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full overflow-y-auto mb-10'>
       {labourData.map((item) => (
@@ -163,7 +156,8 @@ const StaffAttendanceSheet = () => {
 
     </div>
     <div className='justify-center items-center flex mt-7 w-full mb-10'>
-      <button className=' p-2 border-black outline rounded-xl bg-green-600 text-white' onClick={updateAttendance}>submit</button>
+    <Buttons type="submit" name="SUBMIT" classes={'w-96'} click={updateAttendance} />
+      {/* <button className=' p-2 border-black outline rounded-xl bg-green-600 text-white' onClick={updateAttendance}>submit</button> */}
     </div>
   </div>
   )

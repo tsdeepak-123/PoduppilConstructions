@@ -25,6 +25,8 @@ import SingleviewContract from '../pages/AdminPages/Contract/SingleviewContract'
 import Singleviewproject from '../pages/AdminPages/Project/Singleviewproject'
 import SingleViewAttendance from '../pages/AdminPages/Labour/SingleViewAttendance'
 import ViewSalary from '../pages/AdminPages/ViewSalary/ViewSalary'
+import ProfilePage from '../pages/AdminPages/Labour/ProfilePage'
+import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -66,6 +68,8 @@ function AdminRoutes() {
        <Route path='/projectview' element={<Singleviewproject/>}/>
        <Route path='/attendancesingle' element={<SingleViewAttendance/>}/>
        <Route path='/viewsalary' element={<ViewSalary/>}/>
+       <Route path='/viewprofile' element={<ProfilePage/>}/>
+       <Route path='/staffsalary' element={<StaffSalary/>}/>
     </Routes>
     </div>
   )

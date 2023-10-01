@@ -112,7 +112,7 @@ function Labour() {
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
                   </td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>navigate('/admin/viewprofile')}>View
                   </td>
                 </tr>
               ))
