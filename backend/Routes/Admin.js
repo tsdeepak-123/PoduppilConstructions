@@ -11,7 +11,7 @@ const Auth=require('../Middleware/Auth')
 //The routes for admin authentication
 
 adminRoute.post('/login',handleSignIn)
-// adminRoute.post('/signup',handleSignUp)
+adminRoute.post('/signup',handleSignUp)
 adminRoute.post('/addlabour',upload.fields([{ name: 'proof', maxCount: 1 }, { name: 'photo', maxCount: 1 }]),handleLabourAdding)
 adminRoute.get('/labourslist',handleLabourDetails)
 adminRoute.get('/labourbyid',handleLabourById)

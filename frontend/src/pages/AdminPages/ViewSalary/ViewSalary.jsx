@@ -1,9 +1,15 @@
 import React from 'react'
+import Header from '../../../components/AdminComponents/Header/Header'
+import Footer from '../../../components/AdminComponents/Footer/Footer'
+import Salary from '../../../components/AdminComponents/Viewsalary/Salary'
 
 function ViewSalary() {
   return (
+    
     <div>
-      <h1>iammmmmmm view salaryyyyyyyy</h1>
+      <Header/>
+      <Salary/>
+      <Footer/>
     </div>
   )
 }
