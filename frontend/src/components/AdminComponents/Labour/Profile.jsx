@@ -51,7 +51,7 @@ function Profile() {
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Gender</div>
-                      <div class="px-4 py-2">Female</div>
+                      <div class="px-4 py-2">Male</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Contact No.</div>
