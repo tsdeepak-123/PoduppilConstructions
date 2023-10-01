@@ -113,6 +113,8 @@ console.log(req.body);
     }
 
 
+ 
+
     // ......................Labour single view ......................................
 
     const handleLabourById=async (req,res)=>{
@@ -321,5 +323,6 @@ const labourAttendanceById=async(req,res)=>{
       handleAttendance,
       salarycalculationoflabour,
       labourAttendanceById
+      
     
     }
