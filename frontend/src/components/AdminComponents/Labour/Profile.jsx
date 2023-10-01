@@ -22,6 +22,8 @@ function Profile() {
   useEffect(() => {
     fetchData();
   }, []);
+
+
   return (
     
     <div className="mt-44">
