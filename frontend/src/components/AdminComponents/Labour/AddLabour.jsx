@@ -138,8 +138,8 @@ function AddLabour() {
       <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
 
     <div className='mx-auto mt-11'>
-    <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button>
-    {/* <Buttons type="submit" name="ADD LABOUR" classes={'w-96'} /> */}
+    {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
+    <Buttons type="submit" name="ADD LABOUR" classes={'w-96'} />
     </div>
     </form>
    </div>

@@ -14,7 +14,7 @@ function Office() {
       navigate('/admin/labourattendance')
     }
     const handleUtilitybills=()=>{
-      navigate('/admin/projectdetails')
+      navigate('/admin/utilitybills')
     }
     // const handleStaffView=()=>{
     //   navigate('/admin/staffdetails')
