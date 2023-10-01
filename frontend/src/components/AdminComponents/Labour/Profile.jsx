@@ -1,6 +1,27 @@
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import { axiosAdmin } from '../../../Api/Api'
 function Profile() {
+  const[LabourData,setLabourData]=useState()
+  const location=useLocation()
+  const id=location?.state?.id
+  console.log(id,'id came   ');
+  const fetchData = async () => {
+    try {
+      const response = await axiosAdmin.get(`labourbyid?id=${location?.state?.id}`);
+      console.log(response?.data?.LabourData);
+
+      setLabourData(response?.data?.LabourData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(LabourData,'LabourData');
+  //data displayin when mounting
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     
     <div className="mt-44">
@@ -35,48 +56,53 @@ function Profile() {
                     <div class="image overflow-hidden py-4 px-6">
                       <img
                         class="h-auto w-full mx-auto rounded-lg"
-                        src="https://cdn.britannica.com/54/188754-004-1FED59CE/Elon-Musk-2010.jpg"
-                        alt=""
+                        src={LabourData?.photo}
+                        alt="photo"
                       />
                     </div>
                   </div>
                   <div class="w-full md:w-9/12 md:mx-2">
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">First Name</div>
-                      <div class="px-4 py-2">Jane</div>
+                      <div class="px-4 py-2">{LabourData?.name}</div>
                     </div>
-                    <div class="grid grid-cols-2">
+                    {/* <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Last Name</div>
                       <div class="px-4 py-2">Doe</div>
-                    </div>
-                    <div class="grid grid-cols-2">
+                    </div> */}
+                    {/* <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Gender</div>
+<<<<<<< HEAD
                       <div class="px-4 py-2">Male</div>
                     </div>
+=======
+                      <div class="px-4 py-2">Female</div>
+                    </div> */}
+>>>>>>> 0e277db8fd75f7501bcdf4a32c5a04029568d9ee
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Contact No.</div>
-                      <div class="px-4 py-2">+11 998001001</div>
+                      <div class="px-4 py-2">{LabourData?.phone}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Current Address</div>
-                      <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
+                      <div class="px-4 py-2">{LabourData?.address[0]?.street},{LabourData?.address[0]?.town},{LabourData?.address[0]?.post},{LabourData?.address[0]?.district},{LabourData?.address[0]?.pincode}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">
                         Permanant Address
                       </div>
                       <div class="px-4 py-2">
-                        Arlington Heights, IL, Illinois
+                      {LabourData?.address[0]?.street},{LabourData?.address[0]?.town},{LabourData?.address[0]?.post},{LabourData?.address[0]?.district},{LabourData?.address[0]?.pincode}
                       </div>
                     </div>
-                    <div class="grid grid-cols-2">
+                    {/* <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Email.</div>
                       <div class="px-4 py-2">
                         <a class="text-blue-800" href="mailto:jane@example.com"
                           >jane@example.com</a
                         >
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -106,7 +132,7 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-auto w-full mx-auto rounded-lg"
-                      src="https://aadhaarcard.co.in/wp-content/uploads/2023/04/aadhaar-card-800x445.webp"
+                      src={LabourData?.IdProof}
                       alt=""
                     />
                   </div>
@@ -115,7 +141,7 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-auto w-full mx-auto rounded-lg"
-                      src="https://aadhaarcard.co.in/wp-content/uploads/2023/04/aadhaar-card-800x445.webp"
+                      src={LabourData?.IdProof}
                       alt=""
                     />
                   </div>
