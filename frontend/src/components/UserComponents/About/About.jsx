@@ -7,7 +7,7 @@ function About() {
     <div class="container md:ml-72 px-6 text-gray-600 md:px-12 xl:px-6">
         <div class="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
         <div class="md:5/12 lg:w-5/12">
-            <img src="https://tailus.io/sources/blocks/left-image/preview/images/startup.png" alt="image" loading="lazy" width="" height=""/>
+            <img src="/Images/podu.png" alt="image" loading="lazy" width="" height=""/>
         </div>
         <div class="md:7/12 lg:w-6/12">
             <h2 class="text-2xl text-black font-bold md:text-4xl">Our Commitment to Excellence</h2>
