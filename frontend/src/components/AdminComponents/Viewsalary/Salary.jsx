@@ -85,7 +85,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Basic Salary</h2>
         
-        <p className='flex'>< LuIndianRupee className='mt-1'/> {LabourData?.basic}</p>
+        <p className='flex'>< LuIndianRupee className='mt-1'/> {LabourData?.LabourData?.salary}</p>
         
       </div>
 

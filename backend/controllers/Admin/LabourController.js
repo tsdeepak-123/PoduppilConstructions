@@ -360,7 +360,8 @@ const salarycalculationoflabour = async (req, res) => {
    
     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
     if (!salaryDatas) {
-      return res.status(404).json({
+      const salaryData={ LabourData:LaborData}
+      return res.json({salaryData,
         message: "salarydata not found.",
       });
     }
