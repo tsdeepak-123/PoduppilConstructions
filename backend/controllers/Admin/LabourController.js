@@ -181,116 +181,255 @@ console.log(req.body);
 
 // .......................................calculate salary using attendance..................................................
 
-// const salarycalculationoflabour=async(req,res)=>{
+
+// const salarycalculationoflabour = async (req, res) => {
+//   try {
+//     const { laborId } = req.query;
+//     const { laborSalarydate } = req.query;
+//     console.log(laborSalarydate,'laborSalarydate');
+
+//     const LaborData = await Labour.findById({ _id: laborId });
+
+//     if (!LaborData) {
+//       return res.status(404).json({
+//         message: "Labour not found.",
+//       });
+//     }
+
+//     const endDate = new Date();
+//     const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
+//     console.log(startDate,endDate,'dates');
+
+//     const attendanceRecords = await Attendance.find({
+//       'records.laborerId': laborId,
+//       'date': { $gte: startDate, $lte: endDate },
+//     });
+
+//     const month = new Date();
+//     month.setDate(endDate.getDate() - 30);
+
+//     const attendanceRecordbymonth = await Attendance.find({
+//       'records.laborerId': laborId,
+//       'date': { $gte: month, $lte: endDate },
+//     });
+
+//     const week = new Date();
+//     week.setDate(endDate.getDate() - 7);
+
+//     const attendanceRecordbyweek = await Attendance.find({
+//       'records.laborerId': laborId,
+//       'date': { $gte: week, $lte: endDate },
+//     });
+
+//     if (!attendanceRecords) {
+//       return res.status(404).json({
+//         message: "Labour attendance records not found for the specified period.",
+//       });
+//     }
+
+//     const attendanceStatus = {
+//       absent: 0,
+//       halfday: 0,
+//       present: 0,
+//     };
+
+//     attendanceRecords.forEach((record) => {
+//       record.records.forEach((attendanceRecord) => {
+//         if (attendanceRecord.laborerId.equals(laborId)) {
+//           attendanceStatus[attendanceRecord.status]++;
+//         }
+//       });
+//     });
+
+//     const salary = (LaborData?.salary * attendanceStatus?.present) + ((LaborData?.salary * attendanceStatus?.halfday) / 2);
+
+//     const monthlyattendanceStatus = {
+//       absent: 0,
+//       halfday: 0,
+//       present: 0,
+//     };
+
+//     attendanceRecordbymonth.forEach((record) => {
+//       record.records.forEach((attendanceRecord) => {
+//         if (attendanceRecord.laborerId.equals(laborId)) {
+//           monthlyattendanceStatus[attendanceRecord.status]++;
+//         }
+//       });
+//     });
+
+//     const monthlysalary = (LaborData?.salary * monthlyattendanceStatus?.present) + ((LaborData?.salary * monthlyattendanceStatus?.halfday) / 2);
+
+//     const weeklyattendanceStatus = {
+//       absent: 0,
+//       halfday: 0,
+//       present: 0,
+//     };
+
+//     attendanceRecordbyweek.forEach((record) => {
+//       record.records.forEach((attendanceRecord) => {
+//         if (attendanceRecord.laborerId.equals(laborId)) {
+//           weeklyattendanceStatus[attendanceRecord.status]++;
+//         }
+//       });
+//     });
+
+//     const weeklysalary = (LaborData?.salary * weeklyattendanceStatus?.present) + ((LaborData?.salary * weeklyattendanceStatus?.halfday) / 2);
+
+//     const SalaryData = await Salary.findOne({ laborerId: laborId });
+
+//     if (SalaryData) {
+//       console.log(attendanceStatus.present);
+//       const newRecord = {
+//         calculateFrom: startDate,
+//         calculateTo: endDate,
+//         present: attendanceStatus.present,
+//         halfday: attendanceStatus.halfday,
+//         absent: attendanceStatus.absent,
+//         totalSalary: salary,
+//         advance: LaborData.advance,
+//         updatedSalary: salary - LaborData.advance,
+//       };
+
+//       SalaryData.records.addToSet(newRecord);
+//       await SalaryData.save();
+
+//     } else {
+//       const salaryofLabour = new Salary({
+//         laborerId: laborId,
+//         records: [
+//           {
+//             calculateFrom: startDate,
+//             calculateTo: endDate,
+//             present: attendanceStatus.present,
+//             halfday: attendanceStatus.halfday,
+//             absent: attendanceStatus.absent,
+//             totalSalary: salary,
+//             advance: LaborData.advance,
+//             updatedSalary: salary - LaborData.advance,
+//           },
+//         ],
+//       });
+
+//       await salaryofLabour.save();
+//     }
+
+//     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
+//     salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+//     const latestRecord = salaryDatas.records[0];
+
+//     const salaryData = {
+//       LabourData:LaborData,
+//       calculateFrom: latestRecord.calculateFrom,
+//       calculateTo: latestRecord.calculateTo,
+//       present: latestRecord?.present,
+//       halfday: latestRecord?.halfday,
+//       absent: latestRecord?.absent,
+//       salary: latestRecord.totalSalary,
+//       advance: latestRecord.advance,
+//       updatedSalary: latestRecord.updatedSalary,
+//       lastweek: weeklysalary,
+//       lastmonth: monthlysalary,
+//       basic: LaborData?.salary,
+//       lastCalculatedAt: endDate,
+//     };
+
+//     await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+
+//     res.status(200).json({ message: 'Salary calculated successfully', salaryData });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'An error occurred during salary calculation.' });
+//   }
+// };
 
 
-// try {
- 
-//    const laborId = req.query.id
-//   // console.log(laborId);
-//   const LabourData=await Labour.findById({_id:laborId})
-//   // console.log(LabourData);
-//   if(!LabourData){
-//     return res.json({
-//       message: "Labour not found.",
-//     });
-//   }
-//   const attendanceRecords = await Attendance.find({ 'records.laborerId': laborId });
-//   if(!attendanceRecords){
-//     return res.json({
-//       message: "Labour attendanceRecords not found.",
-//     });
-//   }
-//   const attendanceStatus = {
-//     absent: 0,
-//     halfday: 0,
-//     present: 0,
-//   };
-
-//   attendanceRecords.forEach((record) => {
-//     record.records.forEach((attendanceRecord) => {
-//       if (attendanceRecord.laborerId.equals(laborId)) {
-//         attendanceStatus[attendanceRecord.status]++;
-//       }
-//     });
-//   });
-// const salary= (LabourData?.salary*attendanceStatus?.present)+((LabourData?.salary*attendanceStatus?.halfday)/2)
-// // console.log(attendanceStatus?.halfday);
-// // console.log('salary',salary);
-//   // console.log(attendanceStatus);
-//   const salaryData={
-//     present:attendanceStatus?.present,
-//     halfday:attendanceStatus?.halfday,
-//     absent:attendanceStatus?.absent,
-//     salary:salary,
-//     basic:LabourData?.salary
-//   }
-//   res.status(200).json({ message: 'salary get successfully', salaryData });
-// } catch (error) {
-//   console.error(error);
-//   throw error;
-// }
-// }
 
 const salarycalculationoflabour = async (req, res) => {
   try {
-    // console.log(req.query);
     const { laborId } = req.query;
-    const { laborSalarydate } = req.query;
-    // console.log(laborSalarydate);
-    const LabourData=await Labour.findById({_id:laborId})
-    if (!LabourData) {
-      return res.json({
+   
+
+    const LaborData = await Labour.findById({ _id: laborId });
+
+    if (!LaborData) {
+      return res.status(404).json({
         message: "Labour not found.",
       });
     }
-    
+
+   
+    const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
+    if (!salaryDatas) {
+      return res.status(404).json({
+        message: "salarydata not found.",
+      });
+    }
+
+
+    salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+    const latestRecord = salaryDatas.records[0];
+
+    const salaryData = {
+      LabourData:LaborData,
+      calculateFrom: latestRecord.calculateFrom,
+      calculateTo: latestRecord.calculateTo,
+      present: latestRecord?.present,
+      halfday: latestRecord?.halfday,
+      absent: latestRecord?.absent,
+      salary: latestRecord.totalSalary,
+      advance: latestRecord.advance,
+      updatedSalary: latestRecord.updatedSalary,
+      basic: LaborData?.salary,
+     
+    };
+
+   
+    res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred during salary calculation.' });
+  }
+};
+
+//............................ salary calculation ..........................................
+
+
+const salarycalculation = async (req, res) => {
+  try {
+   
+    console.log(req.query);
+    const { laborId } = req.query;
+    const { laborSalarydate } = req.query;
+   
+
+    const LaborData = await Labour.findById({ _id: laborId });
+
+    if (!LaborData) {
+      return res.status(404).json({
+        message: "Labour not found.",
+      });
+    }
+
     const endDate = new Date(laborSalarydate);
-    
-    console.log(LabourData.lastsalaryDate,'LabourData.lastsalaryDate');
-    console.log(LabourData.date,'LabourData.date');
-    const startDate = new Date(LabourData.lastsalaryDate??LabourData.date);
-   
-console.log(endDate,startDate);
-   
-    
+    const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
+    console.log(startDate,endDate,'dates');
+
     const attendanceRecords = await Attendance.find({
       'records.laborerId': laborId,
       'date': { $gte: startDate, $lte: endDate },
     });
-    const month=new Date()
-    month.setDate(endDate.getDate() -30)
+
     
-    console.log(month);
-    const attendanceRecordbymonth = await Attendance.find({
-      'records.laborerId': laborId,
-      'date': { $gte: month, $lte: endDate },
-    });
-    const week=new Date()
-    week.setDate(endDate.getDate() -7)
-    const attendanceRecordbyweek = await Attendance.find({
-      'records.laborerId': laborId,
-      'date': { $gte: week, $lte: endDate },
-    });
-   
+
+    
 
     if (!attendanceRecords) {
-      return res.json({
+      return res.status(404).json({
         message: "Labour attendance records not found for the specified period.",
       });
     }
 
     const attendanceStatus = {
-      absent: 0,
-      halfday: 0,
-      present: 0,
-    };
-    const weeklyattendanceStatus = {
-      absent: 0,
-      halfday: 0,
-      present: 0,
-    };
-    const monthlyattendanceStatus = {
       absent: 0,
       halfday: 0,
       present: 0,
@@ -304,130 +443,62 @@ console.log(endDate,startDate);
       });
     });
 
-    const salary = (LabourData?.salary * attendanceStatus?.present) + ((LabourData?.salary * attendanceStatus?.halfday) / 2);
+    const salary = (LaborData?.salary * attendanceStatus?.present) + ((LaborData?.salary * attendanceStatus?.halfday) / 2);
 
-//  .....monthly calculation start
+   
+    const SalaryData = await Salary.findOne({ laborerId: laborId });
 
-    attendanceRecordbymonth.forEach((record) => {
-      record.records.forEach((attendanceRecord) => {
-        if (attendanceRecord.laborerId.equals(laborId)) {
-          monthlyattendanceStatus[attendanceRecord.status]++;
-        }
-      });
-    });
-
-    const monthlysalary = (LabourData?.salary * monthlyattendanceStatus?.present) + ((LabourData?.salary * monthlyattendanceStatus?.halfday) / 2);
-  
-  //  .....monthly calculation end
-    //  .....weekly calculation  start....
-    attendanceRecordbyweek.forEach((record) => {
-      record.records.forEach((attendanceRecord) => {
-        if (attendanceRecord.laborerId.equals(laborId)) {
-          weeklyattendanceStatus[attendanceRecord.status]++;
-        }
-      });
-    });
-
-    const weeklysalary = (LabourData?.salary * weeklyattendanceStatus?.present) + ((LabourData?.salary * weeklyattendanceStatus?.halfday) / 2);
-//  .....weekly calculation end
-
-    // const salaryData = {
-    //   LabourData, 
-    //   present: attendanceStats?.present,
-    //   halfday:attendanceStats?.present,
-    //   absent: attendanceStats?.absent,
-    //   salary: salary,
-    //   lastweek: weeklysalary,
-    //   lastmonth:monthlysalary ,
-    //   basic: LabourData?.salary,
-    //   lastCalculatedAt:endDate
-    // };
-
-    const SalaryData = await Salary.findOne({ laborerId: laborId })
-    
     if (SalaryData) {
-      // console.log('Salary data is there', SalaryData);
-    
+      console.log(attendanceStatus.present);
       const newRecord = {
         calculateFrom: startDate,
         calculateTo: endDate,
-        present: attendanceStats?.present,
-        halfday: attendanceStats?.halfday,
-        absent: attendanceStats?.absent,
+        present: attendanceStatus.present,
+        halfday: attendanceStatus.halfday,
+        absent: attendanceStatus.absent,
+        date:new Date(),
         totalSalary: salary,
-        advance: LabourData.advance,
-        updatedSalary: salary - LabourData.advance,
+        advance: LaborData.advance,
+        updatedSalary: salary - LaborData.advance,
       };
-    
+
       SalaryData.records.addToSet(newRecord);
       await SalaryData.save();
 
     } else {
-      // console.log('Salary data is not there');
-    
-     
       const salaryofLabour = new Salary({
         laborerId: laborId,
         records: [
           {
             calculateFrom: startDate,
             calculateTo: endDate,
-            present: attendanceStats?.present,
-            halfday: attendanceStats?.halfday,
-            absent: attendanceStats?.absent,
+            present: attendanceStatus.present,
+            halfday: attendanceStatus.halfday,
+            absent: attendanceStatus.absent,
+            date:new Date(),
             totalSalary: salary,
-            advance: LabourData.advance,
-            updatedSalary: salary - LabourData.advance,
+            advance: LaborData.advance,
+            updatedSalary: salary - LaborData.advance,
           },
         ],
       });
-    
+
       await salaryofLabour.save();
-
-      console.log(salaryofLabour, 'salaryLabour....');
     }
-    const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId')
-    console.log(salaryDatas);
+
+    const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
     salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
-
-    
     const latestRecord = salaryDatas.records[0];
-  
-    console.log('Latest SalaryData Record:', latestRecord);
 
-    const salaryData = {
-      LabourData, 
-<<<<<<< HEAD
-      calculateFrom:latestRecord.calculateFrom ,
-      calculateTo:latestRecord.calculateTo ,
-      present: latestRecord?.present,
-      halfday:latestRecord?.present,
-      absent: latestRecord?.absent,
-      salary: latestRecord.totalSalary,
-      advance:latestRecord.advance,
-      updatedSalary:latestRecord. updatedSalary,
-=======
-      present: attendanceStatus?.present,
-      halfday: attendanceStatus?.halfday,
-      absent: attendanceStatus?.absent,
-      salary: salary,
->>>>>>> ac13396a210957443820860998485e903ffd6066
-      lastweek: weeklysalary,
-      lastmonth:monthlysalary ,
-      basic: LabourData?.salary,
-      lastCalculatedAt:endDate
-    }
-    console.log(salaryData,'sddd');
-    const l=await Labour.findByIdAndUpdate({ _id: LabourData._id },{lastsalaryDate: latestRecord.calculateTo,advance: 0 });
-    console.log(l);
 
-    res.status(200).json({ message: 'Salary calculated successfully', salaryData });
+    await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+
+    res.status(200).json({ message: 'Salary calculated successfully' });
   } catch (error) {
     console.error(error);
-    throw error;
+    res.status(500).json({ message: 'An error occurred during salary calculation.' });
   }
 };
-
 
 //.................................  attendance taking using id................................
 
@@ -461,6 +532,7 @@ const labourAttendanceById=async(req,res)=>{
       handleLabourById,
       handleAttendance,
       salarycalculationoflabour,
+      salarycalculation,
       labourAttendanceById
       
     

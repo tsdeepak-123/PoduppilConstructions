@@ -9,6 +9,7 @@ function Salary() {
   const location=useLocation()
   const id=location?.state?.id
   const[LabourData,setLabourData]=useState()
+  const[selectedDate,setselectedDate]=useState()
 const navigate=useNavigate()
   const handleProfileButton=()=>{
     navigate('/admin/viewprofile')
@@ -37,6 +38,7 @@ const navigate=useNavigate()
     }, []);
 
 
+
 const inputDate = new Date(LabourData?.calculateTo);
 const months = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -47,6 +49,22 @@ const month = months[inputDate.getUTCMonth()];
 const year = inputDate.getUTCFullYear();
 const formattedDate = `${day} / ${month} / ${year}`;
   console.log(Number(LabourData?.lastweek)-Number(LabourData?.advance)??0);
+
+  const salaryoflabour=async()=>{
+    try {
+      // const id=LabourData?.LabourData?._id 
+      // console.log(selectedDate,'dateee');
+      const response = await axiosAdmin.post(`salaryoflabour?laborId=${location?.state?.id}&laborSalarydate=${selectedDate}`);
+
+      console.log(response?.data,'response');
+
+  // navigate('/admin/viewsalary',{ state: {id } })
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
   return (
     <>
     <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
@@ -103,8 +121,8 @@ const formattedDate = `${day} / ${month} / ${year}`;
         <p className='text-blue-500 cursor-pointer'>View History</p>
       </div>
       <div className='mt-6 flex flex-row gap-4'>
-        <TextFields name='Date' type='date' input={true}/>
-        <Buttons name='Calculate salary' className='justify-center' classes={'h-14'}/>
+        <TextFields onChange={(e) => {setselectedDate(e.target.value)}} name='Date' type='date' input={true}/>
+        <Buttons click={salaryoflabour} name='Calculate salary' className='justify-center' classes={'h-14'}/>
       </div>
     </div>
   </div>

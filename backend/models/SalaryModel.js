@@ -12,6 +12,7 @@ const SalarySchema = new mongoose.Schema({
     {
      calculateFrom:{ type: Date,required: true,},
      calculateTo:{ type: Date,required: true,},
+     date:{ type: Date,required: true,},
      present:{ type: String,required: true,},
      halfday:{ type: String,required: true,},
      absent:{ type: String,required: true,},
