@@ -27,6 +27,7 @@ import SingleViewAttendance from '../pages/AdminPages/Labour/SingleViewAttendanc
 import ViewSalary from '../pages/AdminPages/ViewSalary/ViewSalary'
 import ProfilePage from '../pages/AdminPages/Labour/ProfilePage'
 import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
+import StaffProfile from '../pages/AdminPages/Staff/StaffProfile'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -70,6 +71,7 @@ function AdminRoutes() {
        <Route path='/viewsalary' element={<ViewSalary/>}/>
        <Route path='/viewprofile' element={<ProfilePage/>}/>
        <Route path='/staffsalary' element={<StaffSalary/>}/>
+       <Route path='/staffprofile' element={<StaffProfile/>}/>
     </Routes>
     </div>
   )

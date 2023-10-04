@@ -4,7 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
-
+import Input from "@mui/material/Input";
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -67,6 +67,19 @@ function AddLabour() {
     const file = e.target.files[0];
     setIdproof(file)
   }
+
+
+  // const handleproofChange = (e) => {
+  //   const files = e.target.files;
+  //   const selectedFiles = [];
+  
+  //   for (let i = 0; i < files.length; i++) {
+  //     selectedFiles.push(files[i]);
+  //   }
+  
+  //   setIdproof(selectedFiles);
+  // };
+  
   const handleImageChange=(e)=>{
     // setIdproof(e.target.value)
     console.log(e.target.files[0],'tagetfile');
@@ -134,9 +147,9 @@ function AddLabour() {
       <TextFields name="Pincode" type="number" value={pincode} onChange={handlePincodeChange}/>
       <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
-      <TextFields name="photo" type="file" input={true} onChange={handleImageChange}/>
+      <TextFields name="photo" type="file"  input={true} onChange={handleImageChange}/>
       <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
-
+      
     <div className='mx-auto mt-11'>
     {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
     <Buttons type="submit" name="ADD LABOUR" classes={'w-96'} />

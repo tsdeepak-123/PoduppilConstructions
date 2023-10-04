@@ -2,28 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { axiosAdmin } from '../../../Api/Api'
 function Profile() {
-  const[LabourData,setLabourData]=useState()
+  const[StaffData,setStaffData]=useState()
   const location=useLocation()
   const id=location?.state?.id
   console.log(id,'id came   ');
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get(`labourbyid?id=${location?.state?.id}`);
-      console.log(response?.data?.LabourData);
+      const response = await axiosAdmin.get(`staffByid?id=${location?.state?.id}`);
+      console.log(response?.data?.StaffData);
 
-      setLabourData(response?.data?.LabourData);
+      setStaffData(response?.data?.StaffData);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(LabourData,'LabourData');
+  console.log(StaffData,'StaffData');
   //data displayin when mounting
   useEffect(() => {
     fetchData();
   }, []);
 
-  const orginalDate=new Date(LabourData?.date)
+  const orginalDate=new Date(StaffData?.date)
   const year = orginalDate.getFullYear()
   const month = (orginalDate.getMonth() +1).toString().padStart(2,'0')
   const day = orginalDate.getDate().toString().padStart(2,'0')
@@ -63,7 +63,7 @@ function Profile() {
                     <div class="image overflow-hidden py-4 px-6">
                       <img
                         class="h-auto w-full mx-auto rounded-lg"
-                        src={LabourData?.photo}
+                        src={StaffData?.photo}
                         alt="photo"
                       />
                     </div>
@@ -71,23 +71,23 @@ function Profile() {
                   <div class="w-full md:w-9/12 md:mx-2">
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">First Name</div>
-                      <div class="px-4 py-2">{LabourData?.name}</div>
+                      <div class="px-4 py-2">{StaffData?.name}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Age</div>
-                      <div class="px-4 py-2">{LabourData?.age}</div>
+                      <div class="px-4 py-2">{StaffData?.age}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Contact No.</div>
-                      <div class="px-4 py-2">{LabourData?.phone}</div>
+                      <div class="px-4 py-2">{StaffData?.phone}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold"> Address</div>
-                      <div class="px-4 py-2">{LabourData?.address[0]?.street},{LabourData?.address[0]?.town},{LabourData?.address[0]?.post},{LabourData?.address[0]?.district},{LabourData?.address[0]?.pincode}</div>
+                      <div class="px-4 py-2">{StaffData?.address[0]?.street},{StaffData?.address[0]?.town},{StaffData?.address[0]?.post},{StaffData?.address[0]?.district},{StaffData?.address[0]?.pincode}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Basic Salary</div>
-                      <div class="px-4 py-2">{LabourData?.salary}</div>
+                      <div class="px-4 py-2">{StaffData?.salary}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Date of Joing</div>
@@ -130,7 +130,7 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-[250px] w-[500px] mx-auto rounded-lg"
-                      src={LabourData?.IdProof}
+                      src={StaffData?.IdProof}
                       alt=""
                     />
                   </div>
@@ -139,7 +139,7 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-[250px] w-[500px] mx-auto rounded-lg"
-                      src={LabourData?.IdProof}
+                      src={StaffData?.IdProof}
                       alt=""
                     />
                   </div>

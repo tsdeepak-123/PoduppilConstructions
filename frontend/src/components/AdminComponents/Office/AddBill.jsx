@@ -30,7 +30,7 @@ function AddBill() {
       <TextFields name="Bill Photo" type="file" input={true}/>
     <div className='mx-auto mt-11'>
      
-    <button type="submit" className="text-[#fff] bg-[#31a051] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">ADD BILL</button>
+    <Buttons type="submit" name="ADD BILL" classes={'w-96'} />
     </div>
     </form>
    </div>

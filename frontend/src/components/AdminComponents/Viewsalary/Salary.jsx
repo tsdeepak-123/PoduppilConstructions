@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { useNavigate } from 'react-router-dom'
-
+import { useLocation, useNavigate } from 'react-router-dom'
+import { axiosAdmin } from '../../../Api/Api'
+import{LuIndianRupee}from 'react-icons/lu'
 function Salary() {
+  const location=useLocation()
+  const id=location?.state?.id
+  const[LabourData,setLabourData]=useState()
 const navigate=useNavigate()
   const handleProfileButton=()=>{
     navigate('/admin/viewprofile')
@@ -14,17 +18,45 @@ const navigate=useNavigate()
   const handleBackArrowClick = () => {
     navigate('/admin/labourdetails');
   };
+    // fetching data from backend
+    const fetchData = async () => {
+      try {
+        const response = await axiosAdmin.get(`salarycalculation?laborId=${location?.state?.id}`);
+        console.log(response?.data?.salaryData);
+  
+        setLabourData(response?.data?.salaryData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    //data displayin when mounting
+    useEffect(() => {
+      fetchData();
+    }, []);
+
+
+const inputDate = new Date(LabourData?.lastCalculatedAt);
+const months = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+const day = inputDate.getUTCDate();
+const month = months[inputDate.getUTCMonth()];
+const year = inputDate.getUTCFullYear();
+const formattedDate = `${day} / ${month} / ${year}`;
+  console.log(Number(LabourData?.lastweek)-Number(LabourData?.advance)??0);
   return (
     <>
     <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
     <div class="container mx-auto p-4 mt-44">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <img src="/Images/podu.png" alt="User Photo" class="w-[150px] h-[180px] rounded-full"/>
+    <div class="flex items-center justify-center gap-5 mb-4">
+      <div >
+        <img src={LabourData?.LabourData?.photo} alt="User Photo" class="w-[150px] h-[150px] rounded-full"/>
       </div>
       <div>
-        <h2>DEEPAK</h2>
-        <h5>7510307113</h5>
+        <h2 className='font-semibold text-xl'>{LabourData?.LabourData?.name}</h2>
+        <h5>{LabourData?.LabourData?.phone}</h5>
       </div>
     </div>
 
@@ -33,24 +65,37 @@ const navigate=useNavigate()
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Basic Salary</h2>
-        <p>$XXXXX</p>
+        
+        <p className='flex'>< LuIndianRupee className='mt-1'/> {LabourData?.basic}</p>
+        
       </div>
-
 
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Attendance Details</h2>
-        <p>Present: XX days</p>
-        <p>Halfday: XX days</p>
-        <p>Absent: XX days</p>
+        <p>Present &nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.present} days</p>
+        <p>Halfday &nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.halfday}days</p>
+        <p>Absent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.absent} days</p>
+        <p>Over Time : {LabourData?.overtime} hours</p>
+
       </div>
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastweek}-{LabourData?.advance} </p>
+      
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{Number(LabourData?.lastweek)-Number(LabourData?.advance)}</p>
       </div>
+    
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Total This Week</h2>
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastweek}</p>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Total This Month</h2>
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastmonth}</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-2">Calculated At</h2>
+        <p className='flex'>{formattedDate}</p>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Salary History</h2>

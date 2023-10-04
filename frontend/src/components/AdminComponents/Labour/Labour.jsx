@@ -37,6 +37,10 @@ function Labour() {
   const nav =(id)=>{
     navigate('/admin/viewprofile',{ state: {id } })
   }
+  const salarypageNavigation =(id)=>{
+    
+    navigate('/admin/viewsalary',{ state: {id } })
+  }
   return (
     <>
       <div className="flex justify-between me-7 mt-32">
@@ -113,11 +117,11 @@ function Labour() {
 
 }
                   <td class="px-6 py-4">{obj.adhar}</td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>navigate('/admin/viewsalary')}>View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>salarypageNavigation(obj?._id)}>View
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
                   </td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj._id)}>View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>
                 </tr>
               ))
