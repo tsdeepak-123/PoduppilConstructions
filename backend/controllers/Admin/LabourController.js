@@ -1,5 +1,6 @@
 const Labour=require('../../models/LabourModal')
 const Attendance=require('../../models/Attendance')
+const Salary=require('../../models/SalaryModel')
 const cloudinary = require('../../Middleware/Cloudinary')
 const mongoose = require('mongoose');
 
@@ -244,10 +245,12 @@ const salarycalculationoflabour = async (req, res) => {
       });
     }
     
-    const endDate = new Date();
-    // const laborSalarydate=endDate.getDate()-2
-    const startDate = new Date(laborSalarydate??LabourData.date);
-    // startDate.setDate(endDate.getDate() - 6);
+    const endDate = new Date(laborSalarydate);
+    
+    console.log(LabourData.lastsalaryDate,'LabourData.lastsalaryDate');
+    console.log(LabourData.date,'LabourData.date');
+    const startDate = new Date(LabourData.lastsalaryDate??LabourData.date);
+   
 console.log(endDate,startDate);
    
     
@@ -328,18 +331,88 @@ console.log(endDate,startDate);
     const weeklysalary = (LabourData?.salary * weeklyattendanceStats?.present) + ((LabourData?.salary * weeklyattendanceStats?.halfday) / 2);
 //  .....weekly calculation end
 
+    // const salaryData = {
+    //   LabourData, 
+    //   present: attendanceStats?.present,
+    //   halfday:attendanceStats?.present,
+    //   absent: attendanceStats?.absent,
+    //   salary: salary,
+    //   lastweek: weeklysalary,
+    //   lastmonth:monthlysalary ,
+    //   basic: LabourData?.salary,
+    //   lastCalculatedAt:endDate
+    // };
+
+    const SalaryData = await Salary.findOne({ laborerId: laborId })
+    
+    if (SalaryData) {
+      // console.log('Salary data is there', SalaryData);
+    
+      const newRecord = {
+        calculateFrom: startDate,
+        calculateTo: endDate,
+        present: attendanceStats?.present,
+        halfday: attendanceStats?.halfday,
+        absent: attendanceStats?.absent,
+        totalSalary: salary,
+        advance: LabourData.advance,
+        updatedSalary: salary - LabourData.advance,
+      };
+    
+      SalaryData.records.addToSet(newRecord);
+      await SalaryData.save();
+
+    } else {
+      // console.log('Salary data is not there');
+    
+     
+      const salaryofLabour = new Salary({
+        laborerId: laborId,
+        records: [
+          {
+            calculateFrom: startDate,
+            calculateTo: endDate,
+            present: attendanceStats?.present,
+            halfday: attendanceStats?.halfday,
+            absent: attendanceStats?.absent,
+            totalSalary: salary,
+            advance: LabourData.advance,
+            updatedSalary: salary - LabourData.advance,
+          },
+        ],
+      });
+    
+      await salaryofLabour.save();
+
+      console.log(salaryofLabour, 'salaryLabour....');
+    }
+    const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId')
+    console.log(salaryDatas);
+    salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+
+    
+    const latestRecord = salaryDatas.records[0];
+  
+    console.log('Latest SalaryData Record:', latestRecord);
+
     const salaryData = {
       LabourData, 
-      present: attendanceStats?.present,
-      halfday: attendanceStats?.halfday,
-      absent: attendanceStats?.absent,
-      salary: salary,
+      calculateFrom:latestRecord.calculateFrom ,
+      calculateTo:latestRecord.calculateTo ,
+      present: latestRecord?.present,
+      halfday:latestRecord?.present,
+      absent: latestRecord?.absent,
+      salary: latestRecord.totalSalary,
+      advance:latestRecord.advance,
+      updatedSalary:latestRecord. updatedSalary,
       lastweek: weeklysalary,
       lastmonth:monthlysalary ,
       basic: LabourData?.salary,
       lastCalculatedAt:endDate
-    };
-    console.log(salaryData);
+    }
+    console.log(salaryData,'sddd');
+    const l=await Labour.findByIdAndUpdate({ _id: LabourData._id },{lastsalaryDate: latestRecord.calculateTo,advance: 0 });
+    console.log(l);
 
     res.status(200).json({ message: 'Salary calculated successfully', salaryData });
   } catch (error) {

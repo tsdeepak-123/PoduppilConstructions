@@ -35,6 +35,7 @@ const handleSignIn = async (req, res) => {
     console.log(email, password);
     if (email && password) {
       const AdminData = await admin.findOne({ email: email });
+      
       console.log(AdminData,'dataofadmin');
       if (!AdminData) {
         res.status(404).json({ success: false, messege: "Invalid email" });

@@ -11,6 +11,7 @@ name: { type: String },
   salary: { type: Number },
   date: { type: Date },
   IdProof: { type: String },
+  advance:{ type: Number,required: true,default:0},
   photo: { type: String },
   address:[{
     street: { type: String },

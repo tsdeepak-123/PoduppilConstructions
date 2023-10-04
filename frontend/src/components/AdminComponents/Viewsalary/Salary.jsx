@@ -36,7 +36,7 @@ const navigate=useNavigate()
     }, []);
 
 
-const inputDate = new Date(LabourData?.lastCalculatedAt);
+const inputDate = new Date(LabourData?.calculateTo);
 const months = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"

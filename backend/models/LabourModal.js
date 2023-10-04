@@ -9,11 +9,10 @@ const LabourSchema = new Schema({
   adhar: { type: Number },
   salary: { type: Number },
   date: { type: Date },
+  lastsalaryDate: { type: Date },
   IdProof: { type: String },
   photo: { type: String },
-  // attendance:[{date:{type:String},
-  //   status:['present', 'half-day', 'absent']
-  // }],
+  advance:{ type: Number,required: true,default:0},
   address:[{
     street: { type: String },
     post: { type: String },
