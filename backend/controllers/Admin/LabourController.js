@@ -201,7 +201,7 @@ console.log(req.body);
 //       message: "Labour attendanceRecords not found.",
 //     });
 //   }
-//   const attendanceStats = {
+//   const attendanceStatus = {
 //     absent: 0,
 //     halfday: 0,
 //     present: 0,
@@ -210,18 +210,18 @@ console.log(req.body);
 //   attendanceRecords.forEach((record) => {
 //     record.records.forEach((attendanceRecord) => {
 //       if (attendanceRecord.laborerId.equals(laborId)) {
-//         attendanceStats[attendanceRecord.status]++;
+//         attendanceStatus[attendanceRecord.status]++;
 //       }
 //     });
 //   });
-// const salary= (LabourData?.salary*attendanceStats?.present)+((LabourData?.salary*attendanceStats?.halfday)/2)
-// // console.log(attendanceStats?.halfday);
+// const salary= (LabourData?.salary*attendanceStatus?.present)+((LabourData?.salary*attendanceStatus?.halfday)/2)
+// // console.log(attendanceStatus?.halfday);
 // // console.log('salary',salary);
-//   // console.log(attendanceStats);
+//   // console.log(attendanceStatus);
 //   const salaryData={
-//     present:attendanceStats?.present,
-//     halfday:attendanceStats?.halfday,
-//     absent:attendanceStats?.absent,
+//     present:attendanceStatus?.present,
+//     halfday:attendanceStatus?.halfday,
+//     absent:attendanceStatus?.absent,
 //     salary:salary,
 //     basic:LabourData?.salary
 //   }
@@ -280,17 +280,17 @@ console.log(endDate,startDate);
       });
     }
 
-    const attendanceStats = {
+    const attendanceStatus = {
       absent: 0,
       halfday: 0,
       present: 0,
     };
-    const weeklyattendanceStats = {
+    const weeklyattendanceStatus = {
       absent: 0,
       halfday: 0,
       present: 0,
     };
-    const monthlyattendanceStats = {
+    const monthlyattendanceStatus = {
       absent: 0,
       halfday: 0,
       present: 0,
@@ -299,36 +299,36 @@ console.log(endDate,startDate);
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.laborerId.equals(laborId)) {
-          attendanceStats[attendanceRecord.status]++;
+          attendanceStatus[attendanceRecord.status]++;
         }
       });
     });
 
-    const salary = (LabourData?.salary * attendanceStats?.present) + ((LabourData?.salary * attendanceStats?.halfday) / 2);
+    const salary = (LabourData?.salary * attendanceStatus?.present) + ((LabourData?.salary * attendanceStatus?.halfday) / 2);
 
 //  .....monthly calculation start
 
     attendanceRecordbymonth.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.laborerId.equals(laborId)) {
-          monthlyattendanceStats[attendanceRecord.status]++;
+          monthlyattendanceStatus[attendanceRecord.status]++;
         }
       });
     });
 
-    const monthlysalary = (LabourData?.salary * monthlyattendanceStats?.present) + ((LabourData?.salary * monthlyattendanceStats?.halfday) / 2);
+    const monthlysalary = (LabourData?.salary * monthlyattendanceStatus?.present) + ((LabourData?.salary * monthlyattendanceStatus?.halfday) / 2);
   
   //  .....monthly calculation end
     //  .....weekly calculation  start....
     attendanceRecordbyweek.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.laborerId.equals(laborId)) {
-          weeklyattendanceStats[attendanceRecord.status]++;
+          weeklyattendanceStatus[attendanceRecord.status]++;
         }
       });
     });
 
-    const weeklysalary = (LabourData?.salary * weeklyattendanceStats?.present) + ((LabourData?.salary * weeklyattendanceStats?.halfday) / 2);
+    const weeklysalary = (LabourData?.salary * weeklyattendanceStatus?.present) + ((LabourData?.salary * weeklyattendanceStatus?.halfday) / 2);
 //  .....weekly calculation end
 
     // const salaryData = {
@@ -397,6 +397,7 @@ console.log(endDate,startDate);
 
     const salaryData = {
       LabourData, 
+<<<<<<< HEAD
       calculateFrom:latestRecord.calculateFrom ,
       calculateTo:latestRecord.calculateTo ,
       present: latestRecord?.present,
@@ -405,6 +406,12 @@ console.log(endDate,startDate);
       salary: latestRecord.totalSalary,
       advance:latestRecord.advance,
       updatedSalary:latestRecord. updatedSalary,
+=======
+      present: attendanceStatus?.present,
+      halfday: attendanceStatus?.halfday,
+      absent: attendanceStatus?.absent,
+      salary: salary,
+>>>>>>> ac13396a210957443820860998485e903ffd6066
       lastweek: weeklysalary,
       lastmonth:monthlysalary ,
       basic: LabourData?.salary,
