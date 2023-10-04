@@ -57,7 +57,8 @@ const formattedDate = `${day} / ${month} / ${year}`;
       const response = await axiosAdmin.post(`salaryoflabour?laborId=${location?.state?.id}&laborSalarydate=${selectedDate}`);
 
       console.log(response?.data,'response');
-
+      
+      window.location.reload();
   // navigate('/admin/viewsalary',{ state: {id } })
 
     } catch (error) {
