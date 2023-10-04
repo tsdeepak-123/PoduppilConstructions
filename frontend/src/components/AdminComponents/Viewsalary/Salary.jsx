@@ -4,6 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { axiosAdmin } from '../../../Api/Api'
 import{LuIndianRupee}from 'react-icons/lu'
+import TextFields from '../../CommonComponents/TextFields/TextFields';
 function Salary() {
   const location=useLocation()
   const id=location?.state?.id
@@ -100,6 +101,10 @@ const formattedDate = `${day} / ${month} / ${year}`;
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Salary History</h2>
         <p className='text-blue-500 cursor-pointer'>View History</p>
+      </div>
+      <div className='mt-6 flex flex-row gap-4'>
+        <TextFields name='Date' type='date' input={true}/>
+        <Buttons name='Calculate salary' className='justify-center' classes={'h-14'}/>
       </div>
     </div>
   </div>
