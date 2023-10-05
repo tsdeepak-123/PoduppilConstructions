@@ -357,10 +357,44 @@ const salarycalculationoflabour = async (req, res) => {
       });
     }
 
+    const endDate = new Date();
+        const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
+        console.log(startDate,endDate,'dates');
+    
+        const attendanceRecords = await Attendance.find({
+          'records.laborerId': laborId,
+          'date': { $gte: startDate, $lte: endDate },
+        });
+
+console.log(attendanceRecords);
+      if (!attendanceRecords) {
+      return res.status(404).json({
+        message: "Labour attendance records not found for the specified period.",
+      });
+    }
    
+      const attendanceStatus = {
+      absent: 0,
+      halfday: 0,
+      present: 0,
+    };
+
+    attendanceRecords.forEach((record) => {
+      record.records.forEach((attendanceRecord) => {
+        if (attendanceRecord.laborerId.equals(laborId)) {
+          attendanceStatus[attendanceRecord.status]++;
+        }
+      });
+    });
+    console.log(attendanceStatus);
     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
     if (!salaryDatas) {
-      const salaryData={ LabourData:LaborData}
+      const salaryData={ LabourData:LaborData,
+        present: 0,
+        halfday: 0,
+        absent: 0,
+        advance: LaborData.advance
+      }
       return res.json({salaryData,
         message: "salarydata not found.",
       });
@@ -374,9 +408,9 @@ const salarycalculationoflabour = async (req, res) => {
       LabourData:LaborData,
       calculateFrom: latestRecord.calculateFrom,
       calculateTo: latestRecord.calculateTo,
-      present: latestRecord?.present,
-      halfday: latestRecord?.halfday,
-      absent: latestRecord?.absent,
+      present: latestRecord?.present??0,
+      halfday: latestRecord?.halfday??0,
+      absent: latestRecord?.absent??0,
       salary: latestRecord.totalSalary,
       advance: latestRecord.advance,
       updatedSalary: latestRecord.updatedSalary,
@@ -473,9 +507,9 @@ const salarycalculation = async (req, res) => {
           {
             calculateFrom: startDate,
             calculateTo: endDate,
-            present: attendanceStatus.present,
-            halfday: attendanceStatus.halfday,
-            absent: attendanceStatus.absent,
+            present: attendanceStatus.present??0,
+            halfday: attendanceStatus.halfday??0,
+            absent: attendanceStatus.absent??0,
             date:new Date(),
             totalSalary: salary,
             advance: LaborData.advance,
