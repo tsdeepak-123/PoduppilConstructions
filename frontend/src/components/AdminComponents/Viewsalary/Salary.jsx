@@ -110,6 +110,14 @@ const formattedDate = `${day} / ${month} / ${year}`;
         <h2 class="text-lg font-semibold mb-2">Total This Week</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastweek}</p>
       </div> :''}
+     {LabourData?.advance || LabourData?.advance==0 ? <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-2">Total Weekly advance</h2>
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.advance}</p>
+      </div> :''}
+     {LabourData?.balance ? <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-2">Total Weekly Balance</h2>
+        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.balance}</p>
+      </div> :''}
 
      {LabourData?.updatedSalary ? <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Last Salary Total</h2>

@@ -179,6 +179,43 @@ console.log(req.body);
     
   }
 
+
+//..........................attendance list ............................................................
+
+
+
+const handleAttendanceList = async (req, res) => {
+  try {
+    const currentDate = new Date();
+
+    const LabourAttendance = await Attendance.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
+            $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
+          }
+        }
+      }
+    ]);
+
+    if (LabourAttendance.length === 0) {
+
+      res.json({ message: 'Attendance not found' });
+      
+    } else {
+
+      console.log(LabourAttendance, 'attendanceDocuments');
+      res.status(200).json({ message: 'Attendance retrieved successfully', LabourAttendance });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
+
 // .......................................calculate salary using attendance..................................................
 
 
@@ -398,7 +435,8 @@ console.log(attendanceRecords);
         halfday: attendanceStatus?.halfday??0,
         absent: attendanceStatus?.absent??0,
         advance: LaborData.advance,
-        lastweek:salary
+        lastweek:salary,
+        balance:salary-LaborData.advance
       }
       return res.json({salaryData,
         message: "salarydata not found.",
@@ -574,7 +612,8 @@ const labourAttendanceById=async(req,res)=>{
       handleAttendance,
       salarycalculationoflabour,
       salarycalculation,
-      labourAttendanceById
+      labourAttendanceById,
+      handleAttendanceList
       
     
     }
