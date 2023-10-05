@@ -2,7 +2,7 @@ import React from 'react';
 
 function Feedback() {
   const feedbackStyles = {
-    backgroundImage: 'url("images/feedback_bacground.jpg")',
+    backgroundImage: 'url("/Images/feedback_bacground.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '384px',

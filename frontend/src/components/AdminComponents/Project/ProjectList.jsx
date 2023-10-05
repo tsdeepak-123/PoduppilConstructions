@@ -14,9 +14,7 @@ function ProjectList() {
     <div className='flex justify-between me-7 mt-32'>
     <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer' onClick={handleBackArrowClick}/>
     </div>
-    <div className="ms-6 mt-9">
-   <Search/>
-  </div>
+
   <div className='flex justify-center'>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
