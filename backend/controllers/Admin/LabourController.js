@@ -348,7 +348,7 @@ const salarycalculationoflabour = async (req, res) => {
   try {
     const { laborId } = req.query;
    
-
+   
     const LaborData = await Labour.findById({ _id: laborId });
 
     if (!LaborData) {
@@ -386,14 +386,19 @@ console.log(attendanceRecords);
         }
       });
     });
-    console.log(attendanceStatus);
+    // console.log(attendanceStatus);
     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
     if (!salaryDatas) {
+     
+      const salary = LaborData?.salary * attendanceStatus?.present+ (LaborData?.salary * attendanceStatus?.halfday) / 2;
+
+      // console.log('datasss',attendanceStatus);
       const salaryData={ LabourData:LaborData,
-        present: 0,
-        halfday: 0,
-        absent: 0,
-        advance: LaborData.advance
+        present:attendanceStatus?.present?? 0,
+        halfday: attendanceStatus?.halfday??0,
+        absent: attendanceStatus?.absent??0,
+        advance: LaborData.advance,
+        lastweek:salary
       }
       return res.json({salaryData,
         message: "salarydata not found.",
@@ -403,7 +408,7 @@ console.log(attendanceRecords);
 
     salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
     const latestRecord = salaryDatas.records[0];
-
+   
     const salaryData = {
       LabourData:LaborData,
       calculateFrom: latestRecord.calculateFrom,
@@ -415,6 +420,7 @@ console.log(attendanceRecords);
       advance: latestRecord.advance,
       updatedSalary: latestRecord.updatedSalary,
       basic: LaborData?.salary,
+      
      
     };
 

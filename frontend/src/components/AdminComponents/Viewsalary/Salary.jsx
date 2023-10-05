@@ -90,36 +90,36 @@ const formattedDate = `${day} / ${month} / ${year}`;
         
       </div>
 
-     {LabourData?.present !=0&& LabourData?.halfday !=0&& <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Attendance Details</h2>
         <p>Present &nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.present} days</p>
         <p>Halfday &nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.halfday}days</p>
         <p>Absent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.absent} days</p>
         {/* <p>Over Time : {LabourData?.overtime} hours</p> */}
 
-      </div>}
+      </div>
 
-   { LabourData?.salary!=0 && LabourData?.advance && <div class="bg-white p-6 rounded-lg shadow-lg">
+   { LabourData?.salary!=0 && LabourData?.advance ? <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.salary}-{LabourData?.advance} </p>
       <br/>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.updatedSalary}</p>
-      </div>}
+      </div>:''}
     
-      {/* <div class="bg-white p-6 rounded-lg shadow-lg">
+     {LabourData?.lastweek ? <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Total This Week</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastweek}</p>
-      </div> */}
+      </div> :''}
 
-     {LabourData?.updatedSalary!=0 && <div class="bg-white p-6 rounded-lg shadow-lg">
+     {LabourData?.updatedSalary ? <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Last Salary Total</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.updatedSalary}</p>
-      </div>}
+      </div> :''}
 
-     {LabourData?.calculateTo&& <div class="bg-white p-6 rounded-lg shadow-lg">
+     {LabourData?.calculateTo ? <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Calculated At</h2>
         <p className='flex'>{formattedDate}</p>
-      </div>}
+      </div> :''}
 
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Salary History</h2>
