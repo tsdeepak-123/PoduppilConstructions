@@ -402,11 +402,20 @@ const salarycalculationoflabour = async (req, res) => {
     const endDate = new Date();
         const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
         console.log(startDate,endDate,'dates');
-    
+
+      
         const attendanceRecords = await Attendance.find({
           'records.laborerId': laborId,
           'date': { $gte: startDate, $lte: endDate },
         });
+        // const attendanceRecords = await Attendance.find({
+        //   'records.laborerId': laborId,
+        //   $and: [
+        //     { 'date': { $gte: startDate } },
+        //     { 'date': { $lte: endDate } }
+        //   ]
+        // });
+        
 
 console.log(attendanceRecords);
       if (!attendanceRecords) {
@@ -497,15 +506,21 @@ const salarycalculation = async (req, res) => {
     const endDate = new Date(laborSalarydate);
     const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
     console.log(startDate,endDate,'dates');
+    const startdatePart = startDate.toISOString().slice(0, 10);
+    const enddatePart = endDate.toISOString().slice(0, 10);
+    console.log(enddatePart==startdatePart,'datesequel');
+
+    if(startdatePart == enddatePart){
+      endDate.setDate(endDate.getDate() + 1)
+// console.log('eque',endDate);
+
+    }
 
     const attendanceRecords = await Attendance.find({
       'records.laborerId': laborId,
       'date': { $gte: startDate, $lte: endDate },
     });
-
-    
-
-    
+   
 
     if (!attendanceRecords) {
       return res.status(404).json({
@@ -527,6 +542,12 @@ const salarycalculation = async (req, res) => {
       });
     });
 
+
+    if(startdatePart == enddatePart){
+      endDate.setDate(endDate.getDate() -1)
+// console.log('minus',endDate);
+
+    }
     const salary = (LaborData?.salary * attendanceStatus?.present) + ((LaborData?.salary * attendanceStatus?.halfday) / 2);
 
    
@@ -578,7 +599,8 @@ const salarycalculation = async (req, res) => {
     await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
 
     res.status(200).json({ message: 'Salary calculated successfully' });
-  } catch (error) {
+  
+ } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'An error occurred during salary calculation.' });
   }

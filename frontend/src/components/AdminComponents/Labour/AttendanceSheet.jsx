@@ -105,6 +105,7 @@ console.log('res',res.data);
         </nav>
 
       </div>
+      
       <div className='grid grid-cols-1 ml-3 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full overflow-y-auto mb-10'>
         {labourData.map((item) => (
           <div key={item._id} className='p-4 flex gap-4 w-auto rounded-2xl shadow-xl'>
