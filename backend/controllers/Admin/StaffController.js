@@ -181,34 +181,6 @@ const handleAttendanceofStaff=async(req,res)=>{
 
 
 const handleAttendanceListofStaff = async (req, res) => {
-  // try {
-  //   const currentDate = new Date();
-
-  //   const StaffAttendance = await Staffattendance.aggregate([
-  //     {
-  //       $match: {
-  //         date: {
-  //           $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
-  //           $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
-  //         }
-  //       }
-  //     }
-  //   ]);
-
-  //   if (StaffAttendance.length === 0) {
-
-  //     res.json({ message: 'Attendance not found' });
-      
-  //   } else {
-
-  //     console.log(StaffAttendance, 'attendanceDocuments');
-  //     res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
-  //   }
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: 'Server error' });
-  // }
-
   try {
     const currentDate = new Date();
 
@@ -216,28 +188,21 @@ const handleAttendanceListofStaff = async (req, res) => {
       {
         $match: {
           date: {
-            $gte: new Date( currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(), 0, 0, 0),
-            $lt: new Date(currentDate.getFullYear(),currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
-          },
-        },
-      },
+            $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
+            $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
+          }
+        }
+      }
     ]);
 
     if (StaffAttendance.length === 0) {
+
       res.json({ message: 'Attendance not found' });
-    } else {
       
-      const promises = StaffAttendance.map((attendanceDocument) =>
-      Promise.all(
-        attendanceDocument.records.map(async (record) => {
-          const staffData = await Staff.findById({ _id: record.StaffId});
-          record.StaffId= staffData;
-        })
-      )
-    );
-    await Promise.all(promises);
-    // console.log(StaffAttendance, 'attendanceDocuments');
-    res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance});
+    } else {
+
+      console.log(StaffAttendance, 'attendanceDocuments');
+      res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
     }
   } catch (error) {
     console.error(error);

@@ -11,7 +11,7 @@ const staffattendanceSchema = new mongoose.Schema({
     {
       StaffId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Labour', 
+        ref: 'Staff', 
         required: true,
       },
       status: {
