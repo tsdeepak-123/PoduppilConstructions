@@ -172,6 +172,46 @@ const handleAttendanceofStaff=async(req,res)=>{
   
 }
 
+
+
+
+
+//..........................attendance list ............................................................
+
+
+
+const handleAttendanceListofStaff = async (req, res) => {
+  try {
+    const currentDate = new Date();
+
+    const StaffAttendance = await Staffattendance.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
+            $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
+          }
+        }
+      }
+    ]);
+
+    if (StaffAttendance.length === 0) {
+
+      res.json({ message: 'Attendance not found' });
+      
+    } else {
+
+      console.log(StaffAttendance, 'attendanceDocuments');
+      res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
+
 //  .........................................staff salary calculation .................................................
 
 const salarycalculationofStaff=async(req,res)=>{
@@ -224,4 +264,4 @@ const salarycalculationofStaff=async(req,res)=>{
 }
   
 
-module.exports = { handleStaffAdding, handleStaffDetails,handleStaffById,handleAttendanceofStaff,salarycalculationofStaff }
+module.exports = { handleStaffAdding, handleStaffDetails,handleStaffById,handleAttendanceofStaff,salarycalculationofStaff,handleAttendanceListofStaff }
