@@ -7,6 +7,7 @@ const LabourAttendance = () => {
     <div>
        <Header headers="Labour Attendance Sheet"/>
     <AttendanceSheet/>
+
     </div>
   )
 }

@@ -3,6 +3,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useNavigate } from 'react-router-dom'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from "../../../Api/Api";
+import AttendanceDisplay from './AttendanceDisplay';
 
 function AttendanceSheet() {
 
@@ -14,14 +15,15 @@ function AttendanceSheet() {
 //   ];
   const [labourData,setLabourdata]=useState([])
   const navigate = useNavigate();
-  const featchData=async()=>{
+  const fetchData=async()=>{
     const response= await axiosAdmin.get("labourslist");
     console.log(response?.data?.allLabourData,'response');
     setLabourdata(response?.data?.allLabourData)
   }
 
+
   useEffect(()=>{
-    featchData();
+    fetchData();
   },[])
   const handleBackArrowClick = () => {
     navigate('/admin/officedetails');
@@ -158,6 +160,7 @@ console.log('res',res.data);
       <Buttons type="submit" name="SUBMIT" classes={'w-96'} click={updateAttendance} />
         {/* <button className=' p-2 border-black outline rounded-xl bg-green-600 text-white' onClick={updateAttendance}>submit</button> */}
       </div>
+      <AttendanceDisplay/>
     </div>
   );
 }
