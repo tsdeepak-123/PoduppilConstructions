@@ -13,10 +13,8 @@ function ProjectLists() {
         <ProjectList/>
         <div className='flex justify-center items-center mt-24'>
           <Dropdown/>
-        </div>
-        <AttendanceDisplay/>
-        
-        <div className='mt-80'>
+        </div> 
+        <div className='mt-52'>
         <Footer/>
         </div>
        

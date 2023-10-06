@@ -3,24 +3,35 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useNavigate } from 'react-router-dom'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from "../../../Api/Api";
+import AttendanceDisplay from '../Labour/AttendanceDisplay';
 
 const StaffAttendanceSheet = () => {
-    const [selectedValues, setSelectedValues] = useState({});
-    //   const data = [
+    const [selectedValues, setSelectedValues] = useState({})
+    const [attendanceData,SetAttendanceData]=useState([])
+    //   const data = [ 
     //     { id: 1, name: 'Option 100 00' },
     //     { id: 2, name: 'Option 200' },
     //     { id: 3, name: 'Option 3' },
     //   ];
-      const [labourData,setLabourdata]=useState([])
+      const [staffData,setLabourdata]=useState([])
       const navigate = useNavigate();
-      const featchData=async()=>{
+
+      const fetchData=async()=>{
         const response= await axiosAdmin.get("staffslist");
         console.log(response?.data?.allStaffData,'response');
         setLabourdata(response?.data?.allStaffData)
       }
+      const fetchAttendance=async()=>{
+        const response= await axiosAdmin.get("staffattendanceList");
+        console.log(response?.data);
+        SetAttendanceData(response?.data.StaffAttendance)
+      }
+
+      console.log(attendanceData);
     
       useEffect(()=>{
-        featchData();
+        fetchData()
+        fetchAttendance()
       },[])
       const handleBackArrowClick = () => {
         navigate('/admin/labourattendance');
@@ -41,11 +52,11 @@ const StaffAttendanceSheet = () => {
       useEffect(() => {
         
         const initialValues = {};
-        labourData.forEach((item) => {
+        staffData.forEach((item) => {
           initialValues[item._id] = 'absent';
         });
         setSelectedValues(initialValues);
-      },[labourData]);
+      },[staffData]);
     
     const updateAttendance=()=>{
       console.log(selectedValues);
@@ -102,8 +113,10 @@ const StaffAttendanceSheet = () => {
       </nav>
       
     </div>
+    {
+    attendanceData ? <AttendanceDisplay attendanceData={attendanceData}/>:<>
     <div className='grid grid-cols-1 ml-3 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full overflow-y-auto mb-10'>
-      {labourData.map((item) => (
+      {staffData.map((item) => (
         <div key={item._id} className='p-4 flex gap-4 w-auto rounded-2xl shadow-xl'>
           <div className='w-[40%]'>
             <img className='w-16 rounded-full h-16' src={item.photo} alt='labour photo' />
@@ -159,6 +172,9 @@ const StaffAttendanceSheet = () => {
     <Buttons type="submit" name="SUBMIT" classes={'w-96'} click={updateAttendance} />
       {/* <button className=' p-2 border-black outline rounded-xl bg-green-600 text-white' onClick={updateAttendance}>submit</button> */}
     </div>
+    </> 
+    }
+    
   </div>
   )
 }
