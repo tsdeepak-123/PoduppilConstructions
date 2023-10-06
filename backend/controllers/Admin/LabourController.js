@@ -512,7 +512,7 @@ const salarycalculation = async (req, res) => {
 
     if(startdatePart == enddatePart){
       endDate.setDate(endDate.getDate() + 1)
-// console.log('eque',endDate);
+// console.log('eque',endDate);   
 
     }
 

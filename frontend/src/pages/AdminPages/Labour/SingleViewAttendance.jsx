@@ -9,9 +9,10 @@ const SingleViewAttendance = () => {
     
       <Header headers="ATTENDANCE"/>
         <AttendanceSingleView/> 
-      <div className='mb-6'>
-      </div>
+      <div className=''>
       <Footer/>
+      </div>
+      
     </div>
   )
 }
