@@ -183,7 +183,6 @@ console.log(req.body);
 //..........................attendance list ............................................................
 
 
-
 const handleAttendanceList = async (req, res) => {
   try {
     const currentDate = new Date();
@@ -192,28 +191,34 @@ const handleAttendanceList = async (req, res) => {
       {
         $match: {
           date: {
-            $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
-            $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
-          }
-        }
-      }
+            $gte: new Date( currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(), 0, 0, 0),
+            $lt: new Date(currentDate.getFullYear(),currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
+          },
+        },
+      },
     ]);
 
     if (LabourAttendance.length === 0) {
-
       res.json({ message: 'Attendance not found' });
-      
     } else {
-
-      console.log(LabourAttendance, 'attendanceDocuments');
-      res.status(200).json({ message: 'Attendance retrieved successfully', LabourAttendance });
+      
+      const promises = LabourAttendance.map((attendanceDocument) =>
+      Promise.all(
+        attendanceDocument.records.map(async (record) => {
+          const laborerData = await Labour.findById({ _id: record.laborerId });
+          record.laborerId = laborerData;
+        })
+      )
+    );
+    await Promise.all(promises);
+    // console.log(LabourAttendance, 'attendanceDocuments');
+    res.status(200).json({ message: 'Attendance retrieved successfully', LabourAttendance});
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
-}
-
+};
 
 
 // .......................................calculate salary using attendance..................................................

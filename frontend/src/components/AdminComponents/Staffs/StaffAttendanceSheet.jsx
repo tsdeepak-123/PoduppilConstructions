@@ -129,8 +129,8 @@ const StaffAttendanceSheet = () => {
                 <input
                   type='radio'
                   name={`attendance_${item._id}`}
-                  value='half-day'
-                  checked={selectedValues[item._id] === 'half-day'}
+                  value='halfday'
+                  checked={selectedValues[item._id] === 'halfday'}
                   onChange={(event) => handleRadioButtonChange(event, item._id)}
                 />
                 <span className='text-xs font-medium'>HALF_DAY</span>
