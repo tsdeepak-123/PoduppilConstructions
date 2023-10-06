@@ -633,6 +633,26 @@ const labourAttendanceById=async(req,res)=>{
 }
 
 
+// giving advance to labour----------------------------------------------------------------------------
+
+const handleLabourAdvance=async(req,res)=>{
+  try {
+    const labourId = req.query.labourId;
+    const {advance}=req.body;
+    const LabourData = await Labour.findById({ _id: labourId });
+      if(!LabourData){
+        res.json({message:"No labour found"})
+      }
+     const updatedAdvance=LabourData.advance + parseFloat(advance)
+     console.log(updatedAdvance);
+       await Labour.updateOne({_id:labourId},{$set:{advance:updatedAdvance}})
+       res.json({ message: "Advance updated successfully" });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
     module.exports={handleLabourAdding,
       handleLabourDetails,
       handleLabourById,
@@ -640,7 +660,7 @@ const labourAttendanceById=async(req,res)=>{
       salarycalculationoflabour,
       salarycalculation,
       labourAttendanceById,
-      handleAttendanceList
-      
+      handleAttendanceList,
+      handleLabourAdvance
     
     }
