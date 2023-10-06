@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { useNavigate } from 'react-router-dom'
+import {useLocation, useNavigate } from 'react-router-dom'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from "../../../Api/Api";
 import AttendanceDisplay from '../Labour/AttendanceDisplay';
@@ -8,6 +8,7 @@ import AttendanceDisplay from '../Labour/AttendanceDisplay';
 const StaffAttendanceSheet = () => {
     const [selectedValues, setSelectedValues] = useState({})
     const [attendanceData,SetAttendanceData]=useState([])
+    const location=useLocation()
     //   const data = [ 
     //     { id: 1, name: 'Option 100 00' },
     //     { id: 2, name: 'Option 200' },
@@ -62,6 +63,7 @@ const StaffAttendanceSheet = () => {
       console.log(selectedValues);
       axiosAdmin.post("staffattendance",{selectedValues}).then((res)=>{
     console.log('res',res.data);
+    window.location.reload();
       }).catch((err)=>{
     
         console.log(err);
