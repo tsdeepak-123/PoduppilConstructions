@@ -199,10 +199,19 @@ const handleAttendanceListofStaff = async (req, res) => {
 
       res.json({ message: 'Attendance not found' });
       
-    } else {
-
-      console.log(StaffAttendance, 'attendanceDocuments');
-      res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
+    }  else {
+      
+      const promises = StaffAttendance.map((attendanceDocument) =>
+      Promise.all(
+        attendanceDocument.records.map(async (record) => {
+          const StaffData = await Staff.findById({ _id: record.StaffId });
+          record.StaffId = StaffData;
+        })
+      )
+    );
+    await Promise.all(promises);
+    // console.log(LabourAttendance, 'attendanceDocuments');
+    res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance});
     }
   } catch (error) {
     console.error(error);
