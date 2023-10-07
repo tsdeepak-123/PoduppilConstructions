@@ -9,7 +9,8 @@ const mongoose = require('mongoose');
 
 
 const handleAddContract = async (req, res) => {
-    try {console.log('contract came');
+    try {
+      console.log(req.body,'contract came');
     
       const  {
         projectname,projectnumber,Contractwork,totallabour,Contractorname,
@@ -79,6 +80,8 @@ const ContractListById =async(req,res)=>{
         res.status(400).json({ error: error.message }); 
     }
 }
+
+
   
   
   

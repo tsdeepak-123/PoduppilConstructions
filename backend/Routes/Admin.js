@@ -5,6 +5,7 @@ const{handleLabourAdding,handleLabourDetails,handleAttendance,salarycalculationo
 const{handleStaffAdding,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff,handleStaffAdvance}=require('../controllers/Admin/StaffController')
 const{handleProjectAdding,ProjectList,ProjectListById}=require('../controllers/Admin/ProjectController')
 const{handleAddContract,ContractList,ContractListById}=require('../controllers/Admin/ContractController')
+const {handleBillAdding,handleBillDetails}=require("../controllers/Admin/BillController")
 const upload=require('../Middleware/Multer')
 const Auth=require('../Middleware/Auth')
 
@@ -35,5 +36,7 @@ adminRoute.get('/projectById',ProjectListById)
 adminRoute.get('/labourattendanceById',labourAttendanceById)
 adminRoute.post('/labouradvance',handleLabourAdvance)
 adminRoute.post('/staffadvance',handleStaffAdvance )
+adminRoute.post('/addbills',handleBillAdding)
+adminRoute.get('/billslist',handleBillDetails)
 
 module.exports=adminRoute

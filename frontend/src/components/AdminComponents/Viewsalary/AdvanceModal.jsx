@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { useNavigate,useLocation, Navigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -21,7 +20,7 @@ const modalStyle = {
 
 function AdvancedModal({labourId}) {
   const [open, setOpen] = useState(false);
-  const [advance, setAdvance] = useState(false)
+  const [advance, setAdvance] = useState()
    
   console.log(labourId);
 

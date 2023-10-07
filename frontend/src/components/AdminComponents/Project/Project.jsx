@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Buttons from '../../CommonComponents/Button/Buttons'
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 // import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {useNavigate} from "react-router-dom"
@@ -42,7 +43,10 @@ function Project() {
   return (
     <>
     <div className='flex justify-between me-7 mt-32'>
-    <TiArrowBackOutline className='ms-11 mt-4 cursor-pointer text-3xl' onClick={handleBackArrowClick}/>
+    <KeyboardReturnIcon
+          className="ms-11 mt-4 cursor-pointer"
+          onClick={handleBackArrowClick}
+        />
     <div className='relative top-20 block sm:hidden'>
     <Buttons name="+" click={handleAddProjectClick}/>
     </div>
@@ -58,10 +62,10 @@ function Project() {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" className="px-6 py-3">
-                    Project name
+                Project number
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Project number
+                    Project name
                 </th>
                 <th scope="col" className="px-6 py-3">
                     Status
@@ -74,15 +78,16 @@ function Project() {
         </thead>
         <tbody>
         {
+          ProjectData && ProjectData.length>0 ?(
            ProjectData?.map((data)=>{
             return(
                 
            <tr key={data?._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                 {data?.name}
-                </th>
                 <td className="px-6 py-4">
                 {data?.projectnumber}
+                </td>
+                <td className="px-6 py-4">
+                 {data?.name}
                 </td>
                 <td className="px-6 py-4">
                     {data?.status}
@@ -92,7 +97,13 @@ function Project() {
                 </td>
             </tr>
             )
-        })  }
+        }) ):(
+          <tr>
+          <td colspan="8" class="text-center py-4">
+            No data available
+          </td>
+        </tr>
+        ) }
         </tbody>
     </table>
 </div>

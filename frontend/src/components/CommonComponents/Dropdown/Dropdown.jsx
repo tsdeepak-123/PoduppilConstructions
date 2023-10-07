@@ -1,32 +1,59 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function Dropdown() {
-    const [age, setAge] = React.useState('');
+function Dropdown({projects}) {
+    const [name, setName] =useState('');
 
     const handleChange = (event) => {
-      setAge(event.target.value);
+      setName(event.target.value);
     };
+
   
   return (
-    <Box className='w-[300px]'>
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">SELECT PROJECT</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={age}
-        label="SELECT PROJECT"
-        onChange={handleChange}
-      >
-        <MenuItem value={10}>Ten</MenuItem>
-      </Select>
-    </FormControl>
-  </Box>
+    <>
+    {
+      projects && projects.length>0 ?(
+        
+        <Box className='w-[380px]'>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">SELECT PROJECT</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={name}
+            label="SELECT PROJECT"
+            onChange={handleChange}
+          >
+            {
+            projects.map((item)=>
+            <MenuItem value={item.name}>{item.name}</MenuItem>
+            )
+            }
+           
+          </Select>
+        </FormControl>
+      </Box>
+        
+      ):(
+        <Box className='w-[380px]'>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">No projects found</InputLabel>
+          <Select
+            id="demo-simple-select"
+            label="SELECT PROJECT"
+          > 
+          </Select>
+        </FormControl>
+      </Box>
+      )
+     
+    }
+    </>
+   
   )
 }
 

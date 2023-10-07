@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TextFields from '../../CommonComponents/TextFields/TextFields'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
+import Dropdown from '../../../components/CommonComponents/Dropdown/Dropdown'
+
 
 function AddContract() {
   const navigate = useNavigate();
@@ -20,10 +22,12 @@ function AddContract() {
   // const [age,setAge]=useState("")
   const [phone,setPhone] = useState('')
   const [date,setDate] = useState('')
+  const [projectData,setProjectData] = useState('')
  
   const handleBackArrowClick = () => {
     navigate(-1);
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,6 +43,25 @@ function AddContract() {
         console.log(error);
       });
   };
+
+  const fetchData = async () => {
+    try {
+      const response = await axiosAdmin.get("projectList");
+      console.log(response?.data?.FindProject);
+
+      setProjectData(response?.data?.FindProject);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //data displayin when mounting
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+
   return (
     <>
       <div className="flex justify-start mt-32">
@@ -49,8 +72,11 @@ function AddContract() {
       </div>
       <div>
     <form className='flex flex-wrap ms-16 px-16 mt-24'>
-      <TextFields name="Project name"  onChange={(e) => {setName(e.target.value)}} type="text"/>
-      <TextFields name="Project number"  onChange={(e) => {setProjectNo(e.target.value)}} type="text"/>
+      {/* <TextFields name="Project name"  onChange={(e) => {setName(e.target.value)}} type="text"/> */}
+      {/* <TextFields name="Project number"  onChange={(e) => {setProjectNo(e.target.value)}} type="text"/> */}
+      <div className="ms-4">
+      <Dropdown projects={projectData}/>
+      </div>  
       <TextFields name="Contract work name" onChange={(e) => {setContractwork(e.target.value)}} type="text"/>
       <TextFields name="Contractor name"  onChange={(e) => {setContractorname(e.target.value)}} type="text"/>
       <TextFields name="Contractor phone"  onChange={(e) => {setPhone(e.target.value)}} type="text"/>
@@ -63,7 +89,7 @@ function AddContract() {
       <TextFields name="date" type="date"  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
     </form>
     <div className="flex justify-center mt-11">
-          <Buttons name="ADD PROJECT" classes={"w-96"} click={handleSubmit} />
+          <Buttons name="ADD CONTRACT" classes={"w-96"} click={handleSubmit} />
         </div>
    </div>
     </>
