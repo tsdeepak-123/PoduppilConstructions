@@ -5,6 +5,7 @@ import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons';
 import { useState } from 'react'
 import { axiosAdmin } from '../../../Api/Api'
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 
 function AddStaff() {
     const navigate= useNavigate()
@@ -172,12 +173,10 @@ function AddStaff() {
 
 
   <>
-    <div className='flex justify-start mt-32'>
-    <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
-    </div>
+  <ReturnButton/>
    <div>
-    <form action='' className='flex flex-wrap ms-16 px-16 mt-24' onSubmit={handleSubmit}>
-      <TextFields name="Labour name" type="text" value={name} onChange={handleNameChange}/>
+    <form action='' className='flex flex-wrap justify-around px-16 mt-24' onSubmit={handleSubmit}>
+      <TextFields name="Staff name" type="text" value={name} onChange={handleNameChange}/>
       <TextFields name="Age" type="number" value={age} onChange={handleAgeChange}/>
       <TextFields name="Phone number" type="text" value={phone} onChange={handlePhoneChange}/>
       <TextFields name="Street name" type="text" value={street} onChange={handleStreetChange}/>
@@ -194,7 +193,7 @@ function AddStaff() {
 
     <div className='flex justify-center mt-16'>
     {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
-    <Buttons type="submit" name="ADD STAFF" classes={'w-96'} />
+    <Buttons type="submit" name="ADD STAFF" classes={'sm:w-96 '} />
     </div>
     </form>
    </div>

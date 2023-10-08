@@ -36,7 +36,7 @@ function Header() {
               </button>
             </div>
             <div id="mobileMenu" className="hidden md:block flex space-x-4">
-              <a href="#home" className="transition ease-in delay-150 hover:text-yellow-500 font-bold">Home</a>
+              <a href="#home" className="transition ease-in delay-150 hover:text-yellow-500 font-bold">Homeb</a>
               <a href="#Services" className="transition ease-in delay-150 hover:text-yellow-500 font-bold">Services</a>
               <a href="#About" className="transition ease-in delay-150 hover:text-yellow-500 font-bold">About</a>
               <a href="#Projects" className="transition ease-in delay-150 hover:text-yellow-500 font-bold">Projects</a>

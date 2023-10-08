@@ -39,7 +39,7 @@ function Dropdown({projects}) {
       </Box>
         
       ):(
-        <Box className='w-[380px]'>
+        <Box className='sm:w-[380px] w-80'>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">No projects found</InputLabel>
           <Select

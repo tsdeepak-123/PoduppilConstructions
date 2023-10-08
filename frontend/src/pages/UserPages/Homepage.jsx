@@ -17,10 +17,10 @@ function Homepage() {
       <Services/>
       <About/>
       <Projects/>
-      <Feedback/>
+      {/* <Feedback/> */}
       <Contact/>
-      {/* <Footer/> */}
       <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 }

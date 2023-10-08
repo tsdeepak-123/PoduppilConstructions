@@ -11,7 +11,7 @@ const BillSchema = new Schema({
   paidby:{type:String},
   payment:{type:String},
   date: { type: Date },
-  image: { type: String },
+  photo: { type: String },
 });
 
 const Bill =new mongoose.model('Bill', BillSchema);

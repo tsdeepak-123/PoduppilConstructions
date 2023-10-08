@@ -69,9 +69,14 @@ const formattedDate = `${day} / ${month} / ${year}`;
   }
   return (
     <>
+         <div className="flex justify-start mt-40">
+        <KeyboardReturnIcon
+          className="ms-14 cursor-pointer"
+          onClick={handleBackArrowClick}
+        />
+      </div>
     
-    <div class="container mx-auto p-4 mt-44">
-    <KeyboardReturnIcon className=' cursor-pointer'onClick={handleBackArrowClick} />
+    <div class="container mx-auto p-4">
     <div class="flex items-center justify-center gap-5 mb-4">
       <div >
         <img src={LabourData?.LabourData?.photo} alt="User Photo" class="w-[150px] h-[150px] rounded-full"/>

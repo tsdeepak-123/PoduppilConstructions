@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import TextFields from "../../CommonComponents/TextFields/TextFields";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import { axiosAdmin } from '../../../Api/Api'
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 
 function AddBill() {
   const [name, setName] = useState("");
@@ -16,9 +16,7 @@ function AddBill() {
   const [payment, setPayment] = useState("");
   const [photo, setphoto] = useState(null);
   const navigate = useNavigate();
-  const handleBackArrowClick = () => {
-    navigate(-1);
-  };
+
 
   const handleBillNameChange = (e) => {
     setName(e.target.value);
@@ -63,52 +61,41 @@ function AddBill() {
     "dataaaaaaaaaaaaaaaa"
   );
   const formSubmit = () => {
-    console.log("hellooo");
-    const billData = {
-      name,
-      date,
-      amount,
-      status,
-      paid,
-      pending,
-      paidby,
-      payment,
-      photo,
-    };
-    const formData=new FormData()
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("date", date);
+    formData.append("amount", amount);
+    formData.append("status", status);
+    formData.append("paid", paid);
+    formData.append("pending", pending);
+    formData.append("paidby", paidby);
+    formData.append("payment", payment);
+    formData.append("photo", photo); // Append the photo to the FormData
 
-
-    Object.entries(billData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    formData.append("photo",photo);
-
-    axiosAdmin.post('addbills',formData, {
+    axiosAdmin
+      .post("addbills", formData,
+      {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-     
-    }).then((response)=>{
-      alert(response?.data?.message);
-      console.log(response?.data?.message,'response for adding Bill');
-      navigate('/admin/utilitybills')
-    }).catch((error)=>{
-      console.log(error);
-    })
+    }
+    )
+      .then((response) => {
+        console.log(response);
+        alert(response?.data?.message);
+        console.log(response?.data?.message, "response for adding Bill");
+        navigate("/admin/utilitybills");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
   return (
     <>
-      <div className="flex justify-start mt-32">
-        <KeyboardReturnIcon
-          className="ms-11 mt-4 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
-      <div>
-        <form
-          className="flex flex-wrap ms-16 px-16 mt-24"
-          onSubmit={formSubmit}
-        >
+    <ReturnButton/>
+
+      <div className="flex flex-wrap justify-around px-16 mt-24 ">
           <TextFields
             name="Bill name"
             type="text"
@@ -165,9 +152,8 @@ function AddBill() {
             onChange={handlephotoChange}
           />
           <div className="mx-auto mt-11">
-            <Buttons type="submit" name="ADD BILL" classes={"w-96"} />
+            <Buttons click={formSubmit} name="ADD BILL" classes={"sm:w-96"} />
           </div>
-        </form>
       </div>
     </>
   );

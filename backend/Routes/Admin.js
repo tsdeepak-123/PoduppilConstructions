@@ -35,8 +35,8 @@ adminRoute.get('/projectList',ProjectList)
 adminRoute.get('/projectById',ProjectListById)
 adminRoute.get('/labourattendanceById',labourAttendanceById)
 adminRoute.post('/labouradvance',handleLabourAdvance)
-adminRoute.post('/staffadvance',handleStaffAdvance )
-adminRoute.post('/addbills',handleBillAdding)
+adminRoute.post('/staffadvance',handleStaffAdvance)
+adminRoute.post('/addbills',upload.fields([{ name: 'photo', maxCount: 1 }]),handleBillAdding)
 adminRoute.get('/billslist',handleBillDetails)
 
 module.exports=adminRoute

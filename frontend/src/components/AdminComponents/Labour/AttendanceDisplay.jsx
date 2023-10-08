@@ -1,19 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import dateFormat from "../../../Validation/FormatDate";
 
 function AttendanceDisplay({ attendanceData }) {
-  console.log(attendanceData, "its meeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-  const navigate = useNavigate();
-  const orginalDate = new Date(attendanceData[0]?.date);
-  const year = orginalDate.getFullYear();
-  const month = (orginalDate.getMonth() + 1).toString().padStart(2, "0");
-  const day = orginalDate.getDate().toString().padStart(2, "0");
-  const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  //formatting the date
+ const date= dateFormat(attendanceData[0]?.date)
   return (
     <>
       <div className="flex justify-center mb-14 font-bold">
-        Date &nbsp;&nbsp; : &nbsp;&nbsp;{formattedDate}
+        Date &nbsp;&nbsp; : &nbsp;&nbsp;{date}
       </div>
       <div className="flex justify-center ">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">

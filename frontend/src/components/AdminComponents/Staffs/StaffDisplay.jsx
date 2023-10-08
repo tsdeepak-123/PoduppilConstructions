@@ -1,9 +1,8 @@
 import React,{ useState ,useEffect} from 'react'
-import Buttons from '../../CommonComponents/Button/Buttons'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {useNavigate} from "react-router-dom"
-import Search from '../../CommonComponents/Search/Search';
 import { axiosAdmin } from "../../../Api/Api";
+import AddNav from '../../CommonComponents/AddNav/AddNav';
+
 
 
 
@@ -39,15 +38,7 @@ function StaffDisplay() {
   }
   return (
     <>
-    <div className='flex justify-between me-7 mt-36'>
-    <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
-    <div className="relative top-20">
-    <Buttons name="+ ADD NEW STAFF" click={handleAddStaffClick}/>
-    </div>
-    </div>
-    <div className="ms-6 mt-9">
-   <Search/>
-  </div>
+<AddNav name="+ ADD NEW STAFF" click={handleAddStaffClick}/>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

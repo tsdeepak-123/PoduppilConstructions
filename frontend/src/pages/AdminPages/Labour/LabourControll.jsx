@@ -5,7 +5,7 @@ import Footer from '../../../components/AdminComponents/Footer/Footer'
 
 function LabourControll() {
   return (
-    <div>
+    <div className='overflow-hidden'>
       <Header headers="LABOUR MANAGEMENT"/>
       <Labour/>
       <div className='mt-72'>

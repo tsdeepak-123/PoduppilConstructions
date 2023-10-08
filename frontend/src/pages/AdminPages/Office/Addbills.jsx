@@ -5,7 +5,7 @@ import Footer from '../../../components/AdminComponents/Footer/Footer'
 
 function Addbills() {
   return (
-    <div>
+    <div className='overflow-hidden'>
         <Header headers="ADD YOUR BILLS"/>
       <AddBill/>
       <div className='mb-24'></div>

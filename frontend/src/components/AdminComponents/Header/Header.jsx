@@ -15,9 +15,12 @@ function Header({headers}) {
         </div>
             </div>
             <h2 className='text-black mt-16 font-bold'>{headers}</h2>
-        <Button startIcon={< PowerSettingsNewIcon />} style={{color:"red"}}>
-        LOGOUT
-        </Button>
+            <div className='mt-16'>
+            <Button startIcon={< PowerSettingsNewIcon />} style={{color:"red"}} className=''>
+            <span className='hidden md:inline-block'> LOGOUT</span>
+           </Button>
+            </div>
+       
     </header>
     </div>
   )

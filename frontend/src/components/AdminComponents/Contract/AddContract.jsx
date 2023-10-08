@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TextFields from '../../CommonComponents/TextFields/TextFields'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
 import Dropdown from '../../../components/CommonComponents/Dropdown/Dropdown'
+import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 
 
 function AddContract() {
@@ -64,17 +64,9 @@ function AddContract() {
 
   return (
     <>
-      <div className="flex justify-start mt-32">
-        <KeyboardReturnIcon
-          className="ms-11 mt-4 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
-      <div>
-    <form className='flex flex-wrap ms-16 px-16 mt-24'>
-      {/* <TextFields name="Project name"  onChange={(e) => {setName(e.target.value)}} type="text"/> */}
-      {/* <TextFields name="Project number"  onChange={(e) => {setProjectNo(e.target.value)}} type="text"/> */}
-      <div className="ms-4">
+    <ReturnButton/>
+      <div  className='flex flex-wrap justify-around px-16 mt-24'>
+      <div className="ms-4 sm:mb-0 mb-4">
       <Dropdown projects={projectData}/>
       </div>  
       <TextFields name="Contract work name" onChange={(e) => {setContractwork(e.target.value)}} type="text"/>
@@ -87,9 +79,8 @@ function AddContract() {
       <TextFields name="Contraction Amount"  onChange={(e) => {setAmount(e.target.value)}} type="text"/> 
       <TextFields name="Payment details"  onChange={(e) => {setPaymentdetails(e.target.value)}} type="text"/> 
       <TextFields name="date" type="date"  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
-    </form>
-    <div className="flex justify-center mt-11">
-          <Buttons name="ADD CONTRACT" classes={"w-96"} click={handleSubmit} />
+    <div className="flex justify-center mt-3">
+          <Buttons name="ADD CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
         </div>
    </div>
     </>

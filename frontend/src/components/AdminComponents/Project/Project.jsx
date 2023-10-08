@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Buttons from '../../CommonComponents/Button/Buttons'
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-
-// import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import {useNavigate} from "react-router-dom"
-import Search from '../../CommonComponents/Search/Search';
-import {TiArrowBackOutline} from 'react-icons/ti'
+import { useNavigate } from 'react-router-dom';
+import AddNav from '../../CommonComponents/AddNav/AddNav';
 import { axiosAdmin } from "../../../Api/Api";
 function Project() {
     const navigate= useNavigate()
     const[ProjectData,setProjectData]=useState()
 
-    const handleBackArrowClick=()=>{
-        navigate(-1)
-    }
     const handleAddProjectClick=()=>{
         navigate('/admin/addproject')
     }
@@ -42,21 +34,7 @@ function Project() {
   }
   return (
     <>
-    <div className='flex justify-between me-7 mt-32'>
-    <KeyboardReturnIcon
-          className="ms-11 mt-4 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-    <div className='relative top-20 block sm:hidden'>
-    <Buttons name="+" click={handleAddProjectClick}/>
-    </div>
-    <div className='relative top-20 hidden sm:block'>
-    <Buttons name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
-    </div>
-    </div>
-    <div className="ms-6 mt-9">
-   <Search/>
-  </div>
+<AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

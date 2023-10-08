@@ -95,15 +95,18 @@ function Contact() {
         <div className="md:w-1/3 ml-5 md:ml-20 mt-10 md:mt-0">
           <h2 className="text-2xl font-bold mb-3">Company Address</h2>
           <p className="text-medium text-gray-800">
-            Construction Company Name<br />
-            123 Main Street<br />
-            Anytown, USA<br />
-            Postal Code: 12345
+            <span className='font-bold'>
+            PODUPPIL CONSTRUCTIONS   
+            </span>
+            <br />
+            ELOKKARA,SHAVEZ NAGAR<br />
+            ENGAPUZHA,KOZHIKODE<br />
+            Postal Code: 673586<br/>
           </p>
           {/* Additional Company Details */}
           <p className="text-medium text-gray-800 mt-8">
-            Phone: +1 (555) 123-4567<br />
-            Email: info@example.com
+            Phone: +91 9946815009<br />
+            Email: poduppilconstructions@gmail.com
           </p>
         </div>
       </div>
