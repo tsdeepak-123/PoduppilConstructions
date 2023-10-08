@@ -6,7 +6,7 @@ function LoginPage() {
   return (
     <div >
       <Login/>
-      <div className='mt-24'>
+      <div className='mt-14'>
       <Footer/>
       </div>
      

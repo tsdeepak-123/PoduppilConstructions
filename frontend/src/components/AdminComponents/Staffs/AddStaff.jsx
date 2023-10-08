@@ -9,9 +9,6 @@ import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 
 function AddStaff() {
     const navigate= useNavigate()
-    const handleBackArrowClick=()=>{
-        navigate(-1)
-    }
 
     const [name,setName]=useState("")
     const [age,setAge]=useState("")
@@ -191,7 +188,7 @@ function AddStaff() {
       <TextFields name="photo" type="file" input={true} onChange={handleImageChange}/>
       <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
 
-    <div className='flex justify-center mt-16'>
+    <div className='flex justify-center mt-3'>
     {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
     <Buttons type="submit" name="ADD STAFF" classes={'sm:w-96 '} />
     </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {useNavigate} from "react-router-dom"
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from '../../CommonComponents/AddNav/AddNav'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 function Contract() {
     const navigate= useNavigate()
     const [ContractData, setContractData] = useState([]);
@@ -57,6 +59,9 @@ function Contract() {
                 <th scope="col" className="px-6 py-3">
                    Details
                 </th>
+                <th scope="col" className="px-6 py-3">
+                   Action
+                </th>
                
                
             </tr>
@@ -82,9 +87,11 @@ function Contract() {
                       {data?.Amount}
                    </td>
                 
-                   <td className="px-6 py-4 " onClick={()=>nav(data?._id)}>
+                   <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id)}>
                      View
                    </td>
+                   <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                  </td>
                </tr>
             )
           

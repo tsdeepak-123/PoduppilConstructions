@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import dateFormat from "../../../Validation/FormatDate";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function UtilityBills() {
   const [billData, setBillData] = useState();
@@ -58,6 +60,9 @@ function UtilityBills() {
               <th scope="col" class="px-6 py-3">
                 Deatils
               </th>
+              <th scope="col" class="px-6 py-3">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -72,6 +77,7 @@ function UtilityBills() {
                 <td class="px-6 py-4">{item.paid}</td>
                 <td class="px-6 py-4">{item.pending}</td>
                 <td class="px-6 py-4 text-blue-600 cursor-pointer">View</td>
+                <DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
               </tr>
                 )
                

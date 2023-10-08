@@ -8,7 +8,7 @@ function StaffControll() {
     <div>
       <Header headers="STAFF MANAGEMENT"/>
       <StaffDisplay/>
-      <div className='mt-72'>
+      <div className='mt-56'>
       <Footer/>
       </div>
     </div>

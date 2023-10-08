@@ -2,6 +2,8 @@ import React,{ useState ,useEffect} from 'react'
 import {useNavigate} from "react-router-dom"
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from '../../CommonComponents/AddNav/AddNav';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -67,6 +69,9 @@ function StaffDisplay() {
                 <th scope="col" class="px-6 py-3">
                     Profile
                 </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -105,6 +110,8 @@ function StaffDisplay() {
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj._id)}>View
+                  </td>
+                  <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
                   </td>
                 </tr>
               ))

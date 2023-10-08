@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Buttons from "../../CommonComponents/Button/Buttons";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { useNavigate } from "react-router-dom";
-import Search from "../../CommonComponents/Search/Search";
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Labour() {
   const navigate = useNavigate();
@@ -73,6 +72,9 @@ function Labour() {
               <th scope="col" class="px-6 py-3">
                 Profile
               </th>
+              <th scope="col" class="px-6 py-3">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -112,12 +114,15 @@ function Labour() {
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>
+                  <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td colspan="8" class="text-center py-4">
-                  No data available
+                  {/* No data available */}
+                  
                 </td>
               </tr>
             )}

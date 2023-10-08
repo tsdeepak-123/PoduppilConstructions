@@ -8,7 +8,7 @@ function LabourControll() {
     <div className='overflow-hidden'>
       <Header headers="LABOUR MANAGEMENT"/>
       <Labour/>
-      <div className='mt-72'>
+      <div className='mt-56'>
       <Footer/>
       </div>
       

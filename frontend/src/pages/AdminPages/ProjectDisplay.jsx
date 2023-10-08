@@ -8,7 +8,7 @@ function ProjectDisplay() {
     <div>
       <Header headers="PROJECT MANAGEMENT"/>
       <Project/>
-      <div className='mt-72'>
+      <div className='mt-56'>
       <Footer/>
       </div>
     </div>

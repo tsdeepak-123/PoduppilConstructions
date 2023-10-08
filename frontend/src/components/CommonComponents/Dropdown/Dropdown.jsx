@@ -5,12 +5,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function Dropdown({projects}) {
-    const [name, setName] =useState('');
-
-    const handleChange = (event) => {
-      setName(event.target.value);
+function Dropdown({projects,onDataPassed}) {
+    const [projectname, setProjectName] =useState('');
+    const handleChange = (e) => {
+      const selectedProjectName=e.target.value
+      setProjectName(selectedProjectName);
+      onDataPassed(selectedProjectName)
     };
+
 
   
   return (
@@ -24,7 +26,7 @@ function Dropdown({projects}) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={name}
+            value={projectname}
             label="SELECT PROJECT"
             onChange={handleChange}
           >

@@ -13,13 +13,13 @@ const handleAddContract = async (req, res) => {
       console.log(req.body,'contract came');
     
       const  {
-        projectname,projectnumber,Contractwork,totallabour,Contractorname,
+        projectname,Contractwork,totallabour,Contractorname,
         totalhelper,Details,phone,date,Paymentdetails,status,Amount} =req.body;
   
-      if ( projectname&&projectnumber&&Contractwork&&totallabour&&Contractorname&&
+      if ( projectname&&Contractwork&&totallabour&&Contractorname&&
         totalhelper&&Details&&phone&&date&&Paymentdetails&&status&&Amount
       ) {
-        const FindProject = await Project.findOne({name:projectname,projectnumber:projectnumber})
+        const FindProject = await Project.findOne({name:projectname})
         console.log(FindProject);
         if(!FindProject){
             res.json({ success: false, messege: "cant find project based on project name and number enter proper number and name of the project " });
@@ -35,10 +35,11 @@ const handleAddContract = async (req, res) => {
         else {
             console.log(req.body);
           const newContract = new contract({
-            project:FindProject._id,Contractwork,totallabour,Contractorname,
+            project:FindProject._id,projectname,Contractwork,totallabour,Contractorname,
         totalhelper,Details,phone,date,Paymentdetails,status,Amount
           });
          
+          console.log(newContract,"new contracttt");
           await newContract.save();
           res.status(200).json({ success: true, messege: "Project added successfully" });
         }

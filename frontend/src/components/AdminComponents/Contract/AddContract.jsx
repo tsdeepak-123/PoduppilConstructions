@@ -9,8 +9,7 @@ import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 
 function AddContract() {
   const navigate = useNavigate();
-  const [projectname,setName]=useState("")
-  const [projectnumber,setProjectNo]=useState("")
+  const [projectname,setProjectName]=useState("")
   const [Contractwork,setContractwork]=useState("")
   const [Contractorname,setContractorname]=useState("")
   const [totallabour,settotallabour]=useState(0)
@@ -23,21 +22,22 @@ function AddContract() {
   const [phone,setPhone] = useState('')
   const [date,setDate] = useState('')
   const [projectData,setProjectData] = useState('')
- 
-  const handleBackArrowClick = () => {
-    navigate(-1);
+
+  const handleDataReceived = (projectname) => {
+    setProjectName(projectname)
   };
-  
+  console.log(projectname,"theeeeeeeeee namweeeeeeeeeee");
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axiosAdmin
       .post("AddContract", {
-        projectname,projectnumber,Contractwork,totallabour,Contractorname,
+        projectname,Contractwork,totallabour,Contractorname,
         totalhelper,Details,phone,date,Paymentdetails,status,Amount
       })
       .then((response) => {
-        // navigate("/admin/projectdetails");
+        console.log(response);
+        navigate("/admin/contractdetails");
       })
       .catch((error) => {
         console.log(error);
@@ -67,11 +67,11 @@ function AddContract() {
     <ReturnButton/>
       <div  className='flex flex-wrap justify-around px-16 mt-24'>
       <div className="ms-4 sm:mb-0 mb-4">
-      <Dropdown projects={projectData}/>
+      <Dropdown projects={projectData} onDataPassed={handleDataReceived}/>
       </div>  
       <TextFields name="Contract work name" onChange={(e) => {setContractwork(e.target.value)}} type="text"/>
       <TextFields name="Contractor name"  onChange={(e) => {setContractorname(e.target.value)}} type="text"/>
-      <TextFields name="Contractor phone"  onChange={(e) => {setPhone(e.target.value)}} type="text"/>
+      <TextFields name="Contractor phone"  onChange={(e) => {setPhone(e.target.value)}} type="number"/>
       <TextFields name="Total main labours" onChange={(e) => {settotallabour(e.target.value)}} type="number"/>
       <TextFields name="Total helpers" onChange={(e) => {setTotalhelper(e.target.value)}} type="number"/>
       <TextFields name="Other details"  onChange={(e) => {setDetails(e.target.value)}} type="text"/>
