@@ -33,6 +33,7 @@ import CompletedBills from '../pages/AdminPages/Office/CompletedBills'
 import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
 import SalaryHistoryDisplay from '../pages/AdminPages/ViewSalary/ViewSalary'
 import MaterialSingleView from '../pages/AdminPages/Materials/MaterialSingleView'
+import SalaryWeek from '../pages/AdminPages/ViewSalary/SalaryWeek'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -81,6 +82,7 @@ function AdminRoutes() {
        <Route path='/completedbills' element={<CompletedBills/>}/>
        <Route path='/billsingleview' element={<BillSingleView/>}/>
        <Route path='/salaryhistory' element={<SalaryHistoryDisplay/>}/>
+       <Route path='/weeklysalary' element={<SalaryWeek/>}/>
     </Routes>
     </div>
   )
