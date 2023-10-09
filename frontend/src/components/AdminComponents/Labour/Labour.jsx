@@ -121,7 +121,7 @@ function Labour() {
             ) : (
               <tr>
                 <td colspan="8" class="text-center py-4">
-                  {/* No data available */}
+                  No data available
                   
                 </td>
               </tr>

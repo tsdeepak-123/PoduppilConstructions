@@ -32,6 +32,7 @@ import Completed from '../pages/AdminPages/Project/Completed'
 import CompletedBills from '../pages/AdminPages/Office/CompletedBills'
 import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
 import SalaryHistoryDisplay from '../pages/AdminPages/ViewSalary/ViewSalary'
+import MaterialSingleView from '../pages/AdminPages/Materials/MaterialSingleView'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
