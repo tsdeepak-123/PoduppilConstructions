@@ -88,7 +88,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
       </div>
     </div>
      <div className='flex justify-end'>
-      <AdvanceModal labourId={LabourData?.LabourData?._id}/>
+      <AdvanceModal labourId={LabourData?.LabourData?._id} fetchData={fetchData}/>
      </div>
     <h1 class="text-2xl font-bold mb-4">Salary Details</h1>
 

@@ -18,7 +18,7 @@ const modalStyle = {
   p: 4,
 };
 
-function AdvancedModal({labourId}) {
+function AdvancedModal({labourId,fetchData}) {
   const [open, setOpen] = useState(false);
   const [advance, setAdvance] = useState()
    
@@ -30,8 +30,13 @@ function AdvancedModal({labourId}) {
 
   const handleSubmit=async(e)=>{
     e.preventDefault()
-    await axiosAdmin.post(`labouradvance?labourId=${labourId}`,{advance})
-    handleClose()
+   const response= await axiosAdmin.post(`labouradvance?labourId=${labourId}`,{advance})
+   console.log(response.data,'res.data canmme');
+   if(response){
+     fetchData()
+     handleClose()
+
+   }
   }
 
   console.log(advance);
