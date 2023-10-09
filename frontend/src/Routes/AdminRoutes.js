@@ -28,6 +28,10 @@ import ViewSalary from '../pages/AdminPages/ViewSalary/ViewSalary'
 import ProfilePage from '../pages/AdminPages/Labour/ProfilePage'
 import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
 import StaffProfile from '../pages/AdminPages/Staff/StaffProfile'
+import Completed from '../pages/AdminPages/Project/Completed'
+import CompletedBills from '../pages/AdminPages/Office/CompletedBills'
+import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
+import SalaryHistoryDisplay from '../pages/AdminPages/ViewSalary/ViewSalary'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -72,6 +76,10 @@ function AdminRoutes() {
        <Route path='/viewprofile' element={<ProfilePage/>}/>
        <Route path='/staffsalary' element={<StaffSalary/>}/>
        <Route path='/staffprofile' element={<StaffProfile/>}/>
+       <Route path='/completedprojects' element={<Completed/>}/>
+       <Route path='/completedbills' element={<CompletedBills/>}/>
+       <Route path='/billsingleview' element={<BillSingleView/>}/>
+       <Route path='/salaryhistory' element={<SalaryHistoryDisplay/>}/>
     </Routes>
     </div>
   )

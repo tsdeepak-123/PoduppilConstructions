@@ -1,16 +1,15 @@
 import React from 'react'
 import Header from '../../../components/AdminComponents/Header/Header'
 import Footer from '../../../components/AdminComponents/Footer/Footer'
-import MaterialDetails from '../../../components/AdminComponents/Materials/MaterialDetails'
-
-function Materials() {
+import SingleView from '../../../components/AdminComponents/Materials/SingleView'
+function MaterialSingleView() {
   return (
     <div>
-        <Header/>
-        <MaterialDetails/>
+        <Header headers="MATERIALS FOR THIS PROJECT"/>
+        <SingleView/>
         <Footer/>
     </div>
   )
 }
 
-export default Materials
+export default MaterialSingleView
