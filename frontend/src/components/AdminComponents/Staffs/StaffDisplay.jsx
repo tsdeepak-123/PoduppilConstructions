@@ -18,6 +18,10 @@ function StaffDisplay() {
     const handleAddStaffClick=()=>{
         navigate('/admin/addstaff')
     }
+    const salarypage=(id)=>{
+      // console.log('hellooo',id);
+      navigate('/admin/staffsalary',{state: {id }})
+    }
 
       // fetching data from backend
   const fetchData = async () => {
@@ -105,7 +109,7 @@ function StaffDisplay() {
 
 }
                   <td class="px-6 py-4">{obj.adhar}</td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>navigate('/admin/staffsalary')}>View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>salarypage(obj._id)}>View
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
                   </td>

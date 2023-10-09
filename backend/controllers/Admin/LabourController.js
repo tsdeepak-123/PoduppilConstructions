@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const handleLabourAdding = async (req, res) => {
   try {
 
-console.log(req.body);
+// console.log(req.body);
     const {
       name,
       age,
@@ -224,168 +224,6 @@ const handleAttendanceList = async (req, res) => {
 // .......................................calculate salary using attendance..................................................
 
 
-// const salarycalculationoflabour = async (req, res) => {
-//   try {
-//     const { laborId } = req.query;
-//     const { laborSalarydate } = req.query;
-//     console.log(laborSalarydate,'laborSalarydate');
-
-//     const LaborData = await Labour.findById({ _id: laborId });
-
-//     if (!LaborData) {
-//       return res.status(404).json({
-//         message: "Labour not found.",
-//       });
-//     }
-
-//     const endDate = new Date();
-//     const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
-//     console.log(startDate,endDate,'dates');
-
-//     const attendanceRecords = await Attendance.find({
-//       'records.laborerId': laborId,
-//       'date': { $gte: startDate, $lte: endDate },
-//     });
-
-//     const month = new Date();
-//     month.setDate(endDate.getDate() - 30);
-
-//     const attendanceRecordbymonth = await Attendance.find({
-//       'records.laborerId': laborId,
-//       'date': { $gte: month, $lte: endDate },
-//     });
-
-//     const week = new Date();
-//     week.setDate(endDate.getDate() - 7);
-
-//     const attendanceRecordbyweek = await Attendance.find({
-//       'records.laborerId': laborId,
-//       'date': { $gte: week, $lte: endDate },
-//     });
-
-//     if (!attendanceRecords) {
-//       return res.status(404).json({
-//         message: "Labour attendance records not found for the specified period.",
-//       });
-//     }
-
-//     const attendanceStatus = {
-//       absent: 0,
-//       halfday: 0,
-//       present: 0,
-//     };
-
-//     attendanceRecords.forEach((record) => {
-//       record.records.forEach((attendanceRecord) => {
-//         if (attendanceRecord.laborerId.equals(laborId)) {
-//           attendanceStatus[attendanceRecord.status]++;
-//         }
-//       });
-//     });
-
-//     const salary = (LaborData?.salary * attendanceStatus?.present) + ((LaborData?.salary * attendanceStatus?.halfday) / 2);
-
-//     const monthlyattendanceStatus = {
-//       absent: 0,
-//       halfday: 0,
-//       present: 0,
-//     };
-
-//     attendanceRecordbymonth.forEach((record) => {
-//       record.records.forEach((attendanceRecord) => {
-//         if (attendanceRecord.laborerId.equals(laborId)) {
-//           monthlyattendanceStatus[attendanceRecord.status]++;
-//         }
-//       });
-//     });
-
-//     const monthlysalary = (LaborData?.salary * monthlyattendanceStatus?.present) + ((LaborData?.salary * monthlyattendanceStatus?.halfday) / 2);
-
-//     const weeklyattendanceStatus = {
-//       absent: 0,
-//       halfday: 0,
-//       present: 0,
-//     };
-
-//     attendanceRecordbyweek.forEach((record) => {
-//       record.records.forEach((attendanceRecord) => {
-//         if (attendanceRecord.laborerId.equals(laborId)) {
-//           weeklyattendanceStatus[attendanceRecord.status]++;
-//         }
-//       });
-//     });
-
-//     const weeklysalary = (LaborData?.salary * weeklyattendanceStatus?.present) + ((LaborData?.salary * weeklyattendanceStatus?.halfday) / 2);
-
-//     const SalaryData = await Salary.findOne({ laborerId: laborId });
-
-//     if (SalaryData) {
-//       console.log(attendanceStatus.present);
-//       const newRecord = {
-//         calculateFrom: startDate,
-//         calculateTo: endDate,
-//         present: attendanceStatus.present,
-//         halfday: attendanceStatus.halfday,
-//         absent: attendanceStatus.absent,
-//         totalSalary: salary,
-//         advance: LaborData.advance,
-//         updatedSalary: salary - LaborData.advance,
-//       };
-
-//       SalaryData.records.addToSet(newRecord);
-//       await SalaryData.save();
-
-//     } else {
-//       const salaryofLabour = new Salary({
-//         laborerId: laborId,
-//         records: [
-//           {
-//             calculateFrom: startDate,
-//             calculateTo: endDate,
-//             present: attendanceStatus.present,
-//             halfday: attendanceStatus.halfday,
-//             absent: attendanceStatus.absent,
-//             totalSalary: salary,
-//             advance: LaborData.advance,
-//             updatedSalary: salary - LaborData.advance,
-//           },
-//         ],
-//       });
-
-//       await salaryofLabour.save();
-//     }
-
-//     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
-//     salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
-//     const latestRecord = salaryDatas.records[0];
-
-//     const salaryData = {
-//       LabourData:LaborData,
-//       calculateFrom: latestRecord.calculateFrom,
-//       calculateTo: latestRecord.calculateTo,
-//       present: latestRecord?.present,
-//       halfday: latestRecord?.halfday,
-//       absent: latestRecord?.absent,
-//       salary: latestRecord.totalSalary,
-//       advance: latestRecord.advance,
-//       updatedSalary: latestRecord.updatedSalary,
-//       lastweek: weeklysalary,
-//       lastmonth: monthlysalary,
-//       basic: LaborData?.salary,
-//       lastCalculatedAt: endDate,
-//     };
-
-//     await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
-
-//     res.status(200).json({ message: 'Salary calculated successfully', salaryData });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'An error occurred during salary calculation.' });
-//   }
-// };
-
-
-
 const salarycalculationoflabour = async (req, res) => {
   try {
     const { laborId } = req.query;
@@ -401,23 +239,17 @@ const salarycalculationoflabour = async (req, res) => {
 
     const endDate = new Date();
         const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
-        console.log(startDate,endDate,'dates');
+        // console.log(startDate,endDate,'dates');
 
       
         const attendanceRecords = await Attendance.find({
           'records.laborerId': laborId,
           'date': { $gte: startDate, $lte: endDate },
         });
-        // const attendanceRecords = await Attendance.find({
-        //   'records.laborerId': laborId,
-        //   $and: [
-        //     { 'date': { $gte: startDate } },
-        //     { 'date': { $lte: endDate } }
-        //   ]
-        // });
+      
         
 
-console.log(attendanceRecords);
+// console.log(attendanceRecords);
       if (!attendanceRecords) {
       return res.status(404).json({
         message: "Labour attendance records not found for the specified period.",
@@ -490,7 +322,7 @@ console.log(attendanceRecords);
 const salarycalculation = async (req, res) => {
   try {
    
-    console.log(req.query);
+    // console.log(req.query);
     const { laborId } = req.query;
     const { laborSalarydate } = req.query;
    
@@ -504,13 +336,15 @@ const salarycalculation = async (req, res) => {
     }
 
     const endDate = new Date(laborSalarydate);
+    const today = new Date();
     const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
-    console.log(startDate,endDate,'dates');
+    // console.log(startDate,endDate,'dates');
     const startdatePart = startDate.toISOString().slice(0, 10);
     const enddatePart = endDate.toISOString().slice(0, 10);
-    console.log(enddatePart==startdatePart,'datesequel');
+    const todayPart = today.toISOString().slice(0, 10);
+    // console.log(enddatePart==startdatePart,'datesequel');
 
-    if(startdatePart == enddatePart){
+    if(todayPart == enddatePart){
       endDate.setDate(endDate.getDate() + 1)
 // console.log('eque',endDate);   
 
@@ -543,7 +377,7 @@ const salarycalculation = async (req, res) => {
     });
 
 
-    if(startdatePart == enddatePart){
+    if(todayPart == enddatePart){
       endDate.setDate(endDate.getDate() -1)
 // console.log('minus',endDate);
 
@@ -554,7 +388,7 @@ const salarycalculation = async (req, res) => {
     const SalaryData = await Salary.findOne({ laborerId: laborId });
 
     if (SalaryData) {
-      console.log(attendanceStatus.present);
+      // console.log(attendanceStatus.present);
       const newRecord = {
         calculateFrom: startDate,
         calculateTo: endDate,
@@ -644,7 +478,7 @@ const handleLabourAdvance=async(req,res)=>{
         res.json({message:"No labour found"})
       }
      const updatedAdvance=LabourData.advance + parseFloat(advance)
-     console.log(updatedAdvance);
+    //  console.log(updatedAdvance);
        await Labour.updateOne({_id:labourId},{$set:{advance:updatedAdvance}})
        res.json({ message: "Advance updated successfully" });
   } catch (error) {
