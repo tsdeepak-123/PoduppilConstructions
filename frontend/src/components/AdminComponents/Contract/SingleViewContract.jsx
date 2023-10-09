@@ -71,5 +71,4 @@ const SingleViewContract = () => {
     </>
   );
 };
-
 export default SingleViewContract;
