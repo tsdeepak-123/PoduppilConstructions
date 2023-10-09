@@ -405,6 +405,10 @@ const salarycalculation = async (req, res) => {
       await SalaryData.save();
 
     } else {
+
+
+     
+
       const salaryofLabour = new Salary({
         laborerId: laborId,
         records: [
@@ -423,6 +427,16 @@ const salarycalculation = async (req, res) => {
       });
 
       await salaryofLabour.save();
+
+      if( salary > LaborData.advance){
+
+        await Labour.findByIdAndUpdate({ _id: LaborData._id }, { advance: 0 });
+      }else{
+        await Labour.findByIdAndUpdate({ _id: LaborData._id },{ advance: LaborData.advance-salary});
+
+      }
+
+
     }
 
     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
@@ -430,7 +444,7 @@ const salarycalculation = async (req, res) => {
     const latestRecord = salaryDatas.records[0];
 
 
-    await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+    await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo });
 
     res.status(200).json({ message: 'Salary calculated successfully' });
   
