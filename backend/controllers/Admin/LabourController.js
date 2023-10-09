@@ -501,6 +501,56 @@ const handleLabourAdvance=async(req,res)=>{
   }
 }
 
+//...........................  salary history of labour ...............................
+
+
+const handleLabourHIstory=async(req,res)=>{
+  try {
+    const {labourId} = req.query;
+    // const {advance}=req.body;
+    const LabourSalaryData = await Salary.findOne({ laborerId: labourId }).populate('laborerId')
+      if(!LabourSalaryData){
+        res.json({message:"No labour found"})
+      }
+    
+       res.status(200).json({ message: "successfull",LabourSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+//...........................  salary history of all labour ...............................
+
+const handleAllLabourHIstory = async (req, res) => {
+  try {
+    // const {labourId} = req.query;
+    // const {advance}=req.body;
+    const LabourSalaryData = await Salary.find().populate('laborerId');
+    
+    if (!LabourSalaryData) {
+      res.json({ message: "No labour found" });
+    }
+
+    const updatedLabourSalaryData = LabourSalaryData.map((labour) => {
+      if (labour.records.length > 0) {
+        const sortedRecords = labour.records.sort((a, b) =>
+          new Date(b.date) - new Date(a.date)
+        );
+        const latestRecord = sortedRecords[0];
+        labour.records = [latestRecord];
+      }
+      return labour;
+    }); // Closing parenthesis should be here
+
+    res.status(200).json({ message: "successfull", updatedLabourSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
     module.exports={handleLabourAdding,
       handleLabourDetails,
       handleLabourById,
@@ -509,6 +559,7 @@ const handleLabourAdvance=async(req,res)=>{
       salarycalculation,
       labourAttendanceById,
       handleAttendanceList,
-      handleLabourAdvance
-    
+      handleLabourAdvance,
+      handleLabourHIstory,
+      handleAllLabourHIstory
     }
