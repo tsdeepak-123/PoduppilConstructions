@@ -23,7 +23,7 @@ function Dashboard() {
     navigate('/admin/projectlist')
   }
   return (
-    <div className='flex flex-wrap mx-5 mt-32'>
+    <div className='flex flex-wrap mx-5 mt-24'>
       <ItemCard classes={'mx-16 mt-16'} name="PROJECTS" discription="" navigation={handleProjectView}/>
       <ItemCard classes={'mx-16 mt-16'} name="LABOURS" discription="" navigation={handleLabourView}/>
       <ItemCard classes={'mx-16 mt-16'} name="STAFFS" discription="" navigation={handleStaffView}/>

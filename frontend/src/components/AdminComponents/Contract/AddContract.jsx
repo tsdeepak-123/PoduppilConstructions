@@ -82,7 +82,7 @@ function AddContract() {
     <div className="flex justify-center mt-3">
           <Buttons name="ADD CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
         </div>
-   </div>
+   </div> 
     </>
   );
 }
