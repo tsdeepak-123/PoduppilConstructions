@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Buttons from "../../CommonComponents/Button/Buttons";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { useNavigate } from "react-router-dom";
-import Search from "../../CommonComponents/Search/Search";
 import { axiosAdmin } from "../../../Api/Api";
+import AddNav from "../../CommonComponents/AddNav/AddNav";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Labour() {
   const navigate = useNavigate();
@@ -43,19 +43,7 @@ function Labour() {
   }
   return (
     <>
-      <div className="flex justify-between me-7 mt-32">
-        <KeyboardReturnIcon
-          className="ms-11 mt-4 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-        <div className="relative top-20">
-          <Buttons name="+ ADD NEW LABOUR" click={handleAddLabourClick} />
-        </div>
-      </div>
-      <div className="ms-6 mt-9">
-        <Search />
-      </div>
-
+    <AddNav name="+ ADD NEW LABOUR" click={handleAddLabourClick}/>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -83,6 +71,9 @@ function Labour() {
               </th>
               <th scope="col" class="px-6 py-3">
                 Profile
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Actions
               </th>
             </tr>
           </thead>
@@ -123,12 +114,15 @@ function Labour() {
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>
+                  <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td colspan="8" class="text-center py-4">
-                  No data available
+                  {/* No data available */}
+                  
                 </td>
               </tr>
             )}

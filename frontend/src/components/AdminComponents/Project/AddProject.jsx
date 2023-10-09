@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import TextFields from "../../CommonComponents/TextFields/TextFields";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import { axiosAdmin } from "../../../Api/Api";
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 
 function AddProject() {
   const navigate = useNavigate();
@@ -15,10 +15,7 @@ function AddProject() {
   const [notes, setNotes] = useState("");
   const [projectnumber, setProjectNumber] = useState("");
   const [supervisorname, setSuperVisorName] = useState("");
-  const handleBackArrowClick = () => {
-    navigate(-1);
-  };
-
+  
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -67,14 +64,8 @@ function AddProject() {
   };
   return (
     <>
-      <div className="flex justify-start mt-32">
-        <KeyboardReturnIcon
-          className="ms-11 mt-4 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
-      <div>
-        <form className="flex flex-wrap ms-16 px-16 mt-24">
+<ReturnButton/>
+         <div className="flex flex-wrap justify-around px-16 mt-24">
           <TextFields
             name="Number"
             type="text"
@@ -124,11 +115,12 @@ function AddProject() {
             value={notes}
             onChange={handleNotesChange}
           />
-        </form>
-        <div className="flex justify-center mt-11">
-          <Buttons name="ADD PROJECT" classes={"w-96"} click={handleSubmit} />
-        </div>
+         <div className="w-[400px]"></div>
       </div>
+      <div className="flex justify-center mt-9">
+      <Buttons name="ADD PROJECT" classes={"sm:w-80"} click={handleSubmit} />
+      </div>
+     
     </>
   );
 }

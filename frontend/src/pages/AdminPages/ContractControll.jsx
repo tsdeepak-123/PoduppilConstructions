@@ -7,7 +7,7 @@ function ContractControll() {
     <div>
        <Header headers="CONTRACT WORKS MANAGEMENT"/>
       <Contract/>
-      <div className='mt-72'>
+      <div className='mt-56'>
       <Footer/>
       </div>
      

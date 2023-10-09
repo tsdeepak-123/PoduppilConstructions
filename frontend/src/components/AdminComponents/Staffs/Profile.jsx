@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
-import { axiosAdmin } from '../../../Api/Api'
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { axiosAdmin } from "../../../Api/Api";
+import dateFormat from "../../../Validation/FormatDate";
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 function Profile() {
-  const[StaffData,setStaffData]=useState()
-  const location=useLocation()
-  const id=location?.state?.id
-  console.log(id,'id came   ');
+  const [StaffData, setStaffData] = useState();
+  const location = useLocation();
+  const id = location?.state?.id;
+  console.log(id, "id came   ");
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get(`staffByid?id=${location?.state?.id}`);
+      const response = await axiosAdmin.get(
+        `staffByid?id=${location?.state?.id}`
+      );
       console.log(response?.data?.StaffData);
 
       setStaffData(response?.data?.StaffData);
@@ -17,28 +21,22 @@ function Profile() {
     }
   };
 
-  console.log(StaffData,'StaffData');
-  //data displayin when mounting
+  console.log(StaffData, "StaffData");
+  //data displaying when mounting
   useEffect(() => {
     fetchData();
   }, []);
-
-  const orginalDate=new Date(StaffData?.date)
-  const year = orginalDate.getFullYear()
-  const month = (orginalDate.getMonth() +1).toString().padStart(2,'0')
-  const day = orginalDate.getDate().toString().padStart(2,'0')
-  const formattedDate = `${day}-${month}-${year}`
-  console.log(formattedDate);
+  //formatting the date
+  const date = dateFormat(StaffData?.date);
   return (
-    
-    <div className="mt-44">
+    <>
+    <ReturnButton/>
+    <div>
       <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2">
           <div class="w-full mx-2">
             <div class="bg-white p-3 shadow-sm rounded-sm">
-              <div
-                class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
-              >
+              <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                 <span clas="text-green-500">
                   <svg
                     class="h-5"
@@ -83,7 +81,13 @@ function Profile() {
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold"> Address</div>
-                      <div class="px-4 py-2">{StaffData?.address[0]?.street},{StaffData?.address[0]?.town},{StaffData?.address[0]?.post},{StaffData?.address[0]?.district},{StaffData?.address[0]?.pincode}</div>
+                      <div class="px-4 py-2">
+                        {StaffData?.address[0]?.street},
+                        {StaffData?.address[0]?.town},
+                        {StaffData?.address[0]?.post},
+                        {StaffData?.address[0]?.district},
+                        {StaffData?.address[0]?.pincode}
+                      </div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Basic Salary</div>
@@ -91,7 +95,7 @@ function Profile() {
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Date of Joing</div>
-                      <div class="px-4 py-2">{formattedDate}</div>
+                      <div class="px-4 py-2">{date}</div>
                     </div>
                     {/* <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Email.</div>
@@ -104,9 +108,7 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              <div
-                class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
-              >
+              <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                 <span clas="text-green-500">
                   <svg
                     class="h-5"
@@ -150,8 +152,8 @@ function Profile() {
         </div>
       </div>
     </div>
-
-  )
+    </>
+  );
 }
 
-export default Profile
+export default Profile;

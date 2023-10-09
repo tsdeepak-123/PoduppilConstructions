@@ -8,7 +8,7 @@ function OfficeControll() {
     <div>
        <Header headers="OFFICE MANAGEMENT"/>
       <Office/>
-      <div className='mt-72'> 
+      <div className='mt-8'> 
       <Footer/>
       </div>
       

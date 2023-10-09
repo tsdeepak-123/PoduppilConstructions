@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { axiosAdmin } from '../../../Api/Api'
 import{LuIndianRupee}from 'react-icons/lu'
 import TextFields from '../../CommonComponents/TextFields/TextFields';
+import AdvanceModal from './AdvanceModal';
 function Salary() {
   const location=useLocation()
   const id=location?.state?.id
@@ -68,8 +69,14 @@ const formattedDate = `${day} / ${month} / ${year}`;
   }
   return (
     <>
-    <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
-    <div class="container mx-auto p-4 mt-44">
+         <div className="flex justify-start mt-40">
+        <KeyboardReturnIcon
+          className="ms-14 cursor-pointer"
+          onClick={handleBackArrowClick}
+        />
+      </div>
+    
+    <div class="container mx-auto p-4">
     <div class="flex items-center justify-center gap-5 mb-4">
       <div >
         <img src={LabourData?.LabourData?.photo} alt="User Photo" class="w-[150px] h-[150px] rounded-full"/>
@@ -79,7 +86,9 @@ const formattedDate = `${day} / ${month} / ${year}`;
         <h5>{LabourData?.LabourData?.phone}</h5>
       </div>
     </div>
-
+     <div className='flex justify-end'>
+      <AdvanceModal labourId={LabourData?.LabourData?._id}/>
+     </div>
     <h1 class="text-2xl font-bold mb-4">Salary Details</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

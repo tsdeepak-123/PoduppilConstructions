@@ -1,8 +1,7 @@
 const Staff = require("../../models/StaffModel");
 const Staffattendance = require("../../models/StaffAttendance");
 const cloudinary = require("../../Middleware/Cloudinary");
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 // This function handles Staff Adding to database, taking in a request (req) and a response (res) as parameters.
 
@@ -105,7 +104,7 @@ const handleStaffAdding = async (req, res) => {
 const handleStaffDetails = async (req, res) => {
   try {
     const allStaffData = await Staff.find();
-   
+
     res.json({ allStaffData });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -116,69 +115,56 @@ const handleStaffDetails = async (req, res) => {
 
 const handleStaffById = async (req, res) => {
   try {
-   
-  const id=req.query.id
-  const StaffData=await Staff.findById({_id:id})
-  if(!StaffData){
-    res.json({ success: false, messege: "cant find Staff details " });
+    const id = req.query.id;
+    const StaffData = await Staff.findById({ _id: id });
+    if (!StaffData) {
+      res.json({ success: false, messege: "cant find Staff details " });
+    }
+    res.json({ StaffData });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-  res.json({StaffData})
-} catch (error) {
-  res.status(400).json({ error: error.message });
-}
-}
-
+};
 
 //  ...............................................staff attendance..............................................
 
-const handleAttendanceofStaff=async(req,res)=>{
-      
+const handleAttendanceofStaff = async (req, res) => {
   try {
     // console.log(req.body);
-    const { selectedValues } = req.body; 
+    const { selectedValues } = req.body;
 
-    const date = new Date(); 
-   
+    const date = new Date();
+
     let attendanceDocument = await Staffattendance.findOne({ date });
 
     if (!attendanceDocument) {
-     
       attendanceDocument = new Staffattendance({ date, records: [] });
     }
 
     for (const StaffId in selectedValues) {
       const status = selectedValues[StaffId];
-      
-      const recordIndex = attendanceDocument.records.findIndex((record) =>
-  record.StaffId && record.StaffId.equals(StaffId)
-);
+
+      const recordIndex = attendanceDocument.records.findIndex(
+        (record) => record.StaffId && record.StaffId.equals(StaffId)
+      );
 
       if (recordIndex !== -1) {
-       
         attendanceDocument.records[recordIndex].status = status;
       } else {
-       
         attendanceDocument.records.push({ StaffId, status });
       }
     }
 
     await attendanceDocument.save();
 
-    res.status(200).json({ message: 'Attendance updated successfully' });
+    res.status(200).json({ message: "Attendance updated successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
-  
-}
-
-
-
-
+};
 
 //..........................attendance list ............................................................
-
-
 
 const handleAttendanceListofStaff = async (req, res) => {
   try {
@@ -188,17 +174,29 @@ const handleAttendanceListofStaff = async (req, res) => {
       {
         $match: {
           date: {
-            $gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0),
-            $lt: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0),
-          }
-        }
-      }
+            $gte: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate(),
+              0,
+              0,
+              0
+            ),
+            $lt: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate() + 1,
+              0,
+              0,
+              0
+            ),
+          },
+        },
+      },
     ]);
 
     if (StaffAttendance.length === 0) {
-
-      res.json({ message: 'Attendance not found' });
-      
+      res.json({ message: "Attendance not found" });
     } else {
 
  const promises = StaffAttendance.map((attendanceDocument) =>
@@ -217,29 +215,28 @@ const handleAttendanceListofStaff = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
-}
-
-
+};
 
 //  .........................................staff salary calculation .................................................
 
-const salarycalculationofStaff=async(req,res)=>{
+const salarycalculationofStaff = async (req, res) => {
   try {
-   
-    const staffId = req.query.id
+    const staffId = req.query.id;
     //  console.log(staffId);
-    const StaffData=await Staff.findById({_id:staffId})
+    const StaffData = await Staff.findById({ _id: staffId });
     //  console.log(StaffData);
-    if(!StaffData){
+    if (!StaffData) {
       return res.json({
         message: "Staff not found.",
       });
     }
-    const attendanceRecords = await Staffattendance.find({ 'records.StaffId': staffId });
+    const attendanceRecords = await Staffattendance.find({
+      "records.StaffId": staffId,
+    });
     // console.log(attendanceRecords);
-    if(!attendanceRecords){
+    if (!attendanceRecords) {
       return res.json({
         message: "Staff attendanceRecords not found.",
       });
@@ -249,7 +246,7 @@ const salarycalculationofStaff=async(req,res)=>{
       halfday: 0,
       present: 0,
     };
-  
+
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.StaffId.equals(staffId)) {
@@ -257,22 +254,52 @@ const salarycalculationofStaff=async(req,res)=>{
         }
       });
     });
-  const salary= (StaffData?.salary*attendanceStats?.present)+((StaffData?.salary*attendanceStats?.halfday)/2)
+    const salary =
+      StaffData?.salary * attendanceStats?.present +
+      (StaffData?.salary * attendanceStats?.halfday) / 2;
 
-    const salaryData={
-      present:attendanceStats?.present,
-      halfday:attendanceStats?.halfday,
-      absent:attendanceStats?.absent,
-      salary:salary,
-      basic:StaffData?.salary
-    }
-    res.status(200).json({ message: 'salary get successfully', salaryData });
+    const salaryData = {
+      present: attendanceStats?.present,
+      halfday: attendanceStats?.halfday,
+      absent: attendanceStats?.absent,
+      salary: salary,
+      basic: StaffData?.salary,
+    };
+    res.status(200).json({ message: "salary get successfully", salaryData });
   } catch (error) {
     console.error(error);
     throw error;
   }
-  
-}
-  
+};
 
-module.exports = { handleStaffAdding, handleStaffDetails,handleStaffById,handleAttendanceofStaff,salarycalculationofStaff,handleAttendanceListofStaff }
+
+// giving advance to staff----------------------------------------------------------------------------
+
+const handleStaffAdvance=async(req,res)=>{
+  try {
+    const staffId = req.query.staffId;
+    const {advance}=req.body;
+    const staffData = await Staff.findById({ _id: staffId });
+      if(!staffData){
+        res.json({message:"No staff found"})
+      }
+     const updatedAdvance=staffData.advance + parseFloat(advance)
+     console.log(updatedAdvance);
+       await Staff.updateOne({_id:staffId},{$set:{advance:updatedAdvance}})
+       res.json({ message: "Advance updated successfully" });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
+module.exports = {
+  handleStaffAdding,
+  handleStaffDetails,
+  handleStaffById,
+  handleAttendanceofStaff,
+  salarycalculationofStaff,
+  handleAttendanceListofStaff,
+  handleStaffAdvance
+};

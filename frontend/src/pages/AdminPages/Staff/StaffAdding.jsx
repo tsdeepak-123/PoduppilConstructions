@@ -9,8 +9,10 @@ function StaffAdding() {
     <div>
       <Header headers="ADD NEW STAFF"/>
       <AddStaff/>
-      <div className='mb-6'></div>
+      <div className='mt-14'>
       <Footer/>
+      </div>
+      
     </div>
   )
 }

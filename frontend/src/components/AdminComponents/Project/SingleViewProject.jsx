@@ -25,7 +25,7 @@ const SingleViewProject = () => {
   }, []);
 
   return (
-    <div className='text-3xl'>SingleViewContract data is came in state value of ProjectData</div>
+    <div className='text-3xl'>SingleView Project data is came in state value of ProjectData</div>
   )
 }
 

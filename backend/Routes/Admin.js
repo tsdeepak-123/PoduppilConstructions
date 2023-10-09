@@ -1,10 +1,11 @@
 const express=require('express')
 const adminRoute=express()
 const {handleSignIn,handleSignUp}=require('../controllers/Admin/AdminController')
-const{handleLabourAdding,handleLabourDetails,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList}=require('../controllers/Admin/LabourController')
-const{handleStaffAdding,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff}=require('../controllers/Admin/StaffController')
+const{handleLabourAdding,handleLabourDetails,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList,handleLabourAdvance}=require('../controllers/Admin/LabourController')
+const{handleStaffAdding,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff,handleStaffAdvance}=require('../controllers/Admin/StaffController')
 const{handleProjectAdding,ProjectList,ProjectListById}=require('../controllers/Admin/ProjectController')
 const{handleAddContract,ContractList,ContractListById}=require('../controllers/Admin/ContractController')
+const {handleBillAdding,handleBillDetails}=require("../controllers/Admin/BillController")
 const upload=require('../Middleware/Multer')
 const Auth=require('../Middleware/Auth')
 
@@ -33,5 +34,9 @@ adminRoute.get('/ContractById',ContractListById)
 adminRoute.get('/projectList',ProjectList)
 adminRoute.get('/projectById',ProjectListById)
 adminRoute.get('/labourattendanceById',labourAttendanceById)
+adminRoute.post('/labouradvance',handleLabourAdvance)
+adminRoute.post('/staffadvance',handleStaffAdvance)
+adminRoute.post('/addbills',upload.fields([{ name: 'photo', maxCount: 1 }]),handleBillAdding)
+adminRoute.get('/billslist',handleBillDetails)
 
 module.exports=adminRoute

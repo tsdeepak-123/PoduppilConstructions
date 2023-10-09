@@ -1,10 +1,9 @@
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
-import Input from "@mui/material/Input";
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -118,8 +117,7 @@ function AddLabour() {
     axiosAdmin.post('addlabour',formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-      },
-     
+      },  
     }).then((response)=>{
       alert(response?.data?.message);
       console.log(response?.data?.message,'response for adding labour');
@@ -130,11 +128,8 @@ function AddLabour() {
   }
   return (
     <>
-    <div className='flex justify-start mt-32'>
-    <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
-    </div>
-   <div>
-    <form action='' className='flex flex-wrap ms-16 px-16 mt-24' onSubmit={handleSubmit}>
+    <ReturnButton/>
+      <div className='flex flex-wrap justify-around px-16 mt-24'>
       <TextFields name="Labour name" type="text" value={name} onChange={handleNameChange}/>
       <TextFields name="Age" type="number" value={age} onChange={handleAgeChange}/>
       <TextFields name="Phone number" type="text" value={phone} onChange={handlePhoneChange}/>
@@ -149,12 +144,9 @@ function AddLabour() {
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
       <TextFields name="photo" type="file"  input={true} onChange={handleImageChange}/>
       <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
-      
-    <div className='mx-auto mt-11'>
-    {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
-    <Buttons type="submit" name="ADD LABOUR" classes={'w-96'} />
-    </div>
-    </form>
+      <>
+      <Buttons click={handleSubmit} name="ADD LABOUR" classes={'sm:w-96'} />
+      </>  
    </div>
 </>
   )
