@@ -1,7 +1,7 @@
 const express=require('express')
 const adminRoute=express()
 const {handleSignIn,handleSignUp}=require('../controllers/Admin/AdminController')
-const{handleLabourAdding,handleLabourDetails,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList,handleLabourAdvance,handleLabourHIstory,handleAllLabourHIstory}=require('../controllers/Admin/LabourController')
+const{handleLabourAdding,handleLabourDetails,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList,handleLabourAdvance,handleLabourHIstory,handleAllLabourHIstory,labourAttendanceEdit}=require('../controllers/Admin/LabourController')
 const{handleStaffAdding,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff,handleStaffAdvance,salarycalculationforStaff}=require('../controllers/Admin/StaffController')
 const{handleProjectAdding,ProjectList,ProjectListById}=require('../controllers/Admin/ProjectController')
 const{handleAddContract,ContractList,ContractListById}=require('../controllers/Admin/ContractController')
@@ -41,5 +41,6 @@ adminRoute.post('/addbills',upload.fields([{ name: 'photo', maxCount: 1 }]),hand
 adminRoute.get('/billslist',handleBillDetails)
 adminRoute.get('/laboursalaryhistory',handleLabourHIstory)
 adminRoute.get('/alllaboursalaryhistory',handleAllLabourHIstory)
+adminRoute.post('/labourAttendanceEdit',labourAttendanceEdit)
 
 module.exports=adminRoute

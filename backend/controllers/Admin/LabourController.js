@@ -550,6 +550,60 @@ const handleAllLabourHIstory = async (req, res) => {
 };
 
 
+// ............................. attendace edit .........................................
+
+
+const labourAttendanceEdit = async (req, res) => {
+
+  try {
+    // console.log('came', req.body);
+    
+    const {labourId, status } = req.body;
+
+    const currentDate = new Date();
+    const startOfDay = new Date(currentDate);
+
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(currentDate);
+
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const attendanceRecords = await Attendance.find({
+      date: { $gte: startOfDay, $lt: endOfDay },
+    });
+
+    // console.log(attendanceRecords);
+
+    attendanceRecords.forEach(async (record) => {
+      const matchingRecord = record.records.find(
+        (r) => r.laborerId == labourId
+      );
+      // console.log(matchingRecord);
+
+      if (matchingRecord) {
+        matchingRecord.status = status;
+      }
+    });
+
+    const updatedRecords = await Promise.all(
+      attendanceRecords.map((record) => record.save())
+      );
+
+      // console.log(updatedRecords);
+
+    res.status(200).json({message: "successfull", updatedRecords });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
 
     module.exports={handleLabourAdding,
       handleLabourDetails,
@@ -561,5 +615,6 @@ const handleAllLabourHIstory = async (req, res) => {
       handleAttendanceList,
       handleLabourAdvance,
       handleLabourHIstory,
-      handleAllLabourHIstory
+      handleAllLabourHIstory,
+      labourAttendanceEdit
     }
