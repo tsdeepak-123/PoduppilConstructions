@@ -201,6 +201,17 @@ const handleAttendanceListofStaff = async (req, res) => {
       
     } else {
 
+ const promises = StaffAttendance.map((attendanceDocument) =>
+      Promise.all(
+        attendanceDocument.records.map(async (record) => {
+        
+          const staffData = await Staffattendance.findById({ _id:record.StaffId});
+       record.StaffId = staffData;
+          
+        })
+      )
+    );
+    await Promise.all(promises);
       console.log(StaffAttendance, 'attendanceDocuments');
       res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
     }
