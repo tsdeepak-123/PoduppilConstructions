@@ -1,5 +1,7 @@
 const Staff = require("../../models/StaffModel");
 const Staffattendance = require("../../models/StaffAttendance");
+
+const StaffSalary = require("../../models/StaffSalaryModel");
 const cloudinary = require("../../Middleware/Cloudinary");
 const mongoose = require("mongoose");
 
@@ -198,21 +200,20 @@ const handleAttendanceListofStaff = async (req, res) => {
     if (StaffAttendance.length === 0) {
       res.json({ message: "Attendance not found" });
     } else {
-      const promises = StaffAttendance.map((attendanceDocument) =>
-        Promise.all(
-          attendanceDocument.records.map(async (record) => {
-            const StaffData = await Staff.findById({ _id: record.StaffId });
-            record.StaffId = StaffData;
-          })
-        )
-      );
-      await Promise.all(promises);
-      res
-        .status(200)
-        .json({
-          message: "Attendance retrieved successfully",
-          StaffAttendance,
-        });
+
+ const promises = StaffAttendance.map((attendanceDocument) =>
+      Promise.all(
+        attendanceDocument.records.map(async (record) => {
+        
+          const staffData = await Staffattendance.findById({ _id:record.StaffId});
+       record.StaffId = staffData;
+          
+        })
+      )
+    );
+    await Promise.all(promises);
+      // console.log(StaffAttendance, 'attendanceDocuments');
+      res.status(200).json({ message: 'Attendance retrieved successfully', StaffAttendance });
     }
   } catch (error) {
     console.error(error);
@@ -222,27 +223,44 @@ const handleAttendanceListofStaff = async (req, res) => {
 
 //  .........................................staff salary calculation .................................................
 
+
+
 const salarycalculationofStaff = async (req, res) => {
   try {
-    const staffId = req.query.id;
-    //  console.log(staffId);
+    // console.log('cameeeee');
+    const  {staffId}  = req.query
+  //  console.log(staffId);
+   
     const StaffData = await Staff.findById({ _id: staffId });
-    //  console.log(StaffData);
+
+    // console.log(StaffData,'StaffData');
+
     if (!StaffData) {
-      return res.json({
-        message: "Staff not found.",
+      return res.status(404).json({
+        message: "StaffData not found.",
       });
     }
-    const attendanceRecords = await Staffattendance.find({
-      "records.StaffId": staffId,
-    });
-    // console.log(attendanceRecords);
-    if (!attendanceRecords) {
-      return res.json({
-        message: "Staff attendanceRecords not found.",
+
+    const endDate = new Date();
+        const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
+        // console.log(startDate,endDate,'dates');
+
+      
+        const attendanceRecords = await Staffattendance.find({
+          'records.StaffId': staffId,
+          'date': { $gte: startDate, $lte: endDate },
+        });
+       
+        
+
+// console.log(attendanceRecords,'attendanceRecords');
+      if (!attendanceRecords) {
+      return res.status(404).json({
+        message: "staff attendance records not found for the specified period.",
       });
     }
-    const attendanceStats = {
+   
+      const attendanceStatus = {
       absent: 0,
       halfday: 0,
       present: 0,
@@ -251,25 +269,197 @@ const salarycalculationofStaff = async (req, res) => {
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.StaffId.equals(staffId)) {
-          attendanceStats[attendanceRecord.status]++;
+          attendanceStatus[attendanceRecord.status]++;
         }
       });
     });
-    const salary =
-      StaffData?.salary * attendanceStats?.present +
-      (StaffData?.salary * attendanceStats?.halfday) / 2;
+    // console.log(attendanceStatus);
+    const salaryDatas = await StaffSalary.findOne({ StaffId: staffId }).populate('StaffId');
+    if (!salaryDatas) {
+     
+      const salary = StaffData?.salary * attendanceStatus?.present+ (StaffData?.salary * attendanceStatus?.halfday) / 2;
 
+      // console.log('datasss',attendanceStatus);
+      const salaryData={ StaffData:StaffData,
+        present:attendanceStatus?.present?? 0,
+        halfday: attendanceStatus?.halfday??0,
+        absent: attendanceStatus?.absent??0,
+        advance: StaffData.advance,
+        lastweek:salary,
+        balance:salary-StaffData.advance
+      }
+      // console.log(salaryData,'salarydata !sdatas');
+      return res.json({salaryData,
+        message: "salarydata not found.",
+      });
+    }
+
+
+    salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+    const latestRecord = salaryDatas.records[0];
+    // console.log(latestRecord,'salarydata');
+   
     const salaryData = {
-      present: attendanceStats?.present,
-      halfday: attendanceStats?.halfday,
-      absent: attendanceStats?.absent,
-      salary: salary,
+      StaffData:StaffData,
+      calculateFrom: latestRecord.calculateFrom,
+      calculateTo: latestRecord.calculateTo,
+      present: latestRecord?.present??0,
+      halfday: latestRecord?.halfday??0,
+      absent: latestRecord?.absent??0,
+      salary: latestRecord.totalSalary,
+      advance: latestRecord.advance,
+      updatedSalary: latestRecord.updatedSalary,
       basic: StaffData?.salary,
+      
+     
     };
-    res.status(200).json({ message: "salary get successfully", salaryData });
+
+   
+    res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
   } catch (error) {
     console.error(error);
-    throw error;
+    res.status(500).json({ message: 'An error occurred during salary calculation.' });
+  }
+};
+
+
+
+//............................ salary calculation ..........................................
+
+
+const salarycalculationforStaff = async (req, res) => {
+  try {
+    // console.log('logggggggggggggggggggggggggggg');
+   
+    // console.log(req.query);
+    const  {staffId}  = req.query
+    const { staffSalarydate } = req.query;
+   
+
+    const StaffData = await Staff.findById({ _id: staffId });
+    // console.log(StaffData,'staffData');
+
+    if (!StaffData) {
+      return res.status(404).json({
+        message: "staff not found.",
+      });
+    }
+
+    const endDate = new Date(staffSalarydate);
+    const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
+    const today=new Date()
+    // console.log(startDate,endDate,'dates......');
+
+    const startdatePart = startDate.toISOString().slice(0, 10);
+    const enddatePart = endDate.toISOString().slice(0, 10);
+    const todayPart = today.toISOString().slice(0, 10);
+
+
+    // console.log(enddatePart==startdatePart,'datesequel....');
+
+    if(todayPart == enddatePart){
+      endDate.setDate(endDate.getDate() + 1)
+// console.log('eque',endDate);   
+
+    }
+
+    const attendanceRecords = await Staffattendance.find({
+      'records.StaffId': staffId,
+      'date': { $gte: startDate, $lte: endDate },
+    });
+   
+// console.log(attendanceRecords,'attendanceRecords');
+    if (!attendanceRecords) {
+      return res.status(404).json({
+        message: "staff attendance records not found for the specified period.",
+      });
+    }
+
+    const attendanceStatus = {
+      absent: 0,
+      halfday: 0,
+      present: 0,
+    };
+
+    attendanceRecords.forEach((record) => {
+      record.records.forEach((attendanceRecord) => {
+        if (attendanceRecord.StaffId.equals(staffId)) {
+          attendanceStatus[attendanceRecord.status]++;
+        }
+      });
+    });
+
+// console.log(attendanceStatus,'attendanceStatus');
+
+    if(todayPart == enddatePart){
+      endDate.setDate(endDate.getDate() -1)
+// console.log('minus',endDate);
+
+    }
+    const salary = (StaffData?.salary * attendanceStatus?.present) + ((StaffData?.salary * attendanceStatus?.halfday) / 2);
+
+  //  console.log(salary,'salary');
+
+    const SalaryData = await StaffSalary.findOne({ StaffId: staffId });
+    // console.log(SalaryData,'SalaryData');
+
+    if (SalaryData) {
+      // console.log(attendanceStatus.present);
+      const newRecord = {
+        calculateFrom: startDate,
+        calculateTo: endDate,
+        present: attendanceStatus.present,
+        halfday: attendanceStatus.halfday,
+        absent: attendanceStatus.absent,
+        date:new Date(),
+        totalSalary: salary,
+        advance: StaffData.advance,
+        updatedSalary: salary - StaffData.advance,
+      };
+
+// console.log(SalaryData,'SalaryData');
+
+      SalaryData.records.addToSet(newRecord);
+      await SalaryData.save();
+
+    } else {
+
+      // console.log('new here  ');
+
+      const salaryofStaff = new StaffSalary({
+        StaffId: staffId,
+        records: [
+          {
+            calculateFrom: startDate,
+            calculateTo: endDate,
+            present: attendanceStatus.present??0,
+            halfday: attendanceStatus.halfday??0,
+            absent: attendanceStatus.absent??0,
+            date:new Date(),
+            totalSalary: salary,
+            advance: StaffData.advance,
+            updatedSalary: salary - StaffData.advance,
+          },
+        ],
+      });
+
+      await salaryofStaff.save();
+    }
+
+    const salaryDatas = await StaffSalary.findOne({ StaffId: staffId }).populate('StaffId');
+    // console.log(salaryDatas,'salaryDatas');
+
+    salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+    const latestRecord = salaryDatas.records[0];
+
+
+    await Staff.findByIdAndUpdate({ _id: StaffData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+
+    res.status(200).json({ message: 'Salary calculated successfully' });
+  
+ } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred during salary calculation.' });
   }
 };
 
@@ -285,7 +475,7 @@ const handleStaffAdvance=async(req,res)=>{
         res.json({message:"No staff found"})
       }
      const updatedAdvance=staffData.advance + parseFloat(advance)
-     console.log(updatedAdvance);
+    //  console.log(updatedAdvance);
        await Staff.updateOne({_id:staffId},{$set:{advance:updatedAdvance}})
        res.json({ message: "Advance updated successfully" });
   } catch (error) {
@@ -301,6 +491,7 @@ module.exports = {
   handleStaffById,
   handleAttendanceofStaff,
   salarycalculationofStaff,
+  salarycalculationforStaff,
   handleAttendanceListofStaff,
   handleStaffAdvance
 };
