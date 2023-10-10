@@ -176,22 +176,8 @@ const handleAttendanceListofStaff = async (req, res) => {
       {
         $match: {
           date: {
-            $gte: new Date(
-              currentDate.getFullYear(),
-              currentDate.getMonth(),
-              currentDate.getDate(),
-              0,
-              0,
-              0
-            ),
-            $lt: new Date(
-              currentDate.getFullYear(),
-              currentDate.getMonth(),
-              currentDate.getDate() + 1,
-              0,
-              0,
-              0
-            ),
+            $gte: new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),0,0,0),
+            $lt: new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate() + 1,0,0,0),
           },
         },
       },
@@ -205,7 +191,7 @@ const handleAttendanceListofStaff = async (req, res) => {
       Promise.all(
         attendanceDocument.records.map(async (record) => {
         
-          const staffData = await Staffattendance.findById({ _id:record.StaffId});
+          const staffData = await Staff.findById({ _id:record.StaffId});
        record.StaffId = staffData;
           
         })
