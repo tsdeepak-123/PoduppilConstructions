@@ -57,6 +57,43 @@ const handleProjectAdding = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+// ................................... Project Editing ..................................
+
+const handleProjectEditing = async (req, res) => {
+  try {
+
+    const id=req.params.id
+
+    if (
+      !req.body.name ||
+      !req.body.date ||
+      !req.body.status ||
+      !req.body.upnext ||
+      !req.body.pending ||
+      !req.body.notes ||
+      !req.body.supervisorname ||
+      !req.body.projectnumber
+    ) {
+      console.log("cccccccccccc");
+      return res.status(400).json({ success: false, messege: "All fields must be field " });
+    }
+    
+  
+    const updatedProject=await Project.findByIdAndUpdate(
+      id,{ $set:req.body},{new:true}
+    )  
+
+    if(!updatedProject){
+      return res.status(404).json({error:"Project not found"})
+    }
+
+    res.status(200).json({ success: true, messege: "Project Updated successfully" })
+   
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 
 
@@ -98,5 +135,5 @@ const ProjectListById =async(req,res)=>{
 
 
 module.exports={
-  handleProjectAdding,ProjectList,ProjectListById
+  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById
 }
