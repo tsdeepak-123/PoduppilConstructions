@@ -1,16 +1,16 @@
 import React from 'react'
 import Header from '../../../components/AdminComponents/Header/Header'
 import Footer from '../../../components/AdminComponents/Footer/Footer'
-import MaterialDetails from '../../../components/AdminComponents/Materials/MaterialDetails'
+import Completed from '../../../components/AdminComponents/Office/Completed'
 
-function Materials() {
+function CompletedBills() {
   return (
     <div>
-        <Header/>
-        <MaterialDetails/>
+        <Header headers="COMPLETED BILLS"/>
+        <Completed/>
         <Footer/>
     </div>
   )
 }
 
-export default Materials
+export default CompletedBills

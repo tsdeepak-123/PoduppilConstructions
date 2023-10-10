@@ -10,12 +10,15 @@ import OfficeControll from '../pages/AdminPages/OfficeControll'
 import ContractControll from '../pages/AdminPages/ContractControll'
 import LabourAdding from '../pages/AdminPages/Labour/LabourAdding'
 import ContractAdding from '../pages/AdminPages/Contract/ContractAdding'
+import ContractEdit from '../pages/AdminPages/Contract/ContractEdit'
 import Addbills from '../pages/AdminPages/Office/Addbills'
 import ProjectAdding from '../pages/AdminPages/Project/ProjectAdding'
 import StaffAdding from '../pages/AdminPages/Staff/StaffAdding'
 import Materials from '../pages/AdminPages/Materials/Materials'
 import ProjectLists from '../pages/AdminPages/Project/ProjectLists'
 import LabourAttendance from '../pages/AdminPages/Office/LabourAttendance'
+import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
+import CompletedBills from '../pages/AdminPages/Office/CompletedBills'
 import StaffAttendance from '../pages/AdminPages/Office/StaffAttendance'
 import UtilityBill from '../pages/AdminPages/Office/UtilityBill'
 import { useCookies } from 'react-cookie';
@@ -25,10 +28,13 @@ import SingleviewContract from '../pages/AdminPages/Contract/SingleviewContract'
 import Singleviewproject from '../pages/AdminPages/Project/Singleviewproject'
 import SingleViewAttendance from '../pages/AdminPages/Labour/SingleViewAttendance'
 import ViewSalary from '../pages/AdminPages/ViewSalary/ViewSalary'
+import SalaryHistoryDisplay from '../pages/AdminPages/ViewSalary/SalaryHistoryDisplay'
+import SalaryWeek from '../pages/AdminPages/ViewSalary/SalaryWeek'
 import ProfilePage from '../pages/AdminPages/Labour/ProfilePage'
 import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
 import StaffProfile from '../pages/AdminPages/Staff/StaffProfile'
 import ProjectEditing from '../pages/AdminPages/Project/ProjectEditing'
+import Completed from '../pages/AdminPages/Project/Completed'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -74,6 +80,12 @@ function AdminRoutes() {
        <Route path='/viewprofile' element={<ProfilePage/>}/>
        <Route path='/staffsalary' element={<StaffSalary/>}/>
        <Route path='/staffprofile' element={<StaffProfile/>}/>
+       <Route path='/completedprojects' element={<Completed/>}/>
+       <Route path='/completedbills' element={<CompletedBills/>}/>
+       <Route path='/billsingleview' element={<BillSingleView/>}/>
+       <Route path='/salaryhistory' element={<SalaryHistoryDisplay/>}/>
+       <Route path='/weeklysalary' element={<SalaryWeek/>}/>
+       <Route path='/editcontract' element={<ContractEdit/>}/>
     </Routes>
     </div>
   )

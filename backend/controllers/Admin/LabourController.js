@@ -405,6 +405,10 @@ const salarycalculation = async (req, res) => {
       await SalaryData.save();
 
     } else {
+
+
+     
+
       const salaryofLabour = new Salary({
         laborerId: laborId,
         records: [
@@ -423,6 +427,16 @@ const salarycalculation = async (req, res) => {
       });
 
       await salaryofLabour.save();
+
+      if( salary > LaborData.advance){
+
+        await Labour.findByIdAndUpdate({ _id: LaborData._id }, { advance: 0 });
+      }else{
+        await Labour.findByIdAndUpdate({ _id: LaborData._id },{ advance: LaborData.advance-salary});
+
+      }
+
+
     }
 
     const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
@@ -430,7 +444,7 @@ const salarycalculation = async (req, res) => {
     const latestRecord = salaryDatas.records[0];
 
 
-    await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+    await Labour.findByIdAndUpdate({ _id: LaborData._id }, { lastsalaryDate: latestRecord.calculateTo });
 
     res.status(200).json({ message: 'Salary calculated successfully' });
   
@@ -467,7 +481,7 @@ const labourAttendanceById=async(req,res)=>{
 }
 
 
-// giving advance to labour----------------------------------------------------------------------------
+// ...............................giving advance to labour --------------------------------------------
 
 const handleLabourAdvance=async(req,res)=>{
   try {
@@ -487,6 +501,110 @@ const handleLabourAdvance=async(req,res)=>{
   }
 }
 
+//...........................  salary history of labour ...............................
+
+
+const handleLabourHIstory=async(req,res)=>{
+  try {
+    const {labourId} = req.query;
+    // const {advance}=req.body;
+    const LabourSalaryData = await Salary.findOne({ laborerId: labourId }).populate('laborerId')
+      if(!LabourSalaryData){
+        res.json({message:"No labour found"})
+      }
+    
+       res.status(200).json({ message: "successfull",LabourSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+//...........................  salary history of all labour ...............................
+
+const handleAllLabourHIstory = async (req, res) => {
+  try {
+    // const {labourId} = req.query;
+    // const {advance}=req.body;
+    const LabourSalaryData = await Salary.find().populate('laborerId');
+    
+    if (!LabourSalaryData) {
+      res.json({ message: "No labour found" });
+    }
+
+    const updatedLabourSalaryData = LabourSalaryData.map((labour) => {
+      if (labour.records.length > 0) {
+        const sortedRecords = labour.records.sort((a, b) =>
+          new Date(b.date) - new Date(a.date)
+        );
+        const latestRecord = sortedRecords[0];
+        labour.records = [latestRecord];
+      }
+      return labour;
+    }); // Closing parenthesis should be here
+
+    res.status(200).json({ message: "successfull", updatedLabourSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+// ............................. attendace edit .........................................
+
+
+const labourAttendanceEdit = async (req, res) => {
+
+  try {
+    // console.log('came', req.body);
+    
+    const {labourId, status } = req.body;
+
+    const currentDate = new Date();
+    const startOfDay = new Date(currentDate);
+
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(currentDate);
+
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const attendanceRecords = await Attendance.find({
+      date: { $gte: startOfDay, $lt: endOfDay },
+    });
+
+    // console.log(attendanceRecords);
+
+    attendanceRecords.forEach(async (record) => {
+      const matchingRecord = record.records.find(
+        (r) => r.laborerId == labourId
+      );
+      // console.log(matchingRecord);
+
+      if (matchingRecord) {
+        matchingRecord.status = status;
+      }
+    });
+
+    const updatedRecords = await Promise.all(
+      attendanceRecords.map((record) => record.save())
+      );
+
+      // console.log(updatedRecords);
+
+    res.status(200).json({message: "successfull", updatedRecords });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+
     module.exports={handleLabourAdding,
       handleLabourDetails,
       handleLabourById,
@@ -495,6 +613,8 @@ const handleLabourAdvance=async(req,res)=>{
       salarycalculation,
       labourAttendanceById,
       handleAttendanceList,
-      handleLabourAdvance
-    
+      handleLabourAdvance,
+      handleLabourHIstory,
+      handleAllLabourHIstory,
+      labourAttendanceEdit
     }

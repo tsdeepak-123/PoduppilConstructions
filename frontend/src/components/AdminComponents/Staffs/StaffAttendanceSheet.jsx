@@ -20,8 +20,8 @@ const StaffAttendanceSheet = () => {
       }
       const fetchAttendance=async()=>{
         const response= await axiosAdmin.get("staffattendanceList");
-        console.log(response?.data);
-        SetAttendanceData(response?.data.StaffAttendance)
+        console.log(response?.data?.StaffAttendance);
+        SetAttendanceData(response?.data?.StaffAttendance)
       }
 
       console.log(attendanceData);

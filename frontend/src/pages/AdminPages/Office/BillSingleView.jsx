@@ -1,16 +1,16 @@
 import React from 'react'
 import Header from '../../../components/AdminComponents/Header/Header'
 import Footer from '../../../components/AdminComponents/Footer/Footer'
-import MaterialDetails from '../../../components/AdminComponents/Materials/MaterialDetails'
+import BillSingle from '../../../components/AdminComponents/Office/BillSingle'
 
-function Materials() {
+function BillSingleView() {
   return (
     <div>
-        <Header/>
-        <MaterialDetails/>
+        <Header headers="Bill Details"/> 
+        <BillSingle/>
         <Footer/>
     </div>
   )
 }
 
-export default Materials
+export default BillSingleView

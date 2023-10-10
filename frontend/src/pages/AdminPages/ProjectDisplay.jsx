@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../../components/AdminComponents/Header/Header'
 import Footer from '../../components/AdminComponents/Footer/Footer'
 import Project from '../../components/AdminComponents/Project/Project'
+import Completed from './Project/Completed'
 
 function ProjectDisplay() {
   return (

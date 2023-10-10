@@ -40,5 +40,11 @@ adminRoute.post('/labouradvance',handleLabourAdvance)
 adminRoute.post('/staffadvance',handleStaffAdvance)
 adminRoute.post('/addbills',upload.fields([{ name: 'photo', maxCount: 1 }]),handleBillAdding)
 adminRoute.get('/billslist',handleBillDetails)
+adminRoute.get('/laboursalaryhistory',handleLabourHIstory)
+adminRoute.get('/alllaboursalaryhistory',handleAllLabourHIstory)
+adminRoute.post('/labourAttendanceEdit',labourAttendanceEdit)
+adminRoute.post('/EditContract',handleEditContract)
+adminRoute.post('/stafffAttendanceEdit',stafffAttendanceEdit)
+adminRoute.get('/allStaffsalaryhistory',handleAllStaffHIstory)
 
 module.exports=adminRoute

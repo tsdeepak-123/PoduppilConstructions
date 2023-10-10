@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import TextFields from '../../CommonComponents/TextFields/TextFields'
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
@@ -7,8 +7,11 @@ import Dropdown from '../../../components/CommonComponents/Dropdown/Dropdown'
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 
 
-function AddContract() {
+function EditContract() {
   const navigate = useNavigate();
+  const location=useLocation()
+  console.log(location?.state?.data,'location data came in this page ');
+
   const [projectname,setProjectName]=useState("")
   const [Contractwork,setContractwork]=useState("")
   const [Contractorname,setContractorname]=useState("")
@@ -87,4 +90,4 @@ function AddContract() {
   );
 }
 
-export default AddContract;
+export default EditContract;

@@ -109,23 +109,25 @@ const formattedDate = `${day} / ${month} / ${year}`;
 
       </div>
 
-   { LabourData?.salary!=0 && LabourData?.advance ? <div class="bg-white p-6 rounded-lg shadow-lg">
+   {/* { LabourData?.balance ? 
+   <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
-        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.salary}-{LabourData?.advance} </p>
+      
       <br/>
-        <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.updatedSalary}</p>
-      </div>:''}
+      {LabourData?.balance&&<p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.balance}</p>}
+      </div>
+       :''}  */}
     
      {LabourData?.lastweek ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total This Week</h2>
+        <h2 class="text-lg font-semibold mb-2">Salary</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.lastweek}</p>
       </div> :''}
      {LabourData?.advance || LabourData?.advance==0 ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total Weekly advance</h2>
+        <h2 class="text-lg font-semibold mb-2">Advance</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.advance}</p>
       </div> :''}
      {LabourData?.balance ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total Weekly Balance</h2>
+        <h2 class="text-lg font-semibold mb-2">Balance</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.balance}</p>
       </div> :''}
 

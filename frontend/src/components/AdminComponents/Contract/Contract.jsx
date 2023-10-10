@@ -30,8 +30,13 @@ function Contract() {
   }, []);
 
   const nav=(id)=>{
-    console.log(id);
+    // console.log(id);
     navigate('/admin/contractview',{ state: { id } })
+  }
+
+  const editpage=(data)=>{
+    // console.log(id);
+    navigate('/admin/editcontract',{ state: { data } })
   }
   return (
     <>
@@ -90,7 +95,7 @@ function Contract() {
                    <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id)}>
                      View
                    </td>
-                   <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                   <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon onClick={()=>editpage(data)} className="text-yellow-600"/>
                   </td>
                </tr>
             )

@@ -1,10 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import ReturnButton from "../../CommonComponents/Return/ReturnButton"
 
-
-function ProjectList() {
-
+function Completed() {
   return (
     <>
     <ReturnButton/>
@@ -15,10 +12,7 @@ function ProjectList() {
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Project name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Total Parchased
+                    bill name
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Details
@@ -27,10 +21,8 @@ function ProjectList() {
         </thead>
         <tbody>
             <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> 
-                </th>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                </th>
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> 
+                </td>
                 <td class="px-6 py-4 text-blue-500 cursor-pointer">
                     view
                 </td>
@@ -44,4 +36,4 @@ function ProjectList() {
   )
 }
 
-export default ProjectList
+export default Completed
