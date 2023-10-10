@@ -484,6 +484,93 @@ const handleStaffAdvance=async(req,res)=>{
   }
 }
 
+//..................... staff attendance edit ......................................................
+
+
+
+
+const stafffAttendanceEdit = async (req, res) => {
+
+  try {
+    // console.log('came', req.body);
+    
+    const {staffId, status } = req.body;
+
+    const currentDate = new Date();
+    const startOfDay = new Date(currentDate);
+
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(currentDate);
+
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const attendanceRecords = await Staffattendance.find({
+      date: { $gte: startOfDay, $lt: endOfDay },
+    });
+
+    // console.log(attendanceRecords);
+
+    attendanceRecords.forEach(async (record) => {
+      const matchingRecord = record.records.find(
+        (r) => r.StaffId == staffId
+      );
+      // console.log(matchingRecord);
+
+      if (matchingRecord) {
+        matchingRecord.status = status;
+      }
+    });
+
+    const updatedRecords = await Promise.all(
+      attendanceRecords.map((record) => record.save())
+      );
+
+      // console.log(updatedRecords);
+
+    res.status(200).json({message: "successfull", updatedRecords });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+//...........................  salary history of all labour ...............................
+
+const handleAllStaffHIstory = async (req, res) => {
+  try {
+    // const {labourId} = req.query;
+    // const {advance}=req.body;
+    const StaffSalaryData = await StaffSalary.find().populate('StaffId');
+    
+    if (!StaffSalaryData) {
+      res.json({ message: "No staff found" });
+    }
+
+    const updatedStaffSalaryData = StaffSalaryData.map((staff) => {
+      if (staff.records.length > 0) {
+        const sortedRecords = staff.records.sort((a, b) =>
+          new Date(b.date) - new Date(a.date)
+        );
+        const latestRecord = sortedRecords[0];
+        staff.records = [latestRecord];
+      }
+      return staff;
+    }); // Closing parenthesis should be here
+
+    res.status(200).json({ message: "successfull", updatedStaffSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
 
 module.exports = {
   handleStaffAdding,
@@ -493,5 +580,7 @@ module.exports = {
   salarycalculationofStaff,
   salarycalculationforStaff,
   handleAttendanceListofStaff,
-  handleStaffAdvance
+  handleStaffAdvance,
+  stafffAttendanceEdit,
+  handleAllStaffHIstory
 };

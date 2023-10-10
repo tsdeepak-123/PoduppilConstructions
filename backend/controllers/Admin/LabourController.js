@@ -481,7 +481,7 @@ const labourAttendanceById=async(req,res)=>{
 }
 
 
-// giving advance to labour----------------------------------------------------------------------------
+// ...............................giving advance to labour --------------------------------------------
 
 const handleLabourAdvance=async(req,res)=>{
   try {
