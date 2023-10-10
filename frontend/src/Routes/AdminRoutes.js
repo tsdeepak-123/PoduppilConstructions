@@ -28,6 +28,7 @@ import ViewSalary from '../pages/AdminPages/ViewSalary/ViewSalary'
 import ProfilePage from '../pages/AdminPages/Labour/ProfilePage'
 import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
 import StaffProfile from '../pages/AdminPages/Staff/StaffProfile'
+import ProjectEditing from '../pages/AdminPages/Project/ProjectEditing'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -58,6 +59,7 @@ function AdminRoutes() {
        <Route path='/addcontract' element={<ContractAdding/>}/>
        <Route path='/addbills' element={<Addbills/>}/>
        <Route path='/addproject' element={<ProjectAdding/>}/>
+       <Route path='/editproject' element={<ProjectEditing/>}/>{/*edited*/}
        <Route path='/addstaff' element={<StaffAdding/>}/>
        <Route path='/projectlist' element={<ProjectLists/>}/>
        

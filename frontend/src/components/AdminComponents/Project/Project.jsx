@@ -12,6 +12,13 @@ function Project() {
         navigate('/admin/addproject')
     }
 
+    //editing project data
+
+    const handleEdit = (projectData) => {
+      navigate(`/admin/editproject`, { state: { projectData } });
+    };
+    
+
     
       // fetching data from backend
   const fetchData = async () => {
@@ -79,7 +86,7 @@ function Project() {
                 <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id)}>
                   View
                 </td>
-                <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon onClick={()=>{handleEdit(data)}} className="text-yellow-600"/>
                   </td>
             </tr>
             )
