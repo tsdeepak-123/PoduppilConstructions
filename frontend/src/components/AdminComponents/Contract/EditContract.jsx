@@ -8,6 +8,7 @@ import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 
 
 function EditContract() {
+
   const navigate = useNavigate();
   const location=useLocation()
   console.log(location?.state?.data,'location data came in this page ');
@@ -25,6 +26,23 @@ function EditContract() {
   const [phone,setPhone] = useState('')
   const [date,setDate] = useState('')
   const [projectData,setProjectData] = useState('')
+  
+   useEffect(()=>{
+    const formattedDate = new Date(location?.state?.data?.date).toISOString().split('T')[0]
+    setContractorname(location?.state?.data?.Contractorname)
+    setProjectName(location?.state?.data?.projectname)
+    setContractwork(location?.state?.data?.Contractwork)
+    settotallabour(location?.state?.data?.totallabour)
+    setTotalhelper(location?.state?.data?.totalhelper)
+    setDetails(location?.state?.data?.Details)
+    setStatus(location?.state?.data?.status)
+    setAmount(location?.state?.data?.Amount)
+    setPaymentdetails(location?.state?.data?.Paymentdetails)
+    setPhone(location?.state?.data?.phone)
+    setDate(formattedDate)
+    setProjectData(location?.state?.data?.projectData)
+
+  },[])
 
   const handleDataReceived = (projectname) => {
     setProjectName(projectname)
@@ -72,16 +90,17 @@ function EditContract() {
       <div className="ms-4 sm:mb-0 mb-4">
       <Dropdown projects={projectData} onDataPassed={handleDataReceived}/>
       </div>  
-      <TextFields name="Contract work name" onChange={(e) => {setContractwork(e.target.value)}} type="text"/>
-      <TextFields name="Contractor name"  onChange={(e) => {setContractorname(e.target.value)}} type="text"/>
-      <TextFields name="Contractor phone"  onChange={(e) => {setPhone(e.target.value)}} type="number"/>
-      <TextFields name="Total main labours" onChange={(e) => {settotallabour(e.target.value)}} type="number"/>
-      <TextFields name="Total helpers" onChange={(e) => {setTotalhelper(e.target.value)}} type="number"/>
-      <TextFields name="Other details"  onChange={(e) => {setDetails(e.target.value)}} type="text"/>
-      <TextFields name="Work status"  onChange={(e) => {setStatus(e.target.value)}}type="text"/> 
-      <TextFields name="Contraction Amount"  onChange={(e) => {setAmount(e.target.value)}} type="text"/> 
-      <TextFields name="Payment details"  onChange={(e) => {setPaymentdetails(e.target.value)}} type="text"/> 
-      <TextFields name="date" type="date"  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
+      
+      <TextFields name="Contract work name"  value={Contractwork} onChange={(e) => {setContractwork(e.target.value)}} type="text"/>
+      <TextFields name="Contractor name" value={Contractorname} onChange={(e) => {setContractorname(e.target.value)}} type="text"/>
+      <TextFields name="Contractor phone" value={phone} onChange={(e) => {setPhone(e.target.value)}} type="number"/>
+      <TextFields name="Total main labours" value={totallabour} onChange={(e) => {settotallabour(e.target.value)}} type="number"/>
+      <TextFields name="Total helpers" value={totalhelper} onChange={(e) => {setTotalhelper(e.target.value)}} type="number"/>
+      <TextFields name="Other details" value={Details} onChange={(e) => {setDetails(e.target.value)}} type="text"/>
+      <TextFields name="Work status" value={status} onChange={(e) => {setStatus(e.target.value)}}type="text"/> 
+      <TextFields name="Contraction Amount" value={Amount} onChange={(e) => {setAmount(e.target.value)}} type="text"/> 
+      <TextFields name="Payment details" value={Paymentdetails}  onChange={(e) => {setPaymentdetails(e.target.value)}} type="text"/> 
+      <TextFields name="date" type="date" value={date}  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
     <div className="flex justify-center mt-3">
           <Buttons name="ADD CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
         </div>

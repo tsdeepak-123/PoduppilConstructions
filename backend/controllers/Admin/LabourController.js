@@ -583,6 +583,9 @@ const labourAttendanceEdit = async (req, res) => {
 
       if (matchingRecord) {
         matchingRecord.status = status;
+      } else {
+
+        record.records.push({laborerId:labourId,status});
       }
     });
 

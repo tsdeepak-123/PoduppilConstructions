@@ -498,13 +498,15 @@ const stafffAttendanceEdit = async (req, res) => {
     // console.log(attendanceRecords);
 
     attendanceRecords.forEach(async (record) => {
-      const matchingRecord = record.records.find(
-        (r) => r.StaffId == staffId
-      );
-      // console.log(matchingRecord);
+      const matchingRecord = record.records.find((r) => r.StaffId == staffId);
 
       if (matchingRecord) {
         matchingRecord.status = status;
+      } else {
+        // console.log('came');
+
+          record.records.push({ StaffId:staffId, status });
+        
       }
     });
 
