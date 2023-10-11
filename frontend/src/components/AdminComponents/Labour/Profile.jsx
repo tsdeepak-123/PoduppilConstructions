@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { axiosAdmin } from "../../../Api/Api";
 import { useNavigate } from "react-router-dom";
 import dateFormat from "../../../Validation/FormatDate";
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
+import AttendanceEdit from "../Attendance/AttendanceEdit";
+
 function Profile() {
-  const navigate = useNavigate();
+
   const [LabourData, setLabourData] = useState();
   const location = useLocation();
   const id = location?.state?.id;
@@ -23,10 +25,6 @@ function Profile() {
     }
   };
 
-  const handleBackArrowClick = () => {
-    navigate(-1);
-  };
-
   console.log(LabourData, "LabourData");
   //data displayin when mounting
   useEffect(() => {
@@ -36,14 +34,14 @@ function Profile() {
   const date = dateFormat(LabourData?.date);
   return (
     <>
-      <div className="flex justify-start mt-40">
-        <KeyboardReturnIcon
-          className="ms-14 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
+      <ReturnButton/>
       <>
+     
+      
         <div class="container mx-auto my-5 p-5">
+        <div className="flex justify-end">
+        <AttendanceEdit  labourData={LabourData}/>
+        </div>
           <div class="md:flex no-wrap md:-mx-2">
             <div class="w-full mx-2">
               <div class="bg-white p-3 shadow-sm rounded-sm">

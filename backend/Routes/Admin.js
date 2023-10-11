@@ -44,7 +44,7 @@ adminRoute.get('/laboursalaryhistory',handleLabourHIstory)
 adminRoute.get('/alllaboursalaryhistory',handleAllLabourHIstory)
 adminRoute.post('/labourAttendanceEdit',labourAttendanceEdit)
 adminRoute.post('/EditContract',handleEditContract)
-adminRoute.post('/stafffAttendanceEdit',stafffAttendanceEdit)
+adminRoute.post('/staffAttendanceEdit',stafffAttendanceEdit)
 adminRoute.get('/allStaffsalaryhistory',handleAllStaffHIstory)
 
 module.exports=adminRoute

@@ -454,15 +454,15 @@ const salarycalculationforStaff = async (req, res) => {
 
 const handleStaffAdvance=async(req,res)=>{
   try {
-    const staffId = req.query.staffId;
+    const id = req.query.id;
     const {advance}=req.body;
-    const staffData = await Staff.findById({ _id: staffId });
+    const staffData = await Staff.findById({ _id: id });
       if(!staffData){
         res.json({message:"No staff found"})
       }
      const updatedAdvance=staffData.advance + parseFloat(advance)
     //  console.log(updatedAdvance);
-       await Staff.updateOne({_id:staffId},{$set:{advance:updatedAdvance}})
+       await Staff.updateOne({_id:id},{$set:{advance:updatedAdvance}})
        res.json({ message: "Advance updated successfully" });
   } catch (error) {
     console.error("Error updating advance:", error);

@@ -1,12 +1,10 @@
-import React,{useEffect, useState} from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { axiosAdmin } from '../../../Api/Api'
 import Buttons from '../../CommonComponents/Button/Buttons';
-
-
 
 const modalStyle = {
     position: 'absolute',
@@ -19,16 +17,14 @@ const modalStyle = {
     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)', // Adjust box shadow
     p: 4,
   };
-
-function AttendanceEdit({labourData}) {
-
+function AttendanceEditStaff({staffData}) {
     const [open, setOpen] = useState(false);
     const [selectedValues, setSelectedValues] = useState({});
 
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
  
-    console.log(labourData);
+    console.log(staffData);
     const handleRadioButtonChange = (event, id) => {
       const { value } = event.target;
   
@@ -37,7 +33,7 @@ function AttendanceEdit({labourData}) {
     const handleSubmit=async(e)=>{
       try {
         e.preventDefault()
-        const response=await axiosAdmin.post('labourAttendanceEdit',{status:selectedValues,labourId:labourData?._id})
+        const response=await axiosAdmin.post('staffAttendanceEdit',{status:selectedValues,staffId:staffData?._id})
         console.log(response?.data?.messege);
         handleClose()
       } catch (error) {
@@ -45,7 +41,6 @@ function AttendanceEdit({labourData}) {
       }
      
     }
-   
   return (
     <>
     <Button onClick={handleOpen} variant="outlined" color="primary">
@@ -65,18 +60,18 @@ function AttendanceEdit({labourData}) {
         </div>
         <div className='mb-4'>
         <div
-                  key={labourData?._id}
+                  key={staffData?._id}
                   className="p-4 flex gap-4 w-auto rounded-2xl shadow-xl"
                 >
                   <div className="w-[40%]">
                     <img
                       className="w-16 rounded-full h-16"
-                      src={labourData?.photo}
+                      src={staffData?.photo}
                       alt="labour photo"
                     />
                     <div>
                       <p className="text-lg font-medium mt-4 flex">
-                        {labourData?.name}
+                        {staffData?.name}
                       </p>
                     </div>
                   </div>
@@ -85,11 +80,11 @@ function AttendanceEdit({labourData}) {
                       <label>
                         <input
                           type="radio"
-                          name={`attendance_${labourData?._id}`}
+                          name={`attendance_${staffData?._id}`}
                           value="present"
                           checked={selectedValues === "present"}
                           onChange={(event) =>
-                            handleRadioButtonChange(event,labourData?._id)
+                            handleRadioButtonChange(event,staffData?._id)
                           }
                         />
                         <span className="text-xs font-medium">PRESENT</span>
@@ -99,11 +94,11 @@ function AttendanceEdit({labourData}) {
                       <label>
                         <input
                           type="radio"
-                          name={`attendance_${labourData?._id}`}
+                          name={`attendance_${staffData?._id}`}
                           value="halfday"
                           checked={selectedValues === "halfday"}
                           onChange={(event) =>
-                            handleRadioButtonChange(event,labourData?._id)
+                            handleRadioButtonChange(event,staffData?._id)
                           }
                         />
                         <span className="text-xs font-medium">HALF_DAY</span>
@@ -113,11 +108,11 @@ function AttendanceEdit({labourData}) {
                       <label>
                         <input
                           type="radio"
-                          name={`attendance_${labourData?._id}`}
+                          name={`attendance_${staffData?._id}`}
                           value="absent"
                           checked={selectedValues === "absent"}
                           onChange={(event) =>
-                            handleRadioButtonChange(event, labourData?._id)
+                            handleRadioButtonChange(event, staffData?._id)
                           }
                         />
                         <span className="text-xs font-medium">ABSENT</span>
@@ -135,4 +130,4 @@ function AttendanceEdit({labourData}) {
   )
 }
 
-export default AttendanceEdit
+export default AttendanceEditStaff
