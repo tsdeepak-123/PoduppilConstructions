@@ -132,6 +132,7 @@
 // export default AttendanceSingleView;
 import React, { useEffect, useState } from 'react';
 import { axiosAdmin } from '../../../Api/Api';
+import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 
 function AttendanceSingleView() {
   const currentDate = new Date();
@@ -187,6 +188,8 @@ function AttendanceSingleView() {
   };
 
   return (
+    <>
+    <ReturnButton/>
     <div className="calendar">
       <div className="text-center font-semibold mb-2">
         {monthNames[currentMonth]} {currentDate.getFullYear()}
@@ -215,6 +218,7 @@ function AttendanceSingleView() {
         })}
       </div>
     </div>
+    </>
   );
 }
 

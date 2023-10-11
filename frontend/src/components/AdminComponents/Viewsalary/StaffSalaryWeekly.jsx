@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import { axiosAdmin } from "../../../Api/Api";
 
-function WeeklySalary() {
-  const [salaryData, setSalaryData] = useState();
-  const fetch = async () => {
-    try {
-      const response = await axiosAdmin.get("alllaboursalaryhistory");
-      console.log(response?.data.updatedLabourSalaryData);
-      setSalaryData(response?.data.updatedLabourSalaryData);
-    } catch (error) {}
-  };
-  console.log(salaryData);
-
-  useEffect(() => {
-    fetch();
-  }, []);
-
+function StaffSalaryWeekly() {
+    const [salaryData, setSalaryData] = useState();
+    const fetch = async () => {
+      try {
+        const response = await axiosAdmin.get("allStaffsalaryhistory");
+        console.log(response?.data.updatedStaffSalaryData);
+        setSalaryData(response?.data.updatedStaffSalaryData);
+      } catch (error) {}
+    };
+    console.log(salaryData);
+  
+    useEffect(() => {
+      fetch();
+    }, []);
   return (
     <>
       <ReturnButton />
@@ -62,7 +61,7 @@ function WeeklySalary() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default WeeklySalary;
+export default StaffSalaryWeekly

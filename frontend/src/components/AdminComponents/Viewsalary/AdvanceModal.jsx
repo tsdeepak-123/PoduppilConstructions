@@ -18,11 +18,11 @@ const modalStyle = {
   p: 4,
 };
 
-function AdvancedModal({labourId,fetchData}) {
+function AdvancedModal({labourId,staffId}) {
   const [open, setOpen] = useState(false);
   const [advance, setAdvance] = useState()
    
-  console.log(labourId);
+  console.log(labourId,staffId);
 
   const handleAdvanceChange=(e)=>{
     setAdvance(e.target.value)
@@ -30,12 +30,12 @@ function AdvancedModal({labourId,fetchData}) {
 
   const handleSubmit=async(e)=>{
     e.preventDefault()
-   const response= await axiosAdmin.post(`labouradvance?labourId=${labourId}`,{advance})
+    const id = labourId ? labourId : staffId;
+    const endpoint = labourId ? 'labouradvance' : 'staffadvance'; 
+   const response= await axiosAdmin.post(`${endpoint}?id=${id}`,{advance})
    console.log(response.data,'res.data canmme');
    if(response){
-     fetchData()
      handleClose()
-
    }
   }
 

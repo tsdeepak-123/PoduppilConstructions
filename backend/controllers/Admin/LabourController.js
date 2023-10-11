@@ -485,15 +485,15 @@ const labourAttendanceById=async(req,res)=>{
 
 const handleLabourAdvance=async(req,res)=>{
   try {
-    const labourId = req.query.labourId;
+    const id = req.query.id;
     const {advance}=req.body;
-    const LabourData = await Labour.findById({ _id: labourId });
+    const LabourData = await Labour.findById({ _id: id });
       if(!LabourData){
         res.json({message:"No labour found"})
       }
      const updatedAdvance=LabourData.advance + parseFloat(advance)
     //  console.log(updatedAdvance);
-       await Labour.updateOne({_id:labourId},{$set:{advance:updatedAdvance}})
+       await Labour.updateOne({_id:id},{$set:{advance:updatedAdvance}})
        res.json({ message: "Advance updated successfully" });
   } catch (error) {
     console.error("Error updating advance:", error);

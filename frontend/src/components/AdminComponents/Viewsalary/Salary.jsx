@@ -132,7 +132,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
       </div> :''}
 
      {LabourData?.updatedSalary ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Last Salary Total</h2>
+        <h2 class="text-lg font-semibold mb-2">Amount to be paid</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.updatedSalary}</p>
       </div> :''}
 

@@ -6,6 +6,7 @@ import { axiosAdmin } from '../../../Api/Api'
 import{LuIndianRupee}from 'react-icons/lu'
 import TextFields from '../../CommonComponents/TextFields/TextFields';
 import AdvanceModal from './AdvanceModal';
+import ReturnButton from '../../CommonComponents/Return/ReturnButton';
 
 function StaffSalarys() {
   const location=useLocation()
@@ -71,12 +72,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
   }
   return (
     <>
-         <div className="flex justify-start mt-40">
-        <KeyboardReturnIcon
-          className="ms-14 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
+      <ReturnButton/>
     
     <div class="container mx-auto p-4">
     <div class="flex items-center justify-center gap-5 mb-4">
@@ -89,7 +85,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
       </div>
     </div>
      <div className='flex justify-end'>
-      <AdvanceModal labourId={StaffData?.StaffData?._id}/>
+      <AdvanceModal staffId={StaffData?.StaffData?._id}/>
      </div>
     <h1 class="text-2xl font-bold mb-4">Salary Details</h1>
 
