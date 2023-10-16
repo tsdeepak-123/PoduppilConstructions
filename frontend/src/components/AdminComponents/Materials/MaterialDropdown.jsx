@@ -10,7 +10,7 @@ function MaterialDropdown(materials,onDataPassed) {
     const handleChange = (e) => {
       const selectedMaterialname=e.target.value
       setMaterialname(selectedMaterialname);
-      onDataPassed(selectedMaterialname)
+      materials.onDataPassed(selectedMaterialname)
     };
      
     console.log(materials,"iammmmmmmmmmm");
@@ -18,7 +18,7 @@ function MaterialDropdown(materials,onDataPassed) {
   return (
     <>
     {
-      materials && materials.length>0 ?(
+      materials?.materials?.length>0 ?(
         
         <Box className='w-[380px]'>
         <FormControl fullWidth>
@@ -31,8 +31,8 @@ function MaterialDropdown(materials,onDataPassed) {
             onChange={handleChange}
           >
             {
-            materials.map((item)=>
-            <MenuItem value={item.name}>{item.name}</MenuItem>
+            materials?.materials?.map((item)=>
+            <MenuItem value={item?.name}>{item?.name}</MenuItem>
             )
             }
            
