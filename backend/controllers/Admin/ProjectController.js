@@ -1,5 +1,5 @@
 const Project = require("../../models/ProjectModel");
-
+const cloudinary = require('../../Middleware/Cloudinary')
 const Labour = require("../../models/LabourModal");
 
 // This function handles Project Adding to database, taking in a request (req) and a response (res) as parameters.
@@ -134,11 +134,11 @@ const ProjectListById =async(req,res)=>{
 
 const handlePhotoAdding = async (req, res) => {
   try {
-    console.log("iam fileeeeeeeeeeeeeeeeeeeeeees",req.files);
-    console.log(req.query.projectId);
+    console.log("iam fileeeeeeeeeeeeeeeeeeeeeees",req.files.photos);
+    // console.log(req.query.projectId);
     const projectId = req.query.projectId;
     const findProject = await Project.findById(projectId); // Use findById instead of find
-     console.log("findedddddddd",findProject);
+    //  console.log("findedddddddd",findProject);
     if (!findProject) {
       return res.json({ message: "Can't find project", success: false });
     }
@@ -155,7 +155,8 @@ const handlePhotoAdding = async (req, res) => {
     const photoUrls = [];
 
     // Upload each photo to Cloudinary and store the secure URLs
-    for (const photo of req.files) {
+    for (const photo of req.files.photos) {
+      console.log(photo.path,"nooooooooooooooooooooo");
       const photoUpload = await cloudinary.uploader.upload(photo.path);
       if (!photoUpload.secure_url) {
         return res.json({

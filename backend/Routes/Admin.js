@@ -112,7 +112,7 @@ adminRoute.post("/staffAttendanceEdit", stafffAttendanceEdit);
 adminRoute.get("/allStaffsalaryhistory", handleAllStaffHIstory);
 adminRoute.post(
   "/addprojectphotos",
-  upload.array("photos",2),
+  upload.fields([{ name: "photos", maxCount: 2 }]),
   handlePhotoAdding
 );
 adminRoute.post("/addmaterial", handleMaterialAdding);
