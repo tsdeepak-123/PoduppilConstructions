@@ -33,7 +33,7 @@ function PurchaseMaterial() {
       const response = await axiosAdmin.get("allmateriallist");
       // console.log(response?.data?.allMaterials);
 
-      setMaterialData(response?.data?.allMaterials);
+      setMaterialData(response?.data?.allMaterials)
     } catch (error) {
       console.log(error);
     }
