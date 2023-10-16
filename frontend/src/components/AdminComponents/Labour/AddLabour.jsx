@@ -4,6 +4,7 @@ import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
+import TextField from "@mui/material/TextField";
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -17,7 +18,7 @@ function AddLabour() {
   const [pincode,setPincode] = useState('')
   const [salary,setSalary] = useState('')
   const [date,setDate] = useState('')
-  const [idproof,setIdproof] = useState(null)
+  const [idproof,setIdproof] = useState([])
   const [photo,setphoto] = useState(null)
   const navigate= useNavigate()
   const handleBackArrowClick=()=>{
@@ -61,10 +62,8 @@ function AddLabour() {
     setAdhar(e.target.value)
   }
   const handleproofChange=(e)=>{
-    // setIdproof(e.target.value)
-    console.log(e.target.files[0],'tagetfile');
-    const file = e.target.files[0];
-    setIdproof(file)
+    const selectedPhotos = e.target.files;
+    setIdproof(selectedPhotos)
   }
 
 
@@ -143,7 +142,16 @@ function AddLabour() {
       <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
       <TextFields name="photo" type="file"  input={true} onChange={handleImageChange}/>
-      <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
+      {/* <TextFields name="IDProof" type="file" input={true} inputProps={{ multiple: true }} onChange={handleproofChange} /> */}
+      <TextField
+              type="file"
+              label="idproof"
+              InputLabelProps={{shrink:true}}
+              inputProps={{ multiple: true }} // Allow multiple file selection
+              className='sm:w-96 w-80'
+              onChange={handleproofChange}
+              
+            />
       <>
       <Buttons click={handleSubmit} name="ADD LABOUR" classes={'sm:w-96'} />
       </>  

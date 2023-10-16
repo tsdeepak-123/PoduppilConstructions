@@ -6,6 +6,7 @@ import Buttons from '../../CommonComponents/Button/Buttons';
 import { useState } from 'react'
 import { axiosAdmin } from '../../../Api/Api'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
+import TextField from "@mui/material/TextField";
 
 function AddStaff() {
     const navigate= useNavigate()
@@ -22,7 +23,7 @@ function AddStaff() {
     const [pincode,setPincode] = useState('')
     const [salary,setSalary] = useState('')
     const [date,setDate] = useState('')
-    const [idproof,setIdproof] = useState(null)
+    const [idproof,setIdproof] = useState([])
     const [photo,setphoto] = useState(null)
 
     const handleNameChange=(e)=>{
@@ -90,9 +91,7 @@ function AddStaff() {
     // }
 
     const handleproofChange=(e)=>{
-      // setIdproof(e.target.value)
-      console.log(e.target.files[0],'tagetfile');
-      const file = e.target.files[0];
+      const file = e.target.files
       setIdproof(file)
     }
     const handleImageChange=(e)=>{
@@ -186,7 +185,16 @@ function AddStaff() {
       <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
       <TextFields name="photo" type="file" input={true} onChange={handleImageChange}/>
-      <TextFields name="IDProof" type="file" input={true} onChange={handleproofChange} />
+      {/* <TextFields name="IDProof" type="file" input={true} inputProps={{ multiple: true }} onChange={handleproofChange} /> */}
+      <TextField
+              type="file"
+              label="idproof"
+              InputLabelProps={{shrink:true}}
+              inputProps={{ multiple: true }} // Allow multiple file selection
+              className='sm:w-96 w-80'
+              onChange={handleproofChange}
+              
+            />
 
     <div className='flex justify-center mt-3'>
     {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
