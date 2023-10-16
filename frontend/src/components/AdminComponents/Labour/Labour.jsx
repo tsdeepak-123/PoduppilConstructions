@@ -9,9 +9,6 @@ function Labour() {
   const navigate = useNavigate();
   const [labourData, setLabourData] = useState();
 
-  const handleBackArrowClick = () => {
-    navigate(-1);
-  };
   const handleAddLabourClick = () => {
     navigate("/admin/addlabour");
   };

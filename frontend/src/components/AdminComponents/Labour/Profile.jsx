@@ -7,7 +7,7 @@ import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import AttendanceEdit from "../Attendance/AttendanceEdit";
 
 function Profile() {
-
+   const navigate=useNavigate()
   const [LabourData, setLabourData] = useState();
   const location = useLocation();
   const id = location?.state?.id;
@@ -32,6 +32,10 @@ function Profile() {
   }, []);
   //formatting the date
   const date = dateFormat(LabourData?.date);
+  
+  const nav =(id)=>{
+    navigate('/admin/viewprofile',{ state: {id } })
+  }
   return (
     <>
       <ReturnButton/>

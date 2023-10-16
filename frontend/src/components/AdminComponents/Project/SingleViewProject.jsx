@@ -4,6 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Buttons from '../../CommonComponents/Button/Buttons'
 import SingleView from '../../AdminComponents/Materials/SingleView'
+import PhotoAddModal from './PhotoAddModal';
 
 const SingleViewProject = () => {
   const location = useLocation();
@@ -52,7 +53,7 @@ return (
         </div>
         <div className='flex justify-end gap-4 mt-14'>
           <div>
-          <Buttons name="+ ADD PROJECT PHOTOS"/>
+          <PhotoAddModal projectId={project._id}/>
           <p className='text-green-500'>You can add two photos</p>
           </div>
           <div>

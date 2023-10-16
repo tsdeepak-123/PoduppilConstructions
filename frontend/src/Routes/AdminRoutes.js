@@ -35,6 +35,9 @@ import StaffSalary from '../pages/AdminPages/Staff/StaffSalary'
 import StaffProfile from '../pages/AdminPages/Staff/StaffProfile'
 import ProjectEditing from '../pages/AdminPages/Project/ProjectEditing'
 import Completed from '../pages/AdminPages/Project/Completed'
+import StaffWeekSalary from '../pages/AdminPages/ViewSalary/StaffWeekSalary'
+import SalaryManagement from "../pages/AdminPages/ViewSalary/SalaryManagement"
+import Purchase from '../pages/AdminPages/Materials/Purchase'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -86,6 +89,9 @@ function AdminRoutes() {
        <Route path='/salaryhistory' element={<SalaryHistoryDisplay/>}/>
        <Route path='/weeklysalary' element={<SalaryWeek/>}/>
        <Route path='/editcontract' element={<ContractEdit/>}/>
+       <Route path='/weeklystaffsalary' element={<StaffWeekSalary/>}/>
+       <Route path='/salarymanagement' element={<SalaryManagement/>}/>
+       <Route path='/purchasematerial' element={<Purchase/>}/>
     </Routes>
     </div>
   )

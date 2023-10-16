@@ -34,9 +34,7 @@ function AdvancedModal({labourId,staffId}) {
     const endpoint = labourId ? 'labouradvance' : 'staffadvance'; 
    const response= await axiosAdmin.post(`${endpoint}?id=${id}`,{advance})
    console.log(response.data,'res.data canmme');
-   if(response){
      handleClose()
-   }
   }
 
   console.log(advance);

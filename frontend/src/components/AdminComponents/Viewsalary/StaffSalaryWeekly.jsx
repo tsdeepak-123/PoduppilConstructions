@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import { axiosAdmin } from "../../../Api/Api";
+import SalaryStatusDrodown from "./SalaryStatusDrodown";
 
 function StaffSalaryWeekly() {
     const [salaryData, setSalaryData] = useState();
@@ -18,7 +19,10 @@ function StaffSalaryWeekly() {
     }, []);
   return (
     <>
-      <ReturnButton />
+          <div className="flex justify-center font-bold mt-8">
+      <h2>STAFFS SALARY</h2>
+      </div>
+
       <div className="flex justify-center mt-8">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -30,6 +34,9 @@ function StaffSalaryWeekly() {
                 <th scope="col" class="px-16 py-3">
                   Salary
                 </th>
+                <th scope="col" class="px-16 py-3">
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -40,11 +47,15 @@ function StaffSalaryWeekly() {
                 <td
                   scope="row"
                   class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                > {item?.laborerId?.name}</td>
+                > {item?.StaffId?.name}</td>
                 <td
                   scope="row"
                   class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >{item.records[0].updatedSalary}</td>
+                <td
+                  scope="row"
+                  class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                ><SalaryStatusDrodown/></td>
               </tr>
                 )):(
                     <tr>

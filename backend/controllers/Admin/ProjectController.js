@@ -130,10 +130,59 @@ const ProjectListById =async(req,res)=>{
 }
 
 
+//Here handle the project photos aading
+
+const handlePhotoAdding = async (req, res) => {
+  try {
+    console.log("iam fileeeeeeeeeeeeeeeeeeeeeees",req.files);
+    console.log(req.query.projectId);
+    const projectId = req.query.projectId;
+    const findProject = await Project.findById(projectId); // Use findById instead of find
+     console.log("findedddddddd",findProject);
+    if (!findProject) {
+      return res.json({ message: "Can't find project", success: false });
+    }
+
+
+     console.log("iam photoooooooos",req.files.photos);
+    if (!req.files || !req.files.photos|| req.files.photos.length === 0) {
+      return res.json({
+        success: false,
+        message: "At least one photo must be uploaded.",
+      });
+    }
+
+    const photoUrls = [];
+
+    // Upload each photo to Cloudinary and store the secure URLs
+    for (const photo of req.files) {
+      const photoUpload = await cloudinary.uploader.upload(photo.path);
+      if (!photoUpload.secure_url) {
+        return res.json({
+          success: false,
+          message: "Failed to upload photo",
+        });
+      }
+      photoUrls.push(photoUpload.secure_url);
+    }
+
+    console.log("urlsssssssssssssssssssss",photoUrls);
+
+    // Update the project's photos array with the new photo URLs
+    await Project.updateOne({ _id: projectId }, { $push: { photos: { $each: photoUrls } } });
+
+    res.json({ success: true, message: "Photos uploaded successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 
 
 
 
 module.exports={
-  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById
+  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById,handlePhotoAdding
 }

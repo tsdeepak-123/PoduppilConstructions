@@ -21,9 +21,6 @@ const navigate=useNavigate()
   const handleAttendanceButton=()=>{
     navigate('/admin/attendancesingle')
   }
-  const handleBackArrowClick = () => {
-    navigate('/admin/labourdetails');
-  };
     // fetching data from backend
     const fetchData = async () => {
       try {
@@ -106,28 +103,28 @@ const formattedDate = `${day} / ${month} / ${year}`;
 
       </div>
 
-   { StaffData?.salary!=0 && StaffData?.advance ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
+   {/* { StaffData?.salary!=0 && StaffData?.advance ? <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-2">Salary</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.salary}-{StaffData?.advance} </p>
       <br/>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.updatedSalary}</p>
       </div>:''}
-    
+     */}
      {StaffData?.lastweek ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total This Week</h2>
+        <h2 class="text-lg font-semibold mb-2">Salary</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.lastweek}</p>
       </div> :''}
      {StaffData?.advance || StaffData?.advance==0 ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total Weekly advance</h2>
+        <h2 class="text-lg font-semibold mb-2">Advance</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.advance}</p>
       </div> :''}
      {StaffData?.balance ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Total Weekly Balance</h2>
+        <h2 class="text-lg font-semibold mb-2">Amount to be paid</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.balance}</p>
       </div> :''}
 
      {StaffData?.updatedSalary ? <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Last Salary Total</h2>
+        <h2 class="text-lg font-semibold mb-2">Amount to be paid</h2>
         <p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.updatedSalary}</p>
       </div> :''}
 
