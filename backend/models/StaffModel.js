@@ -11,7 +11,7 @@ name: { type: String },
   salary: { type: Number },
   date: { type: Date },
   lastsalaryDate: { type: Date },
-  IdProof: { type: String },
+  IdProof: [{ type: String }],
   advance:{ type: Number,required: true,default:0},
   photo: { type: String },
   address:[{

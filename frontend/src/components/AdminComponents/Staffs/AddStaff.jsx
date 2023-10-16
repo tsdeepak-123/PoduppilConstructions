@@ -123,9 +123,13 @@ function AddStaff() {
       Object.entries(LabourData).forEach(([key, value]) => {
         formData.append(key, value);
       });
-      console.log(idproof,'idproof');
+
+      for (const proof of idproof) {
+        formData.append("proof", proof);
+      }
+      // console.log(idproof,'idproof');
   
-      formData.append("proof",idproof);
+      // formData.append("proof",idproof);
       formData.append("photo",photo);
       axiosAdmin.post('addstaff',formData, {
         headers: {

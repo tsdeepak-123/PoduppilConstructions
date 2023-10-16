@@ -110,14 +110,7 @@ function Profile() {
                         <div class="px-4 py-2 font-semibold">Date of Joing</div>
                         <div class="px-4 py-2">{date}</div>
                       </div>
-                      {/* <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Email.</div>
-                      <div class="px-4 py-2">
-                        <a class="text-blue-800" href="mailto:jane@example.com"
-                          >jane@example.com</a
-                        >
-                      </div>
-                    </div> */}
+                     
                     </div>
                   </div>
                 </div>
@@ -145,8 +138,8 @@ function Profile() {
                     <div class="image overflow-hidden py-3 px-3">
                       <img
                         class="h-[250px] w-[500px] mx-auto rounded-lg"
-                        src={LabourData?.IdProof}
-                        alt=""
+                        src={LabourData?.IdProof[0]}
+                        alt="proof1"
                       />
                     </div>
                   </div>
@@ -154,8 +147,8 @@ function Profile() {
                     <div class="image overflow-hidden py-3 px-3">
                       <img
                         class="h-[250px] w-[500px] mx-auto rounded-lg"
-                        src={LabourData?.IdProof}
-                        alt=""
+                        src={LabourData?.IdProof[1]}
+                        alt="proof2"
                       />
                     </div>
                   </div>

@@ -62,7 +62,7 @@ adminRoute.post("/signup", handleSignUp);
 adminRoute.post(
   "/addlabour",
   upload.fields([
-    { name: "proof", maxCount: 1 },
+    { name: "proof", maxCount: 2 },
     { name: "photo", maxCount: 1 },
   ]),
   handleLabourAdding
@@ -72,7 +72,7 @@ adminRoute.get("/labourbyid", handleLabourById);
 adminRoute.post(
   "/addstaff",
   upload.fields([
-    { name: "proof", maxCount: 1 },
+    { name: "proof", maxCount: 2 },
     { name: "photo", maxCount: 1 },
   ]),
   handleStaffAdding

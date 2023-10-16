@@ -64,6 +64,7 @@ function AddLabour() {
   const handleproofChange=(e)=>{
     const selectedPhotos = e.target.files;
     setIdproof(selectedPhotos)
+   
   }
 
 
@@ -110,8 +111,11 @@ function AddLabour() {
       formData.append(key, value);
     });
     console.log(idproof,'idproof');
+    for (const proof of idproof) {
+      formData.append("proof", proof);
+    }
 
-    formData.append("proof",idproof);
+    // formData.append("proof",idproof);
     formData.append("photo",photo);
     axiosAdmin.post('addlabour',formData, {
       headers: {

@@ -136,8 +136,8 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-[250px] w-[500px] mx-auto rounded-lg"
-                      src={StaffData?.IdProof}
-                      alt=""
+                      src={StaffData?.IdProof[0]}
+                      alt="proof1"
                     />
                   </div>
                 </div>
@@ -145,8 +145,8 @@ function Profile() {
                   <div class="image overflow-hidden py-3 px-3">
                     <img
                       class="h-[250px] w-[500px] mx-auto rounded-lg"
-                      src={StaffData?.IdProof}
-                      alt=""
+                      src={StaffData?.IdProof[1]}
+                      alt="proof2"
                     />
                   </div>
                 </div>
