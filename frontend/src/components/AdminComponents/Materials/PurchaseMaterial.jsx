@@ -31,7 +31,7 @@ function PurchaseMaterial() {
   const fetchMaterialData = async () => {
     try {
       const response = await axiosAdmin.get("allmateriallist");
-      console.log(response?.data?.allMaterials);
+      // console.log(response?.data?.allMaterials);
 
       setMaterialData(response?.data?.allMaterials);
     } catch (error) {
