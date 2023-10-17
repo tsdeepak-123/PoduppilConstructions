@@ -52,14 +52,27 @@ const handleStaffAdding = async (req, res) => {
         });
       }
 
-      const proofUpload = await cloudinary.uploader.upload(
-        req.files.proof[0].path
-      );
+      const proofUrls = [];
+      for (const proof of req.files.proof) {
+        console.log(proof, 'proof');
+        const proofUpload = await cloudinary.uploader.upload(proof.path);
+        if (!proofUpload.secure_url) {
+          return res.json({
+            success: false,
+            message: "Failed to upload proof or photo",
+          });
+        }
+        proofUrls.push(proofUpload.secure_url)
+      }
+
+      // const proofUpload = await cloudinary.uploader.upload(
+      //   req.files.proof[0].path
+      // );
       const photoUpload = await cloudinary.uploader.upload(
         req.files.photo[0].path
       );
 
-      if (!proofUpload.secure_url || !photoUpload.secure_url) {
+      if (!photoUpload.secure_url) {
         return res.json({
           success: false,
           message: "Failed to upload proof or photo",
@@ -70,7 +83,7 @@ const handleStaffAdding = async (req, res) => {
         name,
         age,
         phone,
-        IdProof: proofUpload.secure_url,
+        IdProof: proofUrls,
         photo: photoUpload.secure_url,
         address: {
           street,

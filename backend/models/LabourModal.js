@@ -10,7 +10,7 @@ const LabourSchema = new Schema({
   salary: { type: Number },
   date: { type: Date },
   lastsalaryDate: { type: Date },
-  IdProof: { type: String },
+  IdProof: [{ type: String }],
   photo: { type: String },
   advance:{ type: Number,required: true,default:0},
   address:[{
