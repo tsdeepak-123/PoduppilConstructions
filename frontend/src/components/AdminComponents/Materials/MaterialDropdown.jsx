@@ -10,9 +10,10 @@ function MaterialDropdown(materials,onDataPassed) {
     const handleChange = (e) => {
       const selectedMaterialname=e.target.value
       setMaterialname(selectedMaterialname);
-      materials.onDataPassed(selectedMaterialname)
+      onDataPassed(selectedMaterialname)
+      console.log(selectedMaterialname,"nameeeeeeeeeeeeeeeeeeeeeee");
     };
-     
+   
     console.log(materials,"iammmmmmmmmmm");
 
   return (

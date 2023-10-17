@@ -45,7 +45,7 @@ function AddMaterialModal() {
     const handleClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={handleOpen} variant="contained" color="success">
+      <Button onClick={handleOpen} variant="contained" className='h-8' color="success">
         +
       </Button>
       <Modal
