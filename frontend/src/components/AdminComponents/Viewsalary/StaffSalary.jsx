@@ -58,6 +58,7 @@ const formattedDate = `${day} / ${month} / ${year}`;
       const response = await axiosAdmin.post(`salaryofStaff?staffId=${location?.state?.id}&staffSalarydate=${selectedDate}`);
 
       console.log(response?.data,'response');
+      alert(response?.data?.message)
       
       window.location.reload();
   // navigate('/admin/viewsalary',{ state: {id } })
@@ -67,6 +68,28 @@ const formattedDate = `${day} / ${month} / ${year}`;
     }
 
   }
+
+   const datePortion = StaffData?.StaffData?.lastsalaryDate?.match(/^\d{4}-\d{2}-\d{2}/)[0];
+  
+  
+if (datePortion) {
+
+  const originalDate = new Date(datePortion);
+
+ 
+  originalDate.setDate(originalDate.getDate() + 1);
+
+
+  const year = originalDate.getFullYear();
+  const month = String(originalDate.getMonth() + 1).padStart(2, "0");
+  const day = String(originalDate.getDate()).padStart(2, "0");
+
+ var newDate = `${year}-${month}-${day}`;
+  console.log(newDate); 
+} else {
+  console.log("Date portion is undefined or invalid.");
+}
+
   return (
     <>
       <ReturnButton/>
@@ -138,7 +161,8 @@ const formattedDate = `${day} / ${month} / ${year}`;
         <p className='text-blue-500 cursor-pointer'>View History</p>
       </div>
       <div className='mt-6 flex flex-row gap-4'>
-        <TextFields onChange={(e) => {setselectedDate(e.target.value)}} name='Date' type='date' input={true}/>
+        {/* <TextFields onChange={(e) => {setselectedDate(e.target.value)}} name='Date' type='date' input={true}/> */}
+        <input type="date" value={selectedDate} min={newDate} onChange={(e) => {setselectedDate(e.target.value)}} />
         <Buttons click={salaryoflabour} name='Calculate salary' className='justify-center' classes={'h-14'}/>
       </div>
     </div>

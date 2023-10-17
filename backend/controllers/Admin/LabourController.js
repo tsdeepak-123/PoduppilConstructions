@@ -280,8 +280,8 @@ const salarycalculationoflabour = async (req, res) => {
       });
     });
     // console.log(attendanceStatus);
-    const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
-    if (!salaryDatas) {
+    // const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
+    // if (!salaryDatas) {
      
       const salary = LaborData?.salary * attendanceStatus?.present+ (LaborData?.salary * attendanceStatus?.halfday) / 2;
 
@@ -297,29 +297,29 @@ const salarycalculationoflabour = async (req, res) => {
       return res.json({salaryData,
         message: "salarydata not found.",
       });
-    }
+    // }
 
 
-    salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
-    const latestRecord = salaryDatas.records[0];
+    // salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
+    // const latestRecord = salaryDatas.records[0];
    
-    const salaryData = {
-      LabourData:LaborData,
-      calculateFrom: latestRecord.calculateFrom,
-      calculateTo: latestRecord.calculateTo,
-      present: latestRecord?.present??0,
-      halfday: latestRecord?.halfday??0,
-      absent: latestRecord?.absent??0,
-      salary: latestRecord.totalSalary,
-      advance: latestRecord.advance,
-      updatedSalary: latestRecord.updatedSalary,
-      basic: LaborData?.salary,
+    // const salaryData = {
+    //   LabourData:LaborData,
+    //   calculateFrom: latestRecord.calculateFrom,
+    //   calculateTo: latestRecord.calculateTo,
+    //   present: latestRecord?.present??0,
+    //   halfday: latestRecord?.halfday??0,
+    //   absent: latestRecord?.absent??0,
+    //   salary: latestRecord.totalSalary,
+    //   advance: latestRecord.advance,
+    //   updatedSalary: latestRecord.updatedSalary,
+    //   basic: LaborData?.salary,
       
      
-    };
+    // };
 
    
-    res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
+    // res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'An error occurred during salary calculation.' });
