@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { axiosAdmin } from '../../../Api/Api'
+import { useLocation } from 'react-router-dom';
 
 const modalStyle = {
     position: 'absolute',
@@ -20,6 +21,7 @@ const modalStyle = {
   
 
 function AddMaterialModal() {
+  const location=useLocation()
     const [open, setOpen] = useState(false);
     const [MaterialName, setMaterialName] = useState()
     const [MaterialRate, setMaterialRate] = useState()
@@ -37,9 +39,11 @@ function AddMaterialModal() {
       console.log(MaterialName,MaterialRate);
      const response= await axiosAdmin.post('addmaterial',{MaterialName,MaterialRate})
      console.log(response.data,'res.data canmme');
+     window.location.reload() 
        handleClose()
     }
   
+
  
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

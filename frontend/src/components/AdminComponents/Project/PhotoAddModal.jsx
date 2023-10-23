@@ -63,7 +63,7 @@ function PhotoAddModal({ projectId }) {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="outlined" color="primary">
+      <Button onClick={handleOpen} variant="contained" color="success">
         ADD PROJECT PHOTO
       </Button>
       <Modal
@@ -85,8 +85,8 @@ function PhotoAddModal({ projectId }) {
             />
           </div>
           <Button
-            variant="contained"
-            color="primary"
+            variant="contained" 
+            color="success"
             fullWidth
             onClick={handleSubmit}
           >

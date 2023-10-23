@@ -50,7 +50,7 @@ const handleMaterialList=async(req,res)=>{
 
 const handleMaterialPurchase=async(req,res)=>{
 try {
-    console.log(req.body);
+    console.log(req.body,"bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 } catch (error) {
     console.log(error);
 }

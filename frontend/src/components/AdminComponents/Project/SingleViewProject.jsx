@@ -9,6 +9,7 @@ import PhotoAddModal from './PhotoAddModal';
 const SingleViewProject = () => {
   const location = useLocation();
   const [projectData, setProjectData] = useState(null);
+  const [completed, setCompleted] = useState(false);
 
   const id = location?.state?.id;
 
@@ -24,6 +25,17 @@ const SingleViewProject = () => {
     }
   };
 
+  const handleCompletedProjects=async()=>{
+   try {
+    const response=await axiosAdmin.post(`completedprojects?id=${id}`)
+    console.log(response.data,"response cominggg");
+    
+   } catch (error) {
+    console.log(error);
+   }
+
+  }
+
   // Data displaying when mounting
   useEffect(() => {
     fetchData();
@@ -34,14 +46,21 @@ return (
     <ReturnButton />
     {projectData && projectData.map((project, index) => (
       <div key={index} className="max-w-4xl mx-auto p-6 mt-6 bg-white rounded-lg shadow-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="mb-6 md:mb-0">
-            <img src={project.photos[0]} alt="Project Image 1" className="w-full h-96 rounded-lg" />
-          </div>
-          <div className="mb-6 md:mb-0">
-            <img src={project.photos[1]} alt="Project Image 2" className="w-full h-96 rounded-lg" />
-          </div>
-        </div>
+  {
+    project.photos.length>0 ?(
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="mb-6 md:mb-0">
+        <img src={project.photos[0]} alt="Project Image 1" className="w-full h-96 rounded-lg" />
+      </div>
+      <div className="mb-6 md:mb-0">
+        <img src={project.photos[1]} alt="Project Image 2" className="w-full h-96 rounded-lg" />
+      </div>
+    </div>
+    ):( 
+       project.isCompleted==false ? <p className='text-red-500'>Please add project photos</p>:""
+    )
+
+  }
 
         <div className="mt-6">
           <h2 className="text-2xl font-bold mb-2">{project.name}</h2>
@@ -51,16 +70,24 @@ return (
           <p><strong>Supervisor name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.supervisorname}</p>
           <p><strong>Notes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.notes}</p>
         </div>
-        <div className='flex justify-end gap-4 mt-14'>
-          <div>
-          <PhotoAddModal projectId={project._id}/>
-          <p className='text-green-500'>You can add two photos</p>
+        {
+          project.isCompleted==false ?(
+            <div className='flex justify-end gap-4 mt-14'>
+            <div>
+            <PhotoAddModal projectId={project._id}/>
+            <p className='text-green-500'>You can add two photos</p>
+            </div>
+            <div>
+            <Buttons name="WORK COMPLETED" click={handleCompletedProjects}/>
+            <p className='text-red-500'>If project is completed <br/>click here !</p>
+            </div>   
           </div>
-          <div>
-          <Buttons name="WORK COMPLETED"/>
-          <p className='text-red-500'>If project is completed <br/>click here !</p>
-          </div>   
-        </div>
+          ):(
+            ""
+          )
+
+        }
+
       </div>
     ))}
 

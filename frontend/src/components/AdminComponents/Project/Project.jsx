@@ -4,6 +4,7 @@ import AddNav from '../../CommonComponents/AddNav/AddNav';
 import { axiosAdmin } from "../../../Api/Api";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Buttons from '../../CommonComponents/Button/Buttons';
 function Project() {
     const navigate= useNavigate()
     const[ProjectData,setProjectData]=useState()
@@ -23,7 +24,7 @@ function Project() {
       // fetching data from backend
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList");
+      const response = await axiosAdmin.get("projectList?status=false");
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);
@@ -43,7 +44,13 @@ function Project() {
   }
   return (
     <>
-<AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
+<div className='w-full flex' >
+  <div className='w-[80%]'>
+  <AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
+  </div>
+<div className='w-[20%] mt-[14%]'>
+<Buttons name="COMPLETED PROJECT" />
+</div></div>
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -71,9 +78,8 @@ function Project() {
         {
           ProjectData && ProjectData.length>0 ?(
            ProjectData?.map((data)=>{
-            return(
-                
-           <tr key={data?._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            return(   
+                <tr key={data?._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4">
                 {data?.projectnumber}
                 </td>

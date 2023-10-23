@@ -102,7 +102,7 @@ const handleProjectEditing = async (req, res) => {
 
 const ProjectList =async(req,res)=>{
   try {
-      const FindProject = await Project.find()
+      const FindProject = await Project.find({isCompleted:req.query.status})
       console.log(FindProject);
       if(!FindProject){
           res.json({ success: false, messege: "cant find Project details " });
@@ -181,9 +181,23 @@ const handlePhotoAdding = async (req, res) => {
 
 
 
+const handleCompletedProjects=async(req,res)=>{
+  try {
+    console.log("clicked");
+    console.log(req.query.id,"oiiiiiiii");
+    const id= req.query.id
+    console.log(id);
+    const findProject=await Project.findByIdAndUpdate({_id:id},{$set:{isCompleted:true}})
+    console.log(findProject);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 
 
 module.exports={
-  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById,handlePhotoAdding
+  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById,handlePhotoAdding,handleCompletedProjects
 }

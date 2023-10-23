@@ -36,6 +36,7 @@ const {
   ProjectList,
   ProjectListById,
   handlePhotoAdding,
+  handleCompletedProjects,
 } = require("../controllers/Admin/ProjectController");
 const {
   handleAddContract,
@@ -118,5 +119,6 @@ adminRoute.post(
 adminRoute.post("/addmaterial", handleMaterialAdding);
 adminRoute.get("/allmateriallist", handleMaterialList);
 adminRoute.post("/purchasematerial", handleMaterialPurchase);
+adminRoute.post('/completedprojects',handleCompletedProjects)
 
 module.exports = adminRoute;

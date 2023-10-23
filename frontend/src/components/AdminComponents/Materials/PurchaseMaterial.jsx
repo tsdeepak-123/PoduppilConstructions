@@ -13,11 +13,12 @@ function PurchaseMaterial() {
   const [projectData, setProjectData] = useState("");
   const [MaterialData, setMaterialData] = useState("");
   const [MaterialName, setMaterialName] = useState("");
-  const [quantity, setQuantity] = useState([]);
+  const [quantity, setQuantity] = useState();
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
   };
   const handleMaterialDataRecieved = () => {
+    console.log(MaterialName,"heyyyyyyyyyyyyyyy");
     setMaterialName(MaterialName);
   };
   const handleQuantitychange = (e) => {
@@ -48,7 +49,7 @@ function PurchaseMaterial() {
 
   const handleMaterialSubmit = async () => {
     try {
-      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity});
+      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity,projectname});
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);
@@ -72,7 +73,8 @@ function PurchaseMaterial() {
 
       { projectname ?
       <>
-        <div className="flex justify-center gap-4">
+      <p className="flex justify-center font-bold">  PROJECT : &nbsp;&nbsp; {projectname}</p>
+        <div className="flex justify-center gap-4 mt-8">
           <MaterialDropdown
             materials={MaterialData}
             onDataPassed={handleMaterialDataRecieved}

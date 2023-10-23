@@ -11,7 +11,8 @@ const ProjectSchema = new Schema({
   supervisorname: { type: String, required: true},
   projectnumber: { type: String, required: true},
   notes: { type: String, required: true},
-  photos: { type: [String]}
+  photos: { type: [String]},
+  isCompleted:{type:Boolean,default:false}
 });
 
 const Project =new mongoose.model('Project', ProjectSchema);

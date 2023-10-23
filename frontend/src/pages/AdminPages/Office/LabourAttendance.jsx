@@ -6,7 +6,7 @@ import Footer from '../../../components/AdminComponents/Footer/Footer'
 const LabourAttendance = () => {
   return (
     <div>
-       <Header headers="Labour Attendance Sheet"/>
+       <Header headers="LABOUR ATTENDENCE SHEET"/>
     <AttendanceSheet/>
     <div className='mt-14'>
     <Footer/>
