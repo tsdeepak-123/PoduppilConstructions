@@ -8,6 +8,12 @@ import Buttons from "../../CommonComponents/Button/Buttons";
 import AddMaterialModal from "./AddMaterialModal";
 import TextFields from "../../CommonComponents/TextFields/TextFields";
 import PurchaseTable from "./PurchaseTable";
+
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 function PurchaseMaterial() {
   const [projectname, setProjectName] = useState("");
   const [projectData, setProjectData] = useState("");
@@ -65,6 +71,13 @@ function PurchaseMaterial() {
     fetchMaterialData();
   }, [MaterialName]);
 
+
+  const handleChange = (e) => {
+    const selectedMaterialname = e.target.value;
+    setMaterialName(selectedMaterialname);
+    console.log(selectedMaterialname, "nameeeeeeeeeeeeeeeeeeeeeee");
+  }
+
   console.log(MaterialName,"materiallllllllllllllllllllllllllllllllllllllllll");
   console.log(quantity, "kioooo");
   return (
@@ -75,10 +88,37 @@ function PurchaseMaterial() {
       <>
       <p className="flex justify-center font-bold">  PROJECT : &nbsp;&nbsp; {projectname}</p>
         <div className="flex justify-center gap-4 mt-8">
-          <MaterialDropdown
-            materials={MaterialData}
-            onDataPassed={handleMaterialDataRecieved}
-          />
+        <>
+      {MaterialData?.length > 0 ? (
+        <Box className='w-[380px]'>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">SELECT MATERIAL</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={MaterialName}
+              label="SELECT PROJECT"
+              onChange={handleChange}
+            >
+              {MaterialData.map((item) => (
+                <MenuItem key={item.name} value={item.name}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+      ) : (
+        <Box className='sm:w-[380px] w-80'>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">No materials found</InputLabel>
+            <Select id="demo-simple-select" label="SELECT PROJECT" disabled>
+              <MenuItem>No materials found</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
+    </>
           <div className="mt-3">
           <AddMaterialModal />
           </div>

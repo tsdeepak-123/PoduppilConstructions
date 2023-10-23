@@ -12,6 +12,9 @@ function Project() {
     const handleAddProjectClick=()=>{
         navigate('/admin/addproject')
     }
+    const handleCompletedProjects=()=>{
+        navigate('/admin/completedprojects')
+    }
 
     //editing project data
 
@@ -49,7 +52,7 @@ function Project() {
   <AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
   </div>
 <div className='w-[20%] mt-[14%]'>
-<Buttons name="COMPLETED PROJECT" />
+<Buttons name="COMPLETED PROJECT" click={handleCompletedProjects} />
 </div></div>
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
