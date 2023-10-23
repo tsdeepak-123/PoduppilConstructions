@@ -9,15 +9,11 @@ const handleMaterialAdding=async(req,res)=>{
 
     try {
         console.log(req.body,"iam bodyyyyyyyyy");
-       const {MaterialName,MaterialRate}=req.body
-    //    const alreadyExist=await Material.find({ name: MaterialName,
-    //     rate: MaterialRate})
-    //     if(alreadyExist){
-    //         res.json({success:false, messege:"Material already exists"})
-    //     }
+       const {MaterialName}=req.body
+    
        const newMaterial=new Material({
           name:MaterialName,
-          rate:MaterialRate
+         
         })
 
         await newMaterial.save()
@@ -52,7 +48,7 @@ const handleMaterialList=async(req,res)=>{
 
 const handleMaterialPurchase = async (req, res) => {
     try {
-      const { materials, projectname } = req.body;
+      const { materials, projectname,date } = req.body;
       const projectId=await Project.findOne({name:projectname})
       if(!projectId){
 
@@ -66,10 +62,11 @@ const handleMaterialPurchase = async (req, res) => {
         return acc + cur.total;
       }, 0); 
 
-      const newMaterial= new Material({
-        projectId:projectId._id,
-        newMaterial:totalAmount,
-        Material:materials
+      const newMaterial= new Purchase({
+        project:projectId._id,
+        TotalAmount:totalAmount,
+        Material:materials,
+        date:date
 
     });
 

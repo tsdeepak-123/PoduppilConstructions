@@ -3,34 +3,40 @@ const mongoose = require('mongoose');
 const { Schema, ObjectId } = mongoose;
 
 const MaterialSchema = new Schema({
-project:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"Project"
-},
-Materials:[{
-    name:{
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project', 
+        required: true,
+      },
+date: {
+        type: Date,
+        required: true,
+      },
+Material:[
+  {  name:{
         type:String,
         required:true
     },
-    rate:{
-        type:Number,
-        required:true
-    },
-    quantiy:{
+    quantity:{
         type:Number,
         required:true
     },
     total:{
         type:Number,
         required:true
-    }
-}],
-
-BillTotal:{
+    },
+    baseRate:{
+        type:Number,
+        required:true
+    }}
+],
+TotalAmount:{
     type:Number,
+    required:true
 }
- 
-},{timestamps:true});
+
+});
+
 
 const Purchase =new mongoose.model('Purchase', MaterialSchema);
 
