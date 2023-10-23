@@ -443,6 +443,16 @@ const salarycalculationforStaff = async (req, res) => {
       });
 
       await salaryofStaff.save();
+
+      
+    if( salary > StaffData.advance){
+
+      await Staff.findByIdAndUpdate({  _id: StaffData._id  }, { advance: 0 });
+    }else{
+      await Staff.findByIdAndUpdate({  _id: StaffData._id  },{ advance: StaffData.advance-salary});
+
+    }
+
     }
 
     const salaryDatas = await StaffSalary.findOne({ StaffId: staffId }).populate('StaffId');
@@ -452,7 +462,7 @@ const salarycalculationforStaff = async (req, res) => {
     const latestRecord = salaryDatas.records[0];
 
 
-    await Staff.findByIdAndUpdate({ _id: StaffData._id }, { lastsalaryDate: latestRecord.calculateTo, advance: 0 });
+    await Staff.findByIdAndUpdate({ _id: StaffData._id }, { lastsalaryDate: latestRecord.calculateTo});
 
     res.status(200).json({ message: 'Salary calculated successfully' });
   
