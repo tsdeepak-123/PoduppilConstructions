@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Dropdown from "../../CommonComponents/Dropdown/Dropdown";
 import { axiosAdmin } from "../../../Api/Api";
-import MaterialDropdown from "./MaterialDropdown";
+// import MaterialDropdown from "./MaterialDropdown";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import AddMaterialModal from "./AddMaterialModal";
 import TextFields from "../../CommonComponents/TextFields/TextFields";
 import PurchaseTable from "./PurchaseTable";
-
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,9 +19,10 @@ function PurchaseMaterial() {
   const [MaterialData, setMaterialData] = useState("");
   const [MaterialName, setMaterialName] = useState("");
   const [quantity, setQuantity] = useState();
-
   const [selectedValues, setSelectedValues] = useState([])
-  const [Rate,setRate] = useState(0);
+  const [Rate,setRate] = useState();
+  const [table,setTable] = useState(false);
+  const [date,setDate ]= useState();
 
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
@@ -38,6 +38,9 @@ function PurchaseMaterial() {
   const handleRatechange = (e) => {
   
     setRate(e.target.value);
+  };
+  const handleDatechange = (e) => {
+    setDate(e.target.value);
   };
  
 
@@ -68,7 +71,6 @@ function PurchaseMaterial() {
     try {
       const response = await axiosAdmin.post("/purchasematerial",{materials:selectedValues,projectname});
       console.log(response?.data?.FindProject);
-
       setProjectData(response?.data?.FindProject);
     } catch (error) {
       console.log(error);
@@ -90,6 +92,10 @@ function PurchaseMaterial() {
   }
 
   const handleMaterials = (material, quantity,Rate) => {
+    setMaterialName("")
+    setQuantity("")
+    setRate("")
+    setTable(true)
     console.log(material,quantity,'dggdgdgdggffdhg',Rate);
    
     const newMaterial = {
@@ -148,11 +154,13 @@ function PurchaseMaterial() {
           
           <TextFields
             name="Quantity"
+            value={quantity}
             type="number"
             onChange={handleQuantitychange}
           />
           <TextFields
             name="BaseRate"
+            value={Rate}
             type="number"
             onChange={handleRatechange}
             />
@@ -161,20 +169,25 @@ function PurchaseMaterial() {
           <Buttons name="SUBMIT" click={()=>handleMaterials(MaterialName,quantity,Rate)} />
           </div> 
         </div>
-        <div className="flex justify-center">
-           <PurchaseTable  values={selectedValues}/>
-           {/* materialName={MaterialName} quantity={quantity} */}
+        {
+           table?
+          <>
+          <div className="flex justify-center">
+          <PurchaseTable  values={selectedValues}/>
+          {/* materialName={MaterialName} quantity={quantity} */}
 
-          
-
-
-        </div>
-        <div className="flex justify-center mt-10">
+ 
+       </div>
+       <div className="flex justify-center mt-10">
 
 <Buttons name="SUBMIT" click={handleMaterialSubmit} />
-        </div>
+       </div>
+       </>:""
+        }
+
         </>
-                :      <div className="flex justify-center">
+                :<div className="flex justify-center gap-4">
+                  <TextFields name="Purchase date" type="date" input={true} onChange={ handleDatechange}/>
         <Dropdown projects={projectData} onDataPassed={handleDataReceived} />
       </div>
       }

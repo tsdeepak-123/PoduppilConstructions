@@ -2,11 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Buttons from '../../CommonComponents/Button/Buttons'
+import { axiosAdmin } from "../../../Api/Api";
 function ProjectList() {
 const navigate=useNavigate()
   const handlePurchaseClick=()=>{
     navigate('/admin/purchasematerial')
   }
+  const fetchData=async()=>{
+    try {
+      const response=await axiosAdmin.get('/materialtotal')
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchData()
+  })
   return (
     <>
       <ReturnButton /> 
