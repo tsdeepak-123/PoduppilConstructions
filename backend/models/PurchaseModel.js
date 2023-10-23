@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema, ObjectId } = mongoose;
 
-const PurchaseSchema = new Schema({
+const MaterialSchema = new Schema({
 project:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"Project"

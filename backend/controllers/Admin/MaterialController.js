@@ -1,4 +1,5 @@
 const Material=require('../../models/MaterialModel')
+const Purchase=require('../../models/PurchaseModel')
 
 
 
@@ -57,5 +58,18 @@ try {
 }
 
 
+const handleMaterialTotal=async(req,res)=>{
+    try {
+        const materialData=await Purchase.find()
+        if(materialData){
+            res.json({sucess:true,messege:"Material data finded",materialData})
+        }
+        res.json({success:false,messege:"No data found"})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-module.exports={handleMaterialAdding,handleMaterialList,handleMaterialPurchase}
+
+
+module.exports={handleMaterialAdding,handleMaterialList,handleMaterialPurchase,handleMaterialTotal}

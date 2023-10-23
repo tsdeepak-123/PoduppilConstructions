@@ -54,7 +54,7 @@ const {
 } = require("../controllers/Admin/BillController");
 const upload = require("../Middleware/Multer");
 const Auth = require("../Middleware/Auth");
-const { handleMaterialAdding, handleMaterialList, handleMaterialPurchase } = require("../controllers/Admin/MaterialController");
+const { handleMaterialAdding, handleMaterialList, handleMaterialPurchase, handleMaterialTotal } = require("../controllers/Admin/MaterialController");
 
 //The routes for admin authentication
 
@@ -120,5 +120,6 @@ adminRoute.post("/addmaterial", handleMaterialAdding);
 adminRoute.get("/allmateriallist", handleMaterialList);
 adminRoute.post("/purchasematerial", handleMaterialPurchase);
 adminRoute.post('/completedprojects',handleCompletedProjects)
+adminRoute.get('/materialtotal',handleMaterialTotal)
 
 module.exports = adminRoute;
