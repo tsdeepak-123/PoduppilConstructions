@@ -1,4 +1,5 @@
-const Material=require('../../models/MaterialModel')
+    const Material=require('../../models/MaterialModel')
+const Project=require('../../models/ProjectModel')
 const Purchase=require('../../models/PurchaseModel')
 
 
@@ -8,15 +9,11 @@ const handleMaterialAdding=async(req,res)=>{
 
     try {
         console.log(req.body,"iam bodyyyyyyyyy");
-       const {MaterialName,MaterialRate}=req.body
-    //    const alreadyExist=await Material.find({ name: MaterialName,
-    //     rate: MaterialRate})
-    //     if(alreadyExist){
-    //         res.json({success:false, messege:"Material already exists"})
-    //     }
+       const {MaterialName}=req.body
+    
        const newMaterial=new Material({
           name:MaterialName,
-          rate:MaterialRate
+         
         })
 
         await newMaterial.save()
@@ -49,14 +46,37 @@ const handleMaterialList=async(req,res)=>{
 
 //here purchase the materials
 
-const handleMaterialPurchase=async(req,res)=>{
-try {
-    console.log(req.body,"bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-} catch (error) {
-    console.log(error);
-}
-}
+const handleMaterialPurchase = async (req, res) => {
+    try {
+      const { materials, projectname,date } = req.body;
+      const projectId=await Project.findOne({name:projectname})
+      if(!projectId){
 
+        return res.json({
+            success: false,
+            message: "Failed find project",
+          });
+      }
+      console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",projectId);
+      const totalAmount = materials.reduce((acc, cur) => {
+        return acc + cur.total;
+      }, 0); 
+
+      const newMaterial= new Purchase({
+        project:projectId._id,
+        TotalAmount:totalAmount,
+        Material:materials,
+        date:date
+
+    });
+
+    await newMaterial.save();
+      console.log(totalAmount, 'totalamount');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
 const handleMaterialTotal=async(req,res)=>{
     try {

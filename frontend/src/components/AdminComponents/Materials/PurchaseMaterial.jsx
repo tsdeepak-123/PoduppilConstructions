@@ -70,7 +70,7 @@ function PurchaseMaterial() {
 
   const handleMaterialSubmit = async () => {
     try {
-      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity,projectname,date});
+      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity,projectname});
       console.log(response?.data?.FindProject);
       setProjectData(response?.data?.FindProject);
     } catch (error) {

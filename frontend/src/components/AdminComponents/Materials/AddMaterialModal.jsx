@@ -24,20 +24,20 @@ function AddMaterialModal() {
   const location=useLocation()
     const [open, setOpen] = useState(false);
     const [MaterialName, setMaterialName] = useState()
-    const [MaterialRate, setMaterialRate] = useState()
+    // const [MaterialRate, setMaterialRate] = useState()
      
   
     const handleMaterialNameChange=(e)=>{
       setMaterialName(e.target.value)
     }
-    const handleMaterialRateChange=(e)=>{
-      setMaterialRate(e.target.value)
-    }
+    // const handleMaterialRateChange=(e)=>{
+    //   setMaterialRate(e.target.value)
+    // }
   
     const handleSubmit=async(e)=>{
       e.preventDefault()
-      console.log(MaterialName,MaterialRate);
-     const response= await axiosAdmin.post('addmaterial',{MaterialName,MaterialRate})
+      console.log(MaterialName);
+     const response= await axiosAdmin.post('addmaterial',{MaterialName})
      console.log(response.data,'res.data canmme');
      window.location.reload() 
        handleClose()
@@ -64,9 +64,9 @@ function AddMaterialModal() {
           </Typography>
           <div className='mb-4'>
           <TextField label="Material Name" type="text" fullWidth value={MaterialName} onChange={handleMaterialNameChange}/>
-          <div className='mt-4'>
+          {/* <div className='mt-4'>
           <TextField label="Material Rate"type="number" fullWidth value={MaterialRate} onChange={handleMaterialRateChange}/>
-          </div>
+          </div> */}
           </div>
           <Button variant="contained" color="success" fullWidth onClick={handleSubmit}>
             Submit
