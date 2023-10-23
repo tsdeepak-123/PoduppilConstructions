@@ -1,4 +1,5 @@
 const Material=require('../../models/MaterialModel')
+const Project=require('../../models/ProjectModel')
 
 
 
@@ -48,14 +49,36 @@ const handleMaterialList=async(req,res)=>{
 
 //here purchase the materials
 
-const handleMaterialPurchase=async(req,res)=>{
-try {
-    console.log(req.body,"bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-} catch (error) {
-    console.log(error);
-}
-}
+const handleMaterialPurchase = async (req, res) => {
+    try {
+      const { materials, projectname } = req.body;
+      const projectId=await Project.findOne({name:projectname})
+      if(!projectId){
 
+        return res.json({
+            success: false,
+            message: "Failed find project",
+          });
+      }
+      console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",projectId);
+      const totalAmount = materials.reduce((acc, cur) => {
+        return acc + cur.total;
+      }, 0); 
+
+      const newMaterial= new Material({
+        projectId:projectId._id,
+        newMaterial:totalAmount,
+        Material:materials
+
+    });
+
+    await newMaterial.save();
+      console.log(totalAmount, 'totalamount');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
 
 module.exports={handleMaterialAdding,handleMaterialList,handleMaterialPurchase}

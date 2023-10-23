@@ -66,7 +66,7 @@ function PurchaseMaterial() {
 
   const handleMaterialSubmit = async () => {
     try {
-      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity,projectname});
+      const response = await axiosAdmin.post("/purchasematerial",{materials:selectedValues,projectname});
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);
