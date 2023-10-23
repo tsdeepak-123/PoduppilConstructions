@@ -19,6 +19,10 @@ function PurchaseMaterial() {
   const [MaterialData, setMaterialData] = useState("");
   const [MaterialName, setMaterialName] = useState("");
   const [quantity, setQuantity] = useState();
+
+  const [selectedValues, setSelectedValues] = useState([])
+  const [Rate,setRate] = useState(0);
+
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
   };
@@ -29,6 +33,13 @@ function PurchaseMaterial() {
   const handleQuantitychange = (e) => {
     setQuantity(e.target.value);
   };
+
+  const handleRatechange = (e) => {
+  
+    setRate(e.target.value);
+  };
+ 
+
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get("projectList");
@@ -77,8 +88,20 @@ function PurchaseMaterial() {
     console.log(selectedMaterialname, "nameeeeeeeeeeeeeeeeeeeeeee");
   }
 
-  console.log(MaterialName,"materiallllllllllllllllllllllllllllllllllllllllll");
-  console.log(quantity, "kioooo");
+  const handleMaterials = (material, quantity,Rate) => {
+    console.log(material,quantity,'dggdgdgdggffdhg',Rate);
+   
+    const newMaterial = {
+      name: material,
+      quantity: quantity,
+      baseRate:Rate,
+      total:Rate*quantity
+    };
+    setSelectedValues((prevSelectedValues) => ([...prevSelectedValues,newMaterial]));
+  };
+
+  console.log(selectedValues,"selectedValuesssssss");
+ 
   return (
     <div>
       <ReturnButton />
@@ -127,19 +150,34 @@ function PurchaseMaterial() {
             type="number"
             onChange={handleQuantitychange}
           />
-          <div className="mt-2">
-          <Buttons name="SUBMIT" click={handleMaterialSubmit} />
+          <TextFields
+            name="BaseRate"
+            type="number"
+            onChange={handleRatechange}
+            />
+          {/* <Buttons name="SUBMIT" click={handleMaterialSubmit} /> */}
+            <div className="mt-2">
+          <Buttons name="SUBMIT" click={()=>handleMaterials(MaterialName,quantity,Rate)} />
           </div> 
         </div>
         <div className="flex justify-center">
-           <PurchaseTable />
+           <PurchaseTable  values={selectedValues}/>
            {/* materialName={MaterialName} quantity={quantity} */}
+
+          
+
+
+        </div>
+        <div className="flex justify-center mt-10">
+
+<Buttons name="SUBMIT" click={handleMaterialSubmit} />
         </div>
         </>
                 :      <div className="flex justify-center">
         <Dropdown projects={projectData} onDataPassed={handleDataReceived} />
       </div>
       }
+    
     </div>
   );
 }

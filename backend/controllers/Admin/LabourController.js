@@ -247,6 +247,12 @@ const salarycalculationoflabour = async (req, res) => {
       });
     }
 
+    if(LaborData.lastsalaryDate){
+      LaborData.lastsalaryDate.setDate(LaborData.lastsalaryDate.getDate() + 1)
+      console.log(LaborData.lastsalaryDate ,'got it');
+
+    }
+
     const endDate = new Date();
         const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
         // console.log(startDate,endDate,'dates');
@@ -344,6 +350,7 @@ const salarycalculation = async (req, res) => {
         message: "Labour not found.",
       });
     }
+ 
 
     const endDate = new Date(laborSalarydate);
     const today = new Date();
