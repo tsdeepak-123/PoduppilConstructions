@@ -67,7 +67,7 @@ function EditContract() {
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList");
+      const response = await axiosAdmin.get("projectList?status=false");
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);
@@ -102,7 +102,7 @@ function EditContract() {
       <TextFields name="Payment details" value={Paymentdetails}  onChange={(e) => {setPaymentdetails(e.target.value)}} type="text"/> 
       <TextFields name="date" type="date" value={date}  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
     <div className="flex justify-center mt-3">
-          <Buttons name="ADD CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
+          <Buttons name="EDIT CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
         </div>
    </div> 
     </>

@@ -77,7 +77,7 @@ function UtilityBills() {
                 <td class="px-6 py-4">{item.paid}</td>
                 <td class="px-6 py-4">{item.pending}</td>
                 <td class="px-6 py-4 text-blue-600 cursor-pointer">View</td>
-                <DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                <EditIcon className="text-yellow-600"/>
               </tr>
                 )
                

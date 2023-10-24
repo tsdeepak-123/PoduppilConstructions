@@ -4,6 +4,9 @@ import TextFields from "../../CommonComponents/TextFields/TextFields";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import { axiosAdmin } from "../../../Api/Api";
 import ReturnButton from '../../CommonComponents/Return/ReturnButton';
+import toast, { Toaster } from 'react-hot-toast';
+ import Swal from 'sweetalert2'
+
 
 
 function AddProject() {
@@ -53,7 +56,6 @@ function AddProject() {
     e.preventDefault();
 
     if (projectData) {
-      console.log("vvvvvvvvvvvvvvvv");
       //update operation with the edited values
       axiosAdmin
         .patch(`editproject/${projectData._id}`, {
@@ -68,6 +70,7 @@ function AddProject() {
         })
         .then((response) => {
           navigate("/admin/projectdetails");
+          Swal.fire('Project updated successfully')
         })
         .catch((error) => {
           console.error(error);
@@ -86,16 +89,21 @@ function AddProject() {
           supervisorname,
         })
         .then((response) => {
-          navigate("/admin/projectdetails");
+          if(response.data.success){
+            navigate("/admin/projectdetails");
+            Swal.fire('Project added successfully')
+          } 
+          toast.error(response.data.messege)
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((error) => {  
+          toast.error(error.response.data.messege)
         });
     }
   };
 
     return (
     <>
+    <Toaster  position="top-center" reverseOrder={false}/>
 <ReturnButton/>
          <div className="flex flex-wrap justify-around px-16 mt-24">
           <TextFields

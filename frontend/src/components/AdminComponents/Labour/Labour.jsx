@@ -111,7 +111,7 @@ function Labour() {
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>
-                  <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon className="text-yellow-600"/>
+                  <td class="px-6 py-4 font-medium cursor-pointer"><EditIcon className="text-yellow-600"/>
                   </td>
                 </tr>
               ))

@@ -9,7 +9,7 @@ const StaffAttendance = () => {
     <div>
          <Header headers="STAFF ATTENDENCE SHEET"/>
     <StaffAttendanceSheet/>
-    <div className='mt-28'>
+    <div className='mt-56'>
     <Footer/>
     </div>
     

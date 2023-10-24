@@ -30,9 +30,6 @@ const StaffAttendanceSheet = () => {
         fetchData()
         fetchAttendance()
       },[])
-      const handleBackArrowClick = () => {
-        navigate('/admin/labourattendance');
-      };
     
       const handleAddStaff = () => {
         navigate('/admin/addstaff');

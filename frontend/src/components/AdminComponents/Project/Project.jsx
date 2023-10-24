@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AddNav from '../../CommonComponents/AddNav/AddNav';
 import { axiosAdmin } from "../../../Api/Api";
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Buttons from '../../CommonComponents/Button/Buttons';
 function Project() {
@@ -27,9 +26,7 @@ function Project() {
       // fetching data from backend
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList?status=false");
-      console.log(response?.data?.FindProject);
-
+      const response = await axiosAdmin.get("projectList?status=false")
       setProjectData(response?.data?.FindProject);
     } catch (error) {
       console.log(error);
@@ -42,7 +39,6 @@ function Project() {
   }, []);
 
   const nav=(id)=>{
-    console.log(id,'idddddddddddddddddddddd');
     navigate('/admin/projectview',{ state: { id } })
   }
   return (

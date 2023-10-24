@@ -19,7 +19,7 @@ const modalStyle = {
 };
 
 function PhotoAddModal({ projectId }) {
-  console.log(projectId);
+
   const [open, setOpen] = useState(false);
   const [photos, setPhotos] = useState([]); // State to store multiple photos
 
@@ -32,28 +32,29 @@ function PhotoAddModal({ projectId }) {
     // console.log("Selected photos:", selectedPhotos);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Create a FormData object to store the photos
     const formData = new FormData();
-  
+
     // Append each selected photo to the FormData object
     for (let i = 0; i < photos.length; i++) {
       formData.append("photos", photos[i]);
     }
 
-    console.log("hiiiinformmmmmmmmmmmmm",formData);
-  
     try {
       // Send the FormData object to the backend using axios
-      const response = await axiosAdmin.post(`addprojectphotos?projectId=${projectId}`, formData ,{ headers: {
-        'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
-      },
-    });
-  
-      console.log("Response from backend:", response.data);
+      const response = await axiosAdmin.post(
+        `addprojectphotos?projectId=${projectId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
+          },
+        }
+      );
+
       handleClose();
     } catch (error) {
       console.error("Error uploading photos:", error);
@@ -85,7 +86,7 @@ function PhotoAddModal({ projectId }) {
             />
           </div>
           <Button
-            variant="contained" 
+            variant="contained"
             color="success"
             fullWidth
             onClick={handleSubmit}

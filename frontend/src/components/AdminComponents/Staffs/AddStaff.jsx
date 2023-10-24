@@ -1,12 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons';
 import { useState } from 'react'
 import { axiosAdmin } from '../../../Api/Api'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import TextField from "@mui/material/TextField";
+import toast, { Toaster } from 'react-hot-toast';
+ import Swal from 'sweetalert2'
 
 function AddStaff() {
     const navigate= useNavigate()
@@ -65,31 +66,7 @@ function AddStaff() {
   
 
 
-    // const handleSubmit=(e)=>{
-    //   e.preventDefault()
-
   
-    //   axiosAdmin.post('addstaff',{
-    //     name,
-    //     age,
-    //     phone,
-    //     street,
-    //     post,
-    //     town,
-    //     district,
-    //     state,
-    //     pincode,
-    //     salary,
-    //     adhar,
-    //     date
-    //   }).then((response)=>{
-    //     console.log(response);
-    //     navigate('/admin/staffdetails')
-    //   }).catch((error)=>{
-    //     console.log(error);
-    //   })
-    // }
-
     const handleproofChange=(e)=>{
       const file = e.target.files
       setIdproof(file)
@@ -127,9 +104,6 @@ function AddStaff() {
       for (const proof of idproof) {
         formData.append("proof", proof);
       }
-      // console.log(idproof,'idproof');
-  
-      // formData.append("proof",idproof);
       formData.append("photo",photo);
       axiosAdmin.post('addstaff',formData, {
         headers: {
@@ -137,42 +111,20 @@ function AddStaff() {
         },
        
       }).then((response)=>{
-        console.log(response,'response for adding labour');
-        navigate('/admin/staffdetails')
+        if(response.data.success){
+          navigate('/admin/staffdetails')
+          Swal.fire('Staff added successfully')
+        }
+        toast.error(response.data.message)
       }).catch((error)=>{
         console.log(error);
       })
     }
 
   return (
-  //   <>
-  //       <div className='flex justify-start mt-32'>
-  //       <KeyboardReturnIcon className='ms-11 mt-4 cursor-pointer'onClick={handleBackArrowClick} />
-  //       </div>
-  //       <div>
-  //   <form className='flex flex-wrap ms-16 px-16 mt-24'>
-  //   <TextFields name="Staff name" type="text" value={name} onChange={handleNameChange}/>
-  //   <TextFields name="Age" type="number" value={age} onChange={handleAgeChange}/>
-  //   <TextFields name="Phone number" type="text" value={phone} onChange={handlePhoneChange}/>
-  //   <TextFields name="Street name" type="text" value={street} onChange={handleStreetChange}/>
-  //   <TextFields name="Post office" type="text" value={post} onChange={handlePostChange}/>
-  //   <TextFields name="Town" type="text" value={town} onChange={handleTownChange}/>
-  //   <TextFields name="District" type="text" value={district} onChange={handleDistrictChange}/>
-  //   <TextFields name="State" type="text" value={state} onChange={handleStateChange}/>
-  //   <TextFields name="Adhar Number" type="number" value={adhar} onChange={handleAdharChange}/>
-  //   <TextFields name="Pincode" type="number" value={pincode} onChange={handlePincodeChange}/>
-  //   <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
-  //   <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
-  //   <TextFields name="ID Proof" type="file" input={true} value={idproof} onChange={handleImageChange}/>
-  //   </form>
-  //   <div className='flex justify-center mt-11'>
-  //     <Buttons name="ADD STAFF" classes={'w-96'} click={ handleSubmit}/>
-  //   </div>
-  //  </div>
-  //   </>
-
 
   <>
+  <Toaster position='top-center' reverseOrder={false}/>
   <ReturnButton/>
    <div>
     <form action='' className='flex flex-wrap justify-around px-16 mt-24' onSubmit={handleSubmit}>

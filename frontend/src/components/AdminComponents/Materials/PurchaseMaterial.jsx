@@ -42,7 +42,7 @@ function PurchaseMaterial() {
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList");
+      const response = await axiosAdmin.get("projectList?status=false");
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);

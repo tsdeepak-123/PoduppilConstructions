@@ -5,6 +5,8 @@ import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import TextField from "@mui/material/TextField";
+import toast, { Toaster } from 'react-hot-toast';
+ import Swal from 'sweetalert2'
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -67,21 +69,8 @@ function AddLabour() {
    
   }
 
-
-  // const handleproofChange = (e) => {
-  //   const files = e.target.files;
-  //   const selectedFiles = [];
-  
-  //   for (let i = 0; i < files.length; i++) {
-  //     selectedFiles.push(files[i]);
-  //   }
-  
-  //   setIdproof(selectedFiles);
-  // };
   
   const handleImageChange=(e)=>{
-    // setIdproof(e.target.value)
-    console.log(e.target.files[0],'tagetfile');
     const file = e.target.files[0];
     setphoto(file)
   }
@@ -122,15 +111,20 @@ function AddLabour() {
         "Content-Type": "multipart/form-data",
       },  
     }).then((response)=>{
-      alert(response?.data?.message);
-      console.log(response?.data?.message,'response for adding labour');
-      navigate('/admin/labourdetails')
+      if(response.data.success){
+        Swal.fire('Labour added successfully')
+        navigate('/admin/labourdetails')
+      }
+      toast.error(response?.data?.message);
+     
     }).catch((error)=>{
-      console.log(error);
+      toast.error(error.response?.data?.message);
+
     })
   }
   return (
     <>
+    <Toaster position='top-center' reverseOrder={false}/>
     <ReturnButton/>
       <div className='flex flex-wrap justify-around px-16 mt-24'>
       <TextFields name="Labour name" type="text" value={name} onChange={handleNameChange}/>

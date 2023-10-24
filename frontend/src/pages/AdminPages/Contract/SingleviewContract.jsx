@@ -8,7 +8,7 @@ function SingleviewContract() {
     <div>
       <Header headers="CONTRACT DETAILS"/>
       <SingleViewContract/>
-      <div className='mb-24'></div>
+      <div className='mt-28'></div>
       <Footer/>
     </div>
   )

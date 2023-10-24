@@ -4,6 +4,8 @@ import TextFields from "../../CommonComponents/TextFields/TextFields";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import { axiosAdmin } from '../../../Api/Api'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
+import toast, { Toaster } from 'react-hot-toast';
+ import Swal from 'sweetalert2'
 
 function AddBill() {
   const [name, setName] = useState("");
@@ -47,19 +49,6 @@ function AddBill() {
     const file = e.target.files[0];
     setphoto(file);
   };
-
-  console.log(
-    name,
-    date,
-    amount,
-    status,
-    paid,
-    pending,
-    paidby,
-    payment,
-    photo,
-    "dataaaaaaaaaaaaaaaa"
-  );
   const formSubmit = () => {
     const formData = new FormData();
     formData.append("name", name);
@@ -81,18 +70,22 @@ function AddBill() {
     }
     )
       .then((response) => {
-        console.log(response);
-        alert(response?.data?.message);
-        console.log(response?.data?.message, "response for adding Bill");
-        navigate("/admin/utilitybills");
+        if(response.data.success){
+          navigate("/admin/utilitybills");
+          Swal.fire("Bill added successfully")
+        }
+        toast.error(response.data.message)
+       
       })
       .catch((error) => {
         console.log(error);
+        toast.error(error.response.data.message)
       });
   };
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false}/>
     <ReturnButton/>
 
       <div className="flex flex-wrap justify-around px-16 mt-24 ">

@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function Dropdown({projects,onDataPassed}) {
+function Dropdown({projects,onDataPassed,project}) {
     const [projectname, setProjectName] =useState('');
     const handleChange = (e) => {
       const selectedProjectName=e.target.value

@@ -8,7 +8,7 @@ const LabourAttendance = () => {
     <div>
        <Header headers="LABOUR ATTENDENCE SHEET"/>
     <AttendanceSheet/>
-    <div className='mt-14'>
+    <div className='mt-32'>
     <Footer/>
     </div>
      

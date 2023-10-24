@@ -56,7 +56,7 @@ const handleStaffAdding = async (req, res) => {
       for (const proof of req.files.proof) {
         console.log(proof, 'proof');
         const proofUpload = await cloudinary.uploader.upload(proof.path);
-        if (!proofUpload.secure_url) {
+        if (!proofUpload.secure_url) { 
           return res.json({
             success: false,
             message: "Failed to upload proof or photo",
@@ -133,7 +133,7 @@ const handleStaffById = async (req, res) => {
     const id = req.query.id;
     const StaffData = await Staff.findById({ _id: id });
     if (!StaffData) {
-      res.json({ success: false, messege: "cant find Staff details " });
+      res.json({ success: false, message: "cant find Staff details " });
     }
     res.json({ StaffData });
   } catch (error) {

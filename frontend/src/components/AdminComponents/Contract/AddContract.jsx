@@ -5,7 +5,8 @@ import Buttons from '../../CommonComponents/Button/Buttons'
 import { axiosAdmin } from '../../../Api/Api'
 import Dropdown from '../../../components/CommonComponents/Dropdown/Dropdown'
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
-
+import toast, { Toaster } from 'react-hot-toast';
+ import Swal from 'sweetalert2'
 
 function AddContract() {
   const navigate = useNavigate();
@@ -36,18 +37,22 @@ function AddContract() {
         totalhelper,Details,phone,date,Paymentdetails,status,Amount
       })
       .then((response) => {
-        console.log(response);
-        navigate("/admin/contractdetails");
+        if(response.data.success){
+          Swal.fire("Contract added successfully")
+          navigate("/admin/contractdetails");
+        }
+        toast.error(response.data.messege)
       })
       .catch((error) => {
+        toast.error(error.response.data.message)
         console.log(error);
       });
   };
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList");
-      console.log(response?.data?.FindProject);
+      const response = await axiosAdmin.get("projectList?status=false");
+      console.log(response?.data?.FindProject,"listtttttttttttttttt");
 
       setProjectData(response?.data?.FindProject);
     } catch (error) {
@@ -64,6 +69,7 @@ function AddContract() {
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false}/>
     <ReturnButton/>
       <div  className='flex flex-wrap justify-around px-16 mt-24'>
       <div className="ms-4 sm:mb-0 mb-4">
