@@ -27,21 +27,18 @@ const handleMaterialAdding=async(req,res)=>{
 
 //get full material list
 
-const handleMaterialList=async(req,res)=>{
+const handleMaterialList = async (req, res) => {
     try {
-
-        const allMaterials=await Material.find()
-        if(!allMaterials){
-            res.json({success:false, messege:"No materials found"})
-        }
-
-        res.json({success:true, messege:"materials finded",allMaterials})
-        console.log(allMaterials,"alllllllllllllllllllllllll");
+      const allMaterials = await Material.find();
+      // Material found
+      res.status(200).json({ success: true, message: "Materials found", allMaterials });
+      console.log(allMaterials, "alllllllllllllllllllllllll");
     } catch (error) {
-        console.log(error);
-        res.status(500).json({messege:"internal server error"})
+      console.log(error);
+      res.status(500).json({ message: "Internal server error" });
     }
-}
+  };
+  
 
 
 //here purchase the materials
@@ -64,7 +61,7 @@ const handleMaterialPurchase = async (req, res) => {
 
       const newMaterial= new Purchase({
         project:projectId._id,
-        TotalAmount:totalAmount,
+        // TotalAmount:totalAmount,
         Material:materials,
         date:date
 

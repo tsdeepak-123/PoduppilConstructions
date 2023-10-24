@@ -183,12 +183,9 @@ const handlePhotoAdding = async (req, res) => {
 
 const handleCompletedProjects=async(req,res)=>{
   try {
-    console.log("clicked");
-    console.log(req.query.id,"oiiiiiiii");
     const id= req.query.id
-    console.log(id);
-    const findProject=await Project.findByIdAndUpdate({_id:id},{$set:{isCompleted:true}})
-    console.log(findProject);
+    await Project.findByIdAndUpdate({_id:id},{$set:{isCompleted:true}})
+    res.json({success:true,messege:"Project status updated successfully"})
   } catch (error) {
     console.log(error);
   }

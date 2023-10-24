@@ -5,6 +5,7 @@ import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Buttons from '../../CommonComponents/Button/Buttons'
 import SingleView from '../../AdminComponents/Materials/SingleView'
 import PhotoAddModal from './PhotoAddModal';
+import Swal from 'sweetalert2'
 
 const SingleViewProject = () => {
   const location = useLocation();
@@ -27,8 +28,28 @@ const SingleViewProject = () => {
 
   const handleCompletedProjects=async()=>{
    try {
-    const response=await axiosAdmin.post(`completedprojects?id=${id}`)
-    console.log(response.data,"response cominggg");
+   
+      Swal.fire({
+        title: 'Is the project is completed ?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, completed!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            axiosAdmin.post(`completedprojects?id=${id}`)
+            Swal.fire(
+              'Work completed',
+              'The project is added to completed projects',
+              'success',
+            )
+        }
+     
+   
+      })
+     
     
    } catch (error) {
     console.log(error);

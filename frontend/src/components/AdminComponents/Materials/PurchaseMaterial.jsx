@@ -27,10 +27,6 @@ function PurchaseMaterial() {
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
   };
-  const handleMaterialDataRecieved = () => {
-    console.log(MaterialName,"heyyyyyyyyyyyyyyy");
-    setMaterialName(MaterialName);
-  };
   const handleQuantitychange = (e) => {
     setQuantity(e.target.value);
   };
@@ -83,7 +79,7 @@ function PurchaseMaterial() {
   useEffect(() => {
     fetchData();
     fetchMaterialData();
-  }, [MaterialName]);
+  },[MaterialData]);
 
 
   const handleChange = (e) => {

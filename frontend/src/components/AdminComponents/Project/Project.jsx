@@ -72,7 +72,7 @@ function Project() {
                     Details
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Action
+                    Edit
                 </th>
                 
             </tr>
@@ -95,7 +95,7 @@ function Project() {
                 <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id)}>
                   View
                 </td>
-                <td class="px-6 py-4 font-medium cursor-pointer"><DeleteIcon className="text-red-500"/> &nbsp;&nbsp;&nbsp;<EditIcon onClick={()=>{handleEdit(data)}} className="text-yellow-600"/>
+                <td class="px-6 py-4 font-medium cursor-pointer"><EditIcon onClick={()=>{handleEdit(data)}} className="text-yellow-600"/>
                   </td>
             </tr>
             )
