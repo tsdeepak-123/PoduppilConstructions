@@ -54,7 +54,7 @@ const handleMaterialPurchase = async (req, res) => {
             message: "Failed find project",
           });
       }
-      console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    //   console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       const totalAmount = materials.reduce((acc, cur) => {
         return acc += cur.total;
       }, 0); 
@@ -68,12 +68,65 @@ const handleMaterialPurchase = async (req, res) => {
     });
 
     await newMaterial.save();
-      console.log(totalAmount, 'totalamount');
+    // console.log('data added to db');
+    res.status(200).json({sucess:true,messege:"Purchase bill added"})
     } catch (error) {
       console.log(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   };
   
+
+  //.......................PurchaseData   by id ...........................
+
+  const handlePurchaseById = async (req, res) => {
+    try {
+        const projectid = req.query.id;
+        const PurchaseData = await Purchase.find({ project: projectid });
+
+        if (!PurchaseData || PurchaseData.length === 0) {
+            return res.json({ success: false, message: "No data found" });
+        }
+
+        res.json({ success: true, message: "PurchaseData found successfully", PurchaseData });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+//............................handlePurchaseByDate ...........................
+
+
+const handlePurchaseByDate = async (req, res) => {
+    try {
+        const date = req.query.date;
+        const dateToFind = new Date(date + 'T00:00:00.000+00:00');
+        const projectid = req.query.id;
+        // console.log(req.query,dateToFind,projectid);
+       
+        const PurchaseData = await Purchase.find({
+            project: projectid,
+            date: {
+                $gte: dateToFind,
+                $lt: new Date(dateToFind.getTime() + 24 * 60 * 60 * 1000) 
+            }
+        });
+        // console.log(PurchaseData);
+
+        if (!PurchaseData || PurchaseData.length === 0) {
+            return res.json({ success: false, message: "No data found" });
+        }
+
+        res.json({ success: true, message: "PurchaseData found successfully", PurchaseData });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
+//.........................................
 
 const handleMaterialTotal=async(req,res)=>{
     try {
@@ -84,9 +137,10 @@ const handleMaterialTotal=async(req,res)=>{
         res.json({success:false,messege:"No data found"})
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
 
 
-module.exports={handleMaterialAdding,handleMaterialList,handleMaterialPurchase,handleMaterialTotal}
+module.exports={handleMaterialAdding,handleMaterialList,handleMaterialPurchase,handleMaterialTotal,handlePurchaseById,handlePurchaseByDate}
