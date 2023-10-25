@@ -27,6 +27,10 @@ function PurchaseMaterial() {
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
   };
+  const handleMaterialDataRecieved = () => {
+    console.log(MaterialName,"heyyyyyyyyyyyyyyy");
+    setMaterialName(MaterialName);
+  };
   const handleQuantitychange = (e) => {
     setQuantity(e.target.value);
   };
@@ -42,7 +46,7 @@ function PurchaseMaterial() {
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("projectList?status=false");
+      const response = await axiosAdmin.get("projectList");
       console.log(response?.data?.FindProject);
 
       setProjectData(response?.data?.FindProject);
@@ -62,11 +66,10 @@ function PurchaseMaterial() {
     }
   };
 
-  console.log(date,"dayeee");
 
   const handleMaterialSubmit = async () => {
     try {
-      const response = await axiosAdmin.post("/purchasematerial",{MaterialName,quantity,projectname});
+      const response = await axiosAdmin.post("/purchasematerial",{materials:selectedValues,projectname,date});
       console.log(response?.data?.FindProject);
       setProjectData(response?.data?.FindProject);
     } catch (error) {
@@ -79,7 +82,7 @@ function PurchaseMaterial() {
   useEffect(() => {
     fetchData();
     fetchMaterialData();
-  },[MaterialData]);
+  }, [MaterialName]);
 
 
   const handleChange = (e) => {
@@ -112,11 +115,7 @@ function PurchaseMaterial() {
 
       { projectname ?
       <>
-      <div className="flex justify-center gap-8">  
-      <p className="flex justify-center">  PROJECT : &nbsp;&nbsp; {projectname}</p>
-      <p className="flex justify-center"> DATE :&nbsp;&nbsp; {date}</p>
-      </div>
-     
+      <p className="flex justify-center font-bold">  PROJECT : &nbsp;&nbsp; {projectname}</p>
         <div className="flex justify-center gap-4 mt-8">
         <>
       {MaterialData?.length > 0 ? (
@@ -187,7 +186,7 @@ function PurchaseMaterial() {
         }
 
         </>
-                :<div className="flex flex-wrap justify-center gap-4">
+                :<div className="flex justify-center gap-4">
                   <TextFields name="Purchase date" type="date" input={true} onChange={ handleDatechange}/>
         <Dropdown projects={projectData} onDataPassed={handleDataReceived} />
       </div>

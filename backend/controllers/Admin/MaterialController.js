@@ -54,14 +54,14 @@ const handleMaterialPurchase = async (req, res) => {
             message: "Failed find project",
           });
       }
-      console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",projectId);
+      console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       const totalAmount = materials.reduce((acc, cur) => {
-        return acc + cur.total;
+        return acc += cur.total;
       }, 0); 
 
       const newMaterial= new Purchase({
         project:projectId._id,
-        // TotalAmount:totalAmount,
+        TotalAmount:totalAmount,
         Material:materials,
         date:date
 
