@@ -12,6 +12,7 @@ const BillSchema = new Schema({
   payment:{type:String},
   date: { type: Date },
   photo: { type: String },
+  isPaid:{type:Boolean,default:false}
 });
 
 const Bill =new mongoose.model('Bill', BillSchema);

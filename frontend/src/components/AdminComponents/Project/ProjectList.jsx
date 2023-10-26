@@ -8,18 +8,18 @@ const navigate=useNavigate()
   const handlePurchaseClick=()=>{
     navigate('/admin/purchasematerial')
   }
-  const fetchData=async()=>{
-    try {
-      const response=await axiosAdmin.get('/materialtotal')
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const fetchData=async()=>{
+  //   try {
+  //     const response=await axiosAdmin.get('materialtotal')
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  useEffect(()=>{
-    fetchData()
-  })
+  // useEffect(()=>{
+  //   fetchData()
+  // },[])
   return (
     <>
       <ReturnButton /> 

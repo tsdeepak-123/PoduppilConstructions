@@ -167,7 +167,6 @@ const handlePhotoAdding = async (req, res) => {
       photoUrls.push(photoUpload.secure_url);
     }
 
-    console.log("urlsssssssssssssssssssss",photoUrls);
 
     // Update the project's photos array with the new photo URLs
     await Project.updateOne({ _id: projectId }, { $push: { photos: { $each: photoUrls } } });

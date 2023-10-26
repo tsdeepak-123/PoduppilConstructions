@@ -10,7 +10,6 @@ import Swal from 'sweetalert2'
 const SingleViewProject = () => {
   const location = useLocation();
   const [projectData, setProjectData] = useState(null);
-  const [completed, setCompleted] = useState(false);
 
   const id = location?.state?.id;
 

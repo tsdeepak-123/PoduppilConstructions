@@ -91,8 +91,8 @@ const handleBillAdding = async (req, res) => {
 
   const handleBillDetails=async (req,res)=>{
     try {
-   
-        const allBillData=await Bill.find()
+         
+        const allBillData=await Bill.find({isPaid:req.query.status})
         
         res.json({allBillData})
     } catch (error) {
@@ -101,4 +101,30 @@ const handleBillAdding = async (req, res) => {
 }
 
 
-  module.exports={handleBillAdding,handleBillDetails}
+const handleBillSingleView=async(req,res)=>{
+  try {
+    const id=req.query.id
+    console.log(req.query.id);
+    const billData=await Bill.find({_id:id})
+    if(!billData){
+      res.json({message:"bill not finded",success:true})
+    }
+    console.log(billData);
+    res.json({message:"bill finded",success:true,billData})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+const handleCompletedBills=async(req,res)=>{
+  try {
+    const id= req.query.id
+    await Bill.findByIdAndUpdate({_id:id},{$set:{isPaid:true}})
+    res.json({success:true,messege:"bill status updated successfully"})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+  module.exports={handleBillAdding,handleBillDetails,handleBillSingleView,handleCompletedBills}

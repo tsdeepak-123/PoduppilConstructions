@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import dateFormat from "../../../Validation/FormatDate";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 function UtilityBills() {
@@ -16,7 +15,7 @@ function UtilityBills() {
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("billslist");
+      const response = await axiosAdmin.get("billslist?status=false");
       console.log(response);
 
       setBillData(response.data.allBillData);
@@ -31,6 +30,10 @@ function UtilityBills() {
   }, []);
 //formatting the date
   const date= dateFormat(billData ?billData[0]?.date:"")
+
+  const viewBills=(id)=>{
+    navigate("/admin/billsingleview",{ state: {id } })
+  }
 
   return (
     <>
@@ -76,7 +79,7 @@ function UtilityBills() {
                 <td class="px-6 py-4">{item.status}</td>
                 <td class="px-6 py-4">{item.paid}</td>
                 <td class="px-6 py-4">{item.pending}</td>
-                <td class="px-6 py-4 text-blue-600 cursor-pointer">View</td>
+                <td class="px-6 py-4 text-blue-600 cursor-pointer" onClick={()=>viewBills(item._id)}>View</td>
                 <EditIcon className="text-yellow-600"/>
               </tr>
                 )

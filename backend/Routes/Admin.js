@@ -51,6 +51,8 @@ const {
 const {
   handleBillAdding,
   handleBillDetails,
+  handleBillSingleView,
+  handleCompletedBills,
 } = require("../controllers/Admin/BillController");
 const upload = require("../Middleware/Multer");
 const Auth = require("../Middleware/Auth");
@@ -121,5 +123,7 @@ adminRoute.get("/allmateriallist", handleMaterialList);
 adminRoute.post("/purchasematerial", handleMaterialPurchase);
 adminRoute.post('/completedprojects',handleCompletedProjects)
 adminRoute.get('/materialtotal',handleMaterialTotal)
+adminRoute.get('/billsingle',handleBillSingleView)
+adminRoute.get('/paidbills',handleCompletedBills)
 
 module.exports = adminRoute;

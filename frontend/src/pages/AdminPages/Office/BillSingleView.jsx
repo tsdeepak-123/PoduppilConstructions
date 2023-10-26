@@ -8,7 +8,10 @@ function BillSingleView() {
     <div>
         <Header headers="Bill Details"/> 
         <BillSingle/>
+        <div className='mt-14'>
         <Footer/>
+        </div>
+        
     </div>
   )
 }
