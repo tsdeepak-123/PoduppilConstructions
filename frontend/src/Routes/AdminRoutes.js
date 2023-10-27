@@ -57,43 +57,42 @@ function AdminRoutes() {
     <div>
        <Routes>
        <Route path='/' element={<AdminHome/>}/>
-       <Route path='/login' element={<LoginPage/>}/>
-       <Route path='/dashboard' element={<AdminDashboard/>}/>
-       <Route path='/labourdetails' element={<LabourControll/>}/>
-       <Route path='/projectdetails' element={<ProjectDisplay/>}/>
-       <Route path='/staffdetails' element={<StaffControll/>}/>
-       <Route path='/officedetails' element={<OfficeControll/>}/>
-       <Route path='/contractdetails' element={<ContractControll/>}/>
-       <Route path='/materials' element={<Materials/>}/>
-       <Route path='/addlabour' element={<LabourAdding/>}/>
-       <Route path='/addcontract' element={<ContractAdding/>}/>
-       <Route path='/addbills' element={<Addbills/>}/>
-       <Route path='/addproject' element={<ProjectAdding/>}/>
-       <Route path='/editproject' element={<ProjectEditing/>}/>{/*edited*/}
-       <Route path='/addstaff' element={<StaffAdding/>}/>
-       <Route path='/projectlist' element={<ProjectLists/>}/>
+       <Route path='/login' element={adminToken?<AdminDashboard/>:<LoginPage/>}/>
+       <Route path='/dashboard' element={adminToken?<AdminDashboard/>:<LoginPage/>}/>
+       <Route path='/labourdetails' element={adminToken?<LabourControll/>:<LoginPage/>}/>
+       <Route path='/projectdetails' element={adminToken?<ProjectDisplay/>:<LoginPage/>}/>
+       <Route path='/staffdetails' element={adminToken?<StaffControll/>:<LoginPage/>}/>
+       <Route path='/officedetails' element={adminToken?<OfficeControll/>:<LoginPage/>}/>
+       <Route path='/contractdetails' element={adminToken?<ContractControll/>:<LoginPage/>}/>
+       <Route path='/materials' element={adminToken?<Materials/>:<LoginPage/>}/>
+       <Route path='/addlabour' element={adminToken?<LabourAdding/>:<LoginPage/>}/>
+       <Route path='/addcontract' element={adminToken?<ContractAdding/>:<LoginPage/>}/>
+       <Route path='/addbills' element={adminToken?<Addbills/>:<LoginPage/>}/>
+       <Route path='/addproject' element={adminToken?<ProjectAdding/>:<LoginPage/>}/>
+       <Route path='/editproject' element={adminToken?<ProjectEditing/>:<LoginPage/> }/>{/*edited*/}
+       <Route path='/addstaff' element={adminToken?<StaffAdding/>:<LoginPage/>}/>
+       <Route path='/projectlist' element={adminToken?<ProjectLists/>:<LoginPage/>}/>
        
        {/* start */}
-       <Route path='/labourattendance' element={<LabourAttendance/>}/>
-       <Route path='/staffattendance' element={<StaffAttendance/>}/>
-       <Route path='/utilitybills' element={<UtilityBill/>}/>
-       <Route path='/contractview' element={<SingleviewContract/>}/>
-       <Route path='/projectview' element={<Singleviewproject/>}/>
-       <Route path='/attendancesingle' element={<SingleViewAttendance/>}/>
-       <Route path='/viewsalary' element={<ViewSalary/>}/>
-       <Route path='/viewprofile' element={<ProfilePage/>}/>
-       <Route path='/staffsalary' element={<StaffSalary/>}/>
-       <Route path='/staffprofile' element={<StaffProfile/>}/>
-       <Route path='/completedprojects' element={<Completed/>}/>
-       <Route path='/completedbills' element={<CompletedBills/>}/>
-       <Route path='/billsingleview' element={<BillSingleView/>}/>
-       <Route path='/salaryhistory' element={<SalaryHistoryDisplay/>}/>
-       <Route path='/weeklysalary' element={<SalaryWeek/>}/>
-       <Route path='/editcontract' element={<ContractEdit/>}/>
-       <Route path='/weeklystaffsalary' element={<StaffWeekSalary/>}/>
-       <Route path='/salarymanagement' element={<SalaryManagement/>}/>
-       <Route path='/purchasematerial' element={<Purchase/>}/>
-       <Route path='/paidbills' element={<PaidBills/>}/>
+       <Route path='/labourattendance' element={adminToken?<LabourAttendance/>:<LoginPage/>}/>
+       <Route path='/staffattendance' element={adminToken?<StaffAttendance/>:<LoginPage/>}/>
+       <Route path='/utilitybills' element={adminToken?<UtilityBill/>:<LoginPage/>}/>
+       <Route path='/contractview' element={adminToken?<SingleviewContract/>:<LoginPage/>}/>
+       <Route path='/projectview' element={adminToken?<Singleviewproject/>:<LoginPage/>}/>
+       <Route path='/attendancesingle' element={adminToken?<SingleViewAttendance/>:<LoginPage/>}/>
+       <Route path='/viewsalary' element={adminToken?<ViewSalary/>:<LoginPage/>}/>
+       <Route path='/viewprofile' element={adminToken?<ProfilePage/>:<LoginPage/>}/>
+       <Route path='/staffsalary' element={adminToken?<StaffSalary/>:<LoginPage/>}/>
+       <Route path='/staffprofile' element={adminToken?<StaffProfile/>:<LoginPage/>}/>
+       <Route path='/completedprojects' element={adminToken?<Completed/>:<LoginPage/>}/>
+       <Route path='/completedbills' element={adminToken?<CompletedBills/>:<LoginPage/>}/>
+       <Route path='/billsingleview' element={adminToken?<BillSingleView/>:<LoginPage/>}/>
+       <Route path='/salaryhistory' element={adminToken?<SalaryHistoryDisplay/>:<LoginPage/>}/>
+       <Route path='/weeklysalary' element={adminToken?<SalaryWeek/>:<LoginPage/>}/>
+       <Route path='/editcontract' element={adminToken?<ContractEdit/>:<LoginPage/>}/>
+       <Route path='/weeklystaffsalary' element={adminToken?<StaffWeekSalary/>:<LoginPage/>}/>
+       <Route path='/salarymanagement' element={adminToken?<SalaryManagement/>:<LoginPage/>}/>
+       <Route path='/purchasematerial' element={adminToken?<Purchase/>:<LoginPage/>}/>
     </Routes>
     </div>
   )

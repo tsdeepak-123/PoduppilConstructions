@@ -119,8 +119,11 @@ const handleBillSingleView=async(req,res)=>{
 
 const handleCompletedBills=async(req,res)=>{
   try {
+    console.log("hiiiiiiiiiiiiiiiiiiiii");
     const id= req.query.id
-    await Bill.findByIdAndUpdate({_id:id},{$set:{isPaid:true}})
+    console.log(id,"idddddddddd");
+    const findedBills=await Bill.findByIdAndUpdate({_id:id},{$set:{isPaid:true}})
+    console.log(findedBills);
     res.json({success:true,messege:"bill status updated successfully"})
   } catch (error) {
     console.log(error);
