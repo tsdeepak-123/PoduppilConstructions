@@ -8,8 +8,9 @@ import PhotoAddModal from './PhotoAddModal';
 import Swal from 'sweetalert2'
 
 const SingleViewProject = () => {
-  const location = useLocation();
-  const [projectData, setProjectData] = useState(null);
+  const location = useLocation()
+  const [projectData, setProjectData] = useState(null)
+  const [materialData, setMaterialData] = useState(null)
 
   const id = location?.state?.id;
 
@@ -25,11 +26,21 @@ const SingleViewProject = () => {
     }
   };
 
+ const fetchMaterialData=async()=>{
+  try {
+    const response = await axiosAdmin.get(`PurchaseBillById?projectid=${id}`);
+     setMaterialData(response?.data?.PurchaseData)
+    
+  } catch (error) {
+    console.log(error);
+  }
+ }
+
   const handleCompletedProjects=async()=>{
    try {
    
       Swal.fire({
-        title: 'Is the project is completed ?',
+        title: 'Is the project completed ?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
@@ -59,8 +70,10 @@ const SingleViewProject = () => {
   // Data displaying when mounting
   useEffect(() => {
     fetchData();
+    fetchMaterialData()
   }, [id]);
 
+  console.log(materialData,"from page");
 return (
   <>
     <ReturnButton />
@@ -114,7 +127,7 @@ return (
     <div className='flex flex-wrap justify-center mt-14'>
       <p className=' font-serif font-bold text-[30px]'>Material Used For This Project</p>
     </div>
-    <SingleView/>
+    <SingleView materialData={materialData}/>
   </>
 )
         }

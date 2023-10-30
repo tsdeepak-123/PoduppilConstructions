@@ -51,7 +51,6 @@ function AdminRoutes() {
   }, [dispatch]);
 
   const adminToken = useSelector((state) => state?.Admin?.AdminToken);
-  console.log('adminnnnnnn',adminToken);
 
   return (
     <div>
@@ -85,7 +84,7 @@ function AdminRoutes() {
        <Route path='/staffsalary' element={adminToken?<StaffSalary/>:<LoginPage/>}/>
        <Route path='/staffprofile' element={adminToken?<StaffProfile/>:<LoginPage/>}/>
        <Route path='/completedprojects' element={adminToken?<Completed/>:<LoginPage/>}/>
-       <Route path='/completedbills' element={adminToken?<CompletedBills/>:<LoginPage/>}/>
+       <Route path='/paidbills' element={adminToken?<PaidBills/>:<LoginPage/>}/>
        <Route path='/billsingleview' element={adminToken?<BillSingleView/>:<LoginPage/>}/>
        <Route path='/salaryhistory' element={adminToken?<SalaryHistoryDisplay/>:<LoginPage/>}/>
        <Route path='/weeklysalary' element={adminToken?<SalaryWeek/>:<LoginPage/>}/>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { axiosAdmin } from '../../../Api/Api';
 import ReturnButton from '../../CommonComponents/Return/ReturnButton';
+import dateFormat from '../../../Validation/FormatDate';
 
 function BillsPaid() {
 
@@ -12,7 +13,8 @@ function BillsPaid() {
     const fetchData = async () => {
       try {
         const response = await axiosAdmin.get("billslist?status=true");
-        setBillData(response?.data?.billData);
+        console.log();
+        setBillData(response?.data?.allBillData);
       } catch (error) {
         console.log(error);
       }
@@ -25,6 +27,8 @@ function BillsPaid() {
     const nav = (id) => {
       navigate("/admin/billsingleview", { state: { id } });
     };
+
+    const date=dateFormat(billData ?billData[0]?.date:"")
   return (
     <>
     <ReturnButton />
@@ -46,6 +50,9 @@ function BillsPaid() {
               <th scope="col" class="px-6 py-3">
                 Paid By
               </th>
+              <th scope="col" class="px-6 py-3">
+                Details
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +63,7 @@ function BillsPaid() {
                     key={data?._id}
                     className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
                   >
-                    <td className="px-6 py-4">{data?.date}</td>
+                    <td className="px-6 py-4">{date}</td>
                     <td className="px-6 py-4">{data?.name}</td>
                     <td className="px-6 py-4">{data?.amount}</td>
                     <td className="px-6 py-4">{data?.paidby}</td>

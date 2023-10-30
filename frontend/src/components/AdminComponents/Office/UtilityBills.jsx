@@ -4,6 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import dateFormat from "../../../Validation/FormatDate";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
 import EditIcon from '@mui/icons-material/Edit';
+import Buttons from "../../CommonComponents/Button/Buttons";
 
 function UtilityBills() {
   const [billData, setBillData] = useState();
@@ -24,6 +25,9 @@ function UtilityBills() {
     }
   };
 
+  const handlePaidBills=()=>{
+    navigate("/admin/paidbills")
+  }
 
   useEffect(() => {
     fetchData();
@@ -37,7 +41,13 @@ function UtilityBills() {
 
   return (
     <>
-<AddNav name="+ ADD NEW BILL" click={handleAddBillClick}/>
+<div className='w-full flex' >
+  <div className='w-[80%]'>
+  <AddNav name="+ ADD NEW BILL" click={handleAddBillClick}/>
+  </div>
+<div className='w-[20%] mt-[208px]'>
+<Buttons name="PAID BILLS" click={handlePaidBills} />
+</div></div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

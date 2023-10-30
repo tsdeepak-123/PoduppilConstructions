@@ -34,7 +34,7 @@ function AddMaterialModal() {
     const handleSubmit=async(e)=>{
       e.preventDefault()
       console.log(MaterialName);
-     const response= await axiosAdmin.post('addmaterial',{MaterialName})
+     await axiosAdmin.post('addmaterial',{MaterialName})
        handleClose()
     }
     const handleOpen = () => setOpen(true);

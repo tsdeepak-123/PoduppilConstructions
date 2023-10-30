@@ -2,9 +2,17 @@ import React from 'react'
 import Button from '@mui/material/Button';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AdminAction } from '../../../Stores/AdminAuth';
 
 function Header({headers}) {
   const navigate=useNavigate()
+  const dispatch=useDispatch()
+
+  const handleLogout=()=>{
+   dispatch(AdminAction.AdminLogout())
+    navigate("/admin")
+  }
   return (
     <div>
 
@@ -16,7 +24,7 @@ function Header({headers}) {
             </div>
             <h2 className='text-black mt-16 font-bold'>{headers}</h2>
             <div className='mt-16'>
-            <Button startIcon={< PowerSettingsNewIcon />} style={{color:"red"}} className=''>
+            <Button startIcon={< PowerSettingsNewIcon />} style={{color:"red"}} onClick={handleLogout}>
             <span className='hidden md:inline-block'> LOGOUT</span>
            </Button>
             </div>

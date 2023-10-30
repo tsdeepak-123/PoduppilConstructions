@@ -34,14 +34,14 @@ const handleBillAdding = async (req, res) => {
       ) {
          
         console.log("clearrrrrrrrrrrrrr")
-        const BillExist = await Bill.findOne({name});
+        // const BillExist = await Bill.findOne({name});
   
-        if (BillExist) {
-          return res.json({
-            success: false,
-            message: "Bill already exists. Please check the Bill List.",
-          });
-        }
+        // if (BillExist) {
+        //   return res.json({
+        //     success: false,
+        //     message: "Bill already exists. Please check the Bill List.",
+        //   });
+        // }
         
         if (!req.files|| !req.files.photo) {
           return res.json({
@@ -90,11 +90,10 @@ const handleBillAdding = async (req, res) => {
   // This function handles Labour Details pic from data base, taking in a request (req) and a response (res) as parameters.
 
   const handleBillDetails=async (req,res)=>{
-    try {
-         
+    try { 
         const allBillData=await Bill.find({isPaid:req.query.status})
-        
-        res.json({allBillData})
+        console.log(allBillData,"alll bills");
+        res.json({success:true,allBillData})
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

@@ -45,7 +45,9 @@ const handleMaterialList = async (req, res) => {
 
 const handleMaterialPurchase = async (req, res) => {
     try {
-      const { materials, projectname,date } = req.body;
+    
+      const { materials, projectname,date,careof } = req.body;
+      console.log(careof,"careeeeeeeeeofffffffffffff");
       const projectId=await Project.findOne({name:projectname})
       if(!projectId){
 
@@ -54,6 +56,7 @@ const handleMaterialPurchase = async (req, res) => {
             message: "Failed find project",
           });
       }
+
     //   console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       const totalAmount = materials.reduce((acc, cur) => {
         return acc += cur.total;
@@ -63,7 +66,8 @@ const handleMaterialPurchase = async (req, res) => {
         project:projectId._id,
         TotalAmount:totalAmount,
         Material:materials,
-        date:date
+        date:date,
+        careof:careof
 
     });
 
@@ -81,9 +85,9 @@ const handleMaterialPurchase = async (req, res) => {
 
   const handlePurchaseById = async (req, res) => {
     try {
-        const projectid = req.query.id;
+        const projectid = req.query.projectid;
         const PurchaseData = await Purchase.find({ project: projectid });
-
+          console.log(PurchaseData);
         if (!PurchaseData || PurchaseData.length === 0) {
             return res.json({ success: false, message: "No data found" });
         }

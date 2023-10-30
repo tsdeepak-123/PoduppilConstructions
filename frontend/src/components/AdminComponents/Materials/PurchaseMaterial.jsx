@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {useLocation,useNavigate} from "react-router-dom";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Dropdown from "../../CommonComponents/Dropdown/Dropdown";
 import { axiosAdmin } from "../../../Api/Api";
@@ -13,7 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Swal from "sweetalert2"
+import toast ,{Toaster} from "react-hot-toast"
 function PurchaseMaterial() {
+  const location=useLocation()
+  const navigate=useNavigate()
   const [projectname, setProjectName] = useState("");
   const [projectData, setProjectData] = useState("");
   const [MaterialData, setMaterialData] = useState("");
@@ -23,14 +27,12 @@ function PurchaseMaterial() {
   const [Rate,setRate] = useState();
   const [table,setTable] = useState(false);
   const [date,setDate ]= useState();
+  const [careof,setCareOf ]= useState();
 
   const handleDataReceived = (projectname) => {
     setProjectName(projectname);
   };
-  const handleMaterialDataRecieved = () => {
-    console.log(MaterialName,"heyyyyyyyyyyyyyyy");
-    setMaterialName(MaterialName);
-  };
+
   const handleQuantitychange = (e) => {
     setQuantity(e.target.value);
   };
@@ -41,6 +43,9 @@ function PurchaseMaterial() {
   };
   const handleDatechange = (e) => {
     setDate(e.target.value);
+  };
+  const handleCareOfchange = (e) => {
+    setCareOf(e.target.value);
   };
  
 
@@ -69,9 +74,28 @@ function PurchaseMaterial() {
 
   const handleMaterialSubmit = async () => {
     try {
+      Swal.fire({
+        title: 'Purchase Material ?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Purchase!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            const response =axiosAdmin.post("/purchasematerial",{materials:selectedValues,projectname,date})
+            setProjectData(response?.data?.FindProject);
+            Swal.fire({title:'Material Purchased',icon:"success"}
+            ).then(() => {
+              navigate("/admin/projectlist")
+            });
+        }
+      })
+
+      console.log(careof);
       
-      const response = await axiosAdmin.post("/purchasematerial",{materials:selectedValues,projectname,date});
-      setProjectData(response?.data?.FindProject);
+      
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +106,7 @@ function PurchaseMaterial() {
   useEffect(() => {
     fetchData();
     fetchMaterialData();
-  }, [MaterialName]);
+  }, [MaterialName,MaterialData]);
 
 
   const handleChange = (e) => {
@@ -91,32 +115,45 @@ function PurchaseMaterial() {
     console.log(selectedMaterialname, "nameeeeeeeeeeeeeeeeeeeeeee");
   }
 
-  const handleMaterials = (material, quantity,Rate) => {
-    setMaterialName("")
-    setQuantity("")
-    setRate("")
-    setTable(true)
-    console.log(material,quantity,'dggdgdgdggffdhg',Rate);
-   
-    const newMaterial = {
-      name: material,
-      quantity: quantity,
-      baseRate:Rate,
-      total:Rate*quantity
-    };
-    setSelectedValues((prevSelectedValues) => ([...prevSelectedValues,newMaterial]));
+  const handleMaterials = (material, quantity, rate, careof) => {
+    if (material && quantity && rate && careof) {
+      setTable(true);
+  
+      const newMaterial = {
+        name: material,
+        careof: careof,
+        quantity: quantity,
+        baseRate: rate,
+        total: rate * quantity
+      };
+  
+      setSelectedValues((prevSelectedValues) => [...prevSelectedValues, newMaterial]);
+  
+      // Clear the input fields after submission
+      setMaterialName("");
+      setQuantity("");
+      setRate("");
+      setCareOf("");
+    } else {
+      toast.error("Please fill in all fields before submission.");
+    }
   };
+  
 
   console.log(selectedValues,"selectedValuesssssss");
  
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false}/>
       <ReturnButton />
+      <div>
 
-      { projectname ?
+      </div>
+
+      { projectname && date ?
       <>
       <p className="flex justify-center font-bold">  PROJECT : &nbsp;&nbsp; {projectname}</p>
-        <div className="flex justify-center gap-4 mt-8">
+        <div className="flex justify-center flex-wrap gap-4 mt-8">
         <>
       {MaterialData?.length > 0 ? (
         <Box className='w-[380px]'>
@@ -148,9 +185,17 @@ function PurchaseMaterial() {
         </Box>
       )}
     </>
-          <div className="mt-3">
-          <AddMaterialModal />
-          </div>
+      
+        <div className="mt-3">
+        <AddMaterialModal />
+        </div>
+      
+          <TextFields
+            name="Care OF"
+            value={careof}
+            type="text"
+            onChange={handleCareOfchange}
+          />
           
           <TextFields
             name="Quantity"
@@ -158,17 +203,22 @@ function PurchaseMaterial() {
             type="number"
             onChange={handleQuantitychange}
           />
+          <div className="ms-16">
           <TextFields
             name="BaseRate"
             value={Rate}
             type="number"
             onChange={handleRatechange}
             />
+          </div>
+
           {/* <Buttons name="SUBMIT" click={handleMaterialSubmit} /> */}
-            <div className="mt-2">
-          <Buttons name="SUBMIT" click={()=>handleMaterials(MaterialName,quantity,Rate)} />
+       
+      </div>
+      <div className=" flex justify-center mt-2">
+          <Buttons name="SUBMIT" click={()=>handleMaterials(MaterialName,quantity,Rate,careof)} />
           </div> 
-        </div>
+    
         {
            table?
           <>
