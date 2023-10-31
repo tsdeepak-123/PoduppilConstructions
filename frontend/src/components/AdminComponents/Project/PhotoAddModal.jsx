@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { axiosAdmin } from "../../../Api/Api";
+import { useLocation } from "react-router-dom";
 
 const modalStyle = {
   position: "absolute",
@@ -55,7 +56,7 @@ function PhotoAddModal({ projectId }) {
         }
       );
 
-      handleClose();
+      handleClose().then(()=>window.location.reload());
     } catch (error) {
       console.error("Error uploading photos:", error);
       // Handle errors (display an error message, etc.)

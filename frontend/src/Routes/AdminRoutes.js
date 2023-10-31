@@ -39,6 +39,7 @@ import StaffWeekSalary from '../pages/AdminPages/ViewSalary/StaffWeekSalary'
 import SalaryManagement from "../pages/AdminPages/ViewSalary/SalaryManagement"
 import Purchase from '../pages/AdminPages/Materials/Purchase'
 import PaidBills from '../pages/AdminPages/Office/PaidBills'
+import Attendence from '../pages/AdminPages/Staff/Attendence'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -92,6 +93,7 @@ function AdminRoutes() {
        <Route path='/weeklystaffsalary' element={adminToken?<StaffWeekSalary/>:<LoginPage/>}/>
        <Route path='/salarymanagement' element={adminToken?<SalaryManagement/>:<LoginPage/>}/>
        <Route path='/purchasematerial' element={adminToken?<Purchase/>:<LoginPage/>}/>
+       <Route path='/staffattendencesingle' element={adminToken?<Attendence/>:<LoginPage/>}/>
     </Routes>
     </div>
   )

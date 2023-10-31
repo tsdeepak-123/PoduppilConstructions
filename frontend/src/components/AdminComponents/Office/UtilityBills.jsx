@@ -90,7 +90,7 @@ function UtilityBills() {
                 <td class="px-6 py-4">{item.paid}</td>
                 <td class="px-6 py-4">{item.pending}</td>
                 <td class="px-6 py-4 text-blue-600 cursor-pointer" onClick={()=>viewBills(item._id)}>View</td>
-                <EditIcon className="text-yellow-600"/>
+                <td className="cursor-pointer"><EditIcon className="text-yellow-600"/></td>   
               </tr>
                 )
                

@@ -9,7 +9,7 @@ const SingleViewAttendance = () => {
     
       <Header headers="ATTENDANCE"/>
         <AttendanceSingleView/> 
-      <div className='mt-96'>
+      <div className='mt-20'>
       <Footer/>
       </div>
       

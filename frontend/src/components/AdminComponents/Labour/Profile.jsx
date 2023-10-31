@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import { useNavigate } from "react-router-dom";
-import dateFormat from "../../../Validation/FormatDate";
+import FormatDate from "../../../Validation/FormatDate";
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import AttendanceEdit from "../Attendance/AttendanceEdit";
 
@@ -31,7 +31,7 @@ function Profile() {
     fetchData();
   }, []);
   //formatting the date
-  const date = dateFormat(LabourData?.date);
+ 
   
   const nav =(id)=>{
     navigate('/admin/viewprofile',{ state: {id } })
@@ -108,7 +108,7 @@ function Profile() {
                       </div>
                       <div class="grid grid-cols-2">
                         <div class="px-4 py-2 font-semibold">Date of Joing</div>
-                        <div class="px-4 py-2">{date}</div>
+                        <div class="px-4 py-2">{FormatDate(LabourData?.date)}</div>
                       </div>
                      
                     </div>

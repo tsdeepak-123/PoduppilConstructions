@@ -624,6 +624,17 @@ const labourAttendanceEdit = async (req, res) => {
 
 
 
+const handleSalaryControll = async (req, res) => {
+  try {
+    const id = req.query.id;
+    await Salary.updateOne({ _id: id }, { $set: { "records.0.Is_status": "paid" } });
+    res.json({ success: true, message: "salary status updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Error updating salary status" });
+  }
+};
+
 
     module.exports={handleLabourAdding,
       handleLabourDetails,
@@ -636,5 +647,6 @@ const labourAttendanceEdit = async (req, res) => {
       handleLabourAdvance,
       handleLabourHIstory,
       handleAllLabourHIstory,
-      labourAttendanceEdit
+      labourAttendanceEdit,
+      handleSalaryControll
     }

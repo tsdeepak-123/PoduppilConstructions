@@ -168,10 +168,10 @@ if (datePortion) {
     </div>
   </div>
  
-<div className='flex flex-wrap justify-around mb-7'>
+{/* <div className='flex flex-wrap justify-around mb-7'>
 <Buttons name='VIEW LABOUR PROFILE' click={handleProfileButton} />
 <Buttons name='VIEW LABOUR ATTENDANCE' classes={'ms-4'} click={handleAttendanceButton}/>
-</div>
+</div> */}
   </>
   )
 }

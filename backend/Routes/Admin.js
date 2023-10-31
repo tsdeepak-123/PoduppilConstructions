@@ -17,6 +17,7 @@ const {
   handleLabourHIstory,
   labourAttendanceEdit,
   handleAllLabourHIstory,
+  handleSalaryControll,
 } = require("../controllers/Admin/LabourController");
 const {
   handleStaffAdding,
@@ -29,6 +30,7 @@ const {
   salarycalculationforStaff,
   stafffAttendanceEdit,
   handleAllStaffHIstory,
+  StaffAttendanceById,
 } = require("../controllers/Admin/StaffController");
 const {
   handleProjectAdding,
@@ -56,7 +58,7 @@ const {
 } = require("../controllers/Admin/BillController");
 const upload = require("../Middleware/Multer");
 const Auth = require("../Middleware/Auth");
-const { handleMaterialAdding, handleMaterialList, handleMaterialPurchase, handleMaterialTotal,handlePurchaseById,handlePurchaseByDate } = require("../controllers/Admin/MaterialController");
+const { handleMaterialAdding, handleMaterialList, handleMaterialPurchase, handleMaterialTotal,handlePurchaseById,handlePurchaseByDate, handleAllMaterials } = require("../controllers/Admin/MaterialController");
 
 //The routes for admin authentication
 
@@ -99,6 +101,7 @@ adminRoute.get("/ContractById", ContractListById);
 adminRoute.get("/projectList", ProjectList);
 adminRoute.get("/projectById", ProjectListById);
 adminRoute.get("/labourattendanceById", labourAttendanceById);
+adminRoute.get("/staffattendanceById", StaffAttendanceById);
 adminRoute.post("/labouradvance", handleLabourAdvance);
 adminRoute.post("/staffadvance", handleStaffAdvance);
 adminRoute.post(
@@ -127,5 +130,7 @@ adminRoute.get('/billsingle',handleBillSingleView)
 adminRoute.post('/paidbills',handleCompletedBills)
 adminRoute.get('/PurchaseBillById',handlePurchaseById)
 adminRoute.get('/PurchaseBillByDate',handlePurchaseByDate)
+adminRoute.post('/salarypaid',handleSalaryControll)
+
 
 module.exports = adminRoute;

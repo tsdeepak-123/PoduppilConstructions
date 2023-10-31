@@ -4,6 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import dateFormat from "../../../Validation/FormatDate";
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import AttendanceEditStaff from "../Attendance/AttendanceEditStaff";
+import Buttons from "../../CommonComponents/Button/Buttons";
 function Profile() {
   const [StaffData, setStaffData] = useState();
   const location = useLocation();

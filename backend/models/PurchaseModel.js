@@ -8,6 +8,10 @@ const MaterialSchema = new Schema({
     ref: "Project",
     required: true,
   },
+  projectname:{
+    type:String,
+    required:true
+  },
   date: {
     type: Date,
     required: true,

@@ -5,6 +5,8 @@ import SalaryStatusDrodown from "./SalaryStatusDrodown";
 
 function WeeklySalary() {
   const [salaryData, setSalaryData] = useState();
+  
+
   const fetch = async () => {
     try {
       const response = await axiosAdmin.get("alllaboursalaryhistory");
@@ -12,7 +14,6 @@ function WeeklySalary() {
       setSalaryData(response?.data.updatedLabourSalaryData);
     } catch (error) {}
   };
-  console.log(salaryData);
 
   useEffect(() => {
     fetch();
@@ -57,7 +58,7 @@ function WeeklySalary() {
                 <td
                   scope="row"
                   class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                ><SalaryStatusDrodown/></td>
+                ><SalaryStatusDrodown status={item.records[0].Is_status}/></td>
               </tr>
                 )):(
                     <tr>

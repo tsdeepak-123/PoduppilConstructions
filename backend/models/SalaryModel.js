@@ -19,6 +19,7 @@ const SalarySchema = new mongoose.Schema({
      totalSalary:{ type: Number,required: true,},
      advance:{ type: Number,required: true,default:0},
      updatedSalary:{ type: Number,required: true,},
+     Is_status:{type:String,default:"calculated"}
      
      
     },

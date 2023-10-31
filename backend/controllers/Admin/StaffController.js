@@ -581,6 +581,33 @@ const handleAllStaffHIstory = async (req, res) => {
 };
 
 
+//-----------------------------------------------
+
+const StaffAttendanceById=async(req,res)=>{
+
+  try {
+    const staffId = req.query.staffId;
+    const attendanceRecords = await Staffattendance.find({ 'records.StaffId': staffId });
+  console.log(attendanceRecords,"records");
+    const staffData = {};
+    attendanceRecords.forEach((record) => {
+      record.records.forEach((attendanceRecord) => {
+        if (attendanceRecord.StaffId.equals(staffId)) {
+          const date = record.date.toISOString().split('T')[0]; 
+          const status = attendanceRecord.status;
+          // console.log(date,'date',status,'status');
+          staffData[date] = status;
+        }
+      });
+    });
+    res.status(200).json({staffData});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
 
 
 module.exports = {
@@ -593,5 +620,6 @@ module.exports = {
   handleAttendanceListofStaff,
   handleStaffAdvance,
   stafffAttendanceEdit,
-  handleAllStaffHIstory
+  handleAllStaffHIstory,
+  StaffAttendanceById
 };

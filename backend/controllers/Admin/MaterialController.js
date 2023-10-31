@@ -48,8 +48,8 @@ const handleMaterialPurchase = async (req, res) => {
     
       const { materials, projectname,date,careof } = req.body;
       console.log(careof,"careeeeeeeeeofffffffffffff");
-      const projectId=await Project.findOne({name:projectname})
-      if(!projectId){
+      const findProject=await Project.findOne({name:projectname})
+      if(!findProject){
 
         return res.json({
             success: false,
@@ -57,13 +57,14 @@ const handleMaterialPurchase = async (req, res) => {
           });
       }
 
-    //   console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
       const totalAmount = materials.reduce((acc, cur) => {
         return acc += cur.total;
       }, 0); 
 
       const newMaterial= new Purchase({
-        project:projectId._id,
+        project:findProject._id,
+        projectname:findProject.name,
         TotalAmount:totalAmount,
         Material:materials,
         date:date,
@@ -132,18 +133,19 @@ const handlePurchaseByDate = async (req, res) => {
 
 //.........................................
 
-const handleMaterialTotal=async(req,res)=>{
-    try {
-        const materialData=await Purchase.find()
-        if(materialData){
-            res.json({sucess:true,messege:"Material data finded",materialData})
-        }
-        res.json({success:false,messege:"No data found"})
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+const handleMaterialTotal = async (req, res) => {
+  try {
+      const materialData = await Purchase.find();
+      if (materialData.length > 0) {
+          return res.json({ success: true, message: "Material data found", materialData });
+      }
+      return res.json({ success: false, message: "No data found" });
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
 

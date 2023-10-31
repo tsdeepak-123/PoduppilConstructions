@@ -38,6 +38,9 @@ function Labour() {
     
     navigate('/admin/viewsalary',{ state: {id } })
   }
+  const handleAttendanceButton = (id,LabourName,photo,phone) => {
+    navigate("/admin/attendancesingle",{ state : {id,LabourName,photo,phone} } );
+  };
   return (
     <>
     <AddNav name="+ ADD NEW LABOUR" click={handleAddLabourClick}/>
@@ -107,7 +110,7 @@ function Labour() {
                   <td class="px-6 py-4">{obj.adhar}</td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>salarypageNavigation(obj?._id)}>View
                   </td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer">View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>handleAttendanceButton(obj?._id,obj?.name,obj?.photo,obj?.phone)}>View
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>

@@ -3,7 +3,7 @@ import { axiosAdmin } from '../../../Api/Api';
 import ReturnButton from '../../CommonComponents/Return/ReturnButton';
 import { useLocation } from 'react-router-dom';
 
-function AttendanceSingleView() {
+function AttendanceSingle() {
   const location = useLocation();
   const id = location?.state?.id;
   const name = location?.state?.LabourName;
@@ -28,11 +28,11 @@ function AttendanceSingleView() {
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get(`labourattendanceById?labourId=${id}`);
-      setData(response?.data?.laborData);
+      const response = await axiosAdmin.get(`staffattendanceById?staffId=${id}`);
+      setData(response?.data?.staffData);
 
-      if (response?.data?.laborData) {
-        const firstDataDate = Object.keys(response.data.laborData)[0];
+      if (response?.data?.staffData) {
+        const firstDataDate = Object.keys(response.data.staffData)[0];
         const month = new Date(firstDataDate).getMonth();
         setCurrentMonth(month);
       }
@@ -40,6 +40,8 @@ function AttendanceSingleView() {
       console.log(error);
     }
   };
+
+   console.log(data);
 
   useEffect(() => {
     fetchData();
@@ -57,6 +59,8 @@ function AttendanceSingleView() {
         return 'bg-gray-300';
     }
   };
+
+  console.log(data);
 
   return (
     <>
@@ -111,4 +115,4 @@ function AttendanceSingleView() {
   );
 }
 
-export default AttendanceSingleView;
+export default AttendanceSingle;
