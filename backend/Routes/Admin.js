@@ -45,6 +45,7 @@ const {
   ContractList,
   ContractListById,
   handleEditContract,
+  handleCompletedContracts,
 } = require("../controllers/Admin/ContractController");
 // const{handleLabourAdding,handleLabourHIstory,handleLabourDetails,handleAllLabourHIstory,labourAttendanceEdit,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList,handleLabourAdvance}=require('../controllers/Admin/LabourController')
 // const{handleStaffAdding,stafffAttendanceEdit,handleAllStaffHIstory,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff,handleStaffAdvance,salarycalculationforStaff}=require('../controllers/Admin/StaffController')
@@ -131,6 +132,7 @@ adminRoute.post('/paidbills',handleCompletedBills)
 adminRoute.get('/PurchaseBillById',handlePurchaseById)
 adminRoute.get('/PurchaseBillByDate',handlePurchaseByDate)
 adminRoute.post('/salarypaid',handleSalaryControll)
+adminRoute.post('/completedcontracts',handleCompletedContracts)
 
 
 module.exports = adminRoute;

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
 import EditIcon from "@mui/icons-material/Edit";
+import Buttons from "../../CommonComponents/Button/Buttons";
 function Contract() {
   const navigate = useNavigate();
   const [ContractData, setContractData] = useState([]);
@@ -10,11 +11,14 @@ function Contract() {
   const handleAddContractClick = () => {
     navigate("/admin/addcontract");
   };
+  const handleAddCompletedContract = () => {
+    navigate("/admin/completedcontracts");
+  };
 
   // fetching data from backend
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("ContractList");
+      const response = await axiosAdmin.get("ContractList?status=false");
       console.log(response?.data?.FindContract);
 
       setContractData([...response?.data?.FindContract]);
@@ -39,7 +43,14 @@ function Contract() {
   };
   return (
     <>
-      <AddNav name="+ ADD NEW CONTRACT" click={handleAddContractClick} />
+      <div className="w-full flex">
+        <div className="w-[80%]">
+          <AddNav name="+ ADD NEW PROJECT" click={handleAddContractClick} />
+        </div>
+        <div className="w-[20%] mt-[14%]">
+          <Buttons name="COMPLETED PROJECT" click={handleAddCompletedContract} />
+        </div>
+      </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

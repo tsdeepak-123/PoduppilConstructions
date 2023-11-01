@@ -40,6 +40,7 @@ import SalaryManagement from "../pages/AdminPages/ViewSalary/SalaryManagement"
 import Purchase from '../pages/AdminPages/Materials/Purchase'
 import PaidBills from '../pages/AdminPages/Office/PaidBills'
 import Attendence from '../pages/AdminPages/Staff/Attendence'
+import ContractsCompleted from '../pages/AdminPages/Contract/ContractsCompleted'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -94,6 +95,7 @@ function AdminRoutes() {
        <Route path='/salarymanagement' element={adminToken?<SalaryManagement/>:<LoginPage/>}/>
        <Route path='/purchasematerial' element={adminToken?<Purchase/>:<LoginPage/>}/>
        <Route path='/staffattendencesingle' element={adminToken?<Attendence/>:<LoginPage/>}/>
+       <Route path='/completedcontracts' element={adminToken?<ContractsCompleted/>:<LoginPage/>}/>
     </Routes>
     </div>
   )

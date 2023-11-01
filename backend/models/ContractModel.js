@@ -22,6 +22,7 @@ const ContractSchema = new Schema({
   status: { type: String, required: true},
   Paymentdetails: { type: String, required: true},
   Amount: { type:Number, required: true},
+  isCompleted:{type:Boolean,default:false}
 
 });
 

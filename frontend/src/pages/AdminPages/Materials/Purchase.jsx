@@ -9,7 +9,7 @@ function Purchase() {
     <div>
 <Header headers="MATERIAL PURCHASE"/>
 <PurchaseMaterial/>
-<div className='mt-96'>
+<div className='mt-72'>
 <Footer/>
 </div>
 

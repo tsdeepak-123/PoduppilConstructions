@@ -49,7 +49,8 @@ const handleAddContract = async (req, res) => {
 
 const ContractList =async(req,res)=>{
     try {
-        const FindContract = await contract.find().populate('project')
+      
+        const FindContract = await contract.find({isCompleted:req.query.status}).populate('project')
         console.log(FindContract);
         if(!FindContract){
             res.json({ success: false, messege: "cant find contract details " });
@@ -144,8 +145,18 @@ const handleEditContract = async (req, res) => {
   }
 };
 
+
+const handleCompletedContracts=async(req,res)=>{
+  try {
+    const id= req.query.id
+    await contract.findByIdAndUpdate({_id:id},{$set:{isCompleted:true}})
+    res.json({success:true,messege:"Project status updated successfully"})
+  } catch (error) {
+    console.log(error);
+  }
+}
   
   
   module.exports={
-    handleAddContract,ContractList,ContractListById,handleEditContract
+    handleAddContract,ContractList,ContractListById,handleEditContract,handleCompletedContracts
   }
