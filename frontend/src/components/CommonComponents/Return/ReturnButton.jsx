@@ -6,7 +6,7 @@ function ReturnButton() {
     const navigate = useNavigate();
 
     const handleBackArrowClick = () => {
-        navigate(-1);
+        navigate("/admin/dashboard");
       };
   return (
     <div className="flex justify-start mt-32">

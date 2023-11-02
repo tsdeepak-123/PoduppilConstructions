@@ -5,7 +5,7 @@ import Buttons from '../Button/Buttons'
 import Search from '../Search/Search'
 
 
-function AddNav({name,click}) {
+function AddNav({name,click,value,onChange}) {
     const navigate=useNavigate()
     const handleBackArrowClick=()=>{
         navigate(-1)
@@ -26,7 +26,7 @@ function AddNav({name,click}) {
     </div>
     </div>
     <div className="ms-6 mt-9">
-   <Search/>
+   <Search value={value} onChange={onChange}/>
   </div>
   </>
   )

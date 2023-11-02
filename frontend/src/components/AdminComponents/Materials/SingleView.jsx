@@ -1,28 +1,70 @@
-import React, { useEffect, useRef, useState } from 'react';
-import FormatDate from "../../../Validation/FormatDate"
+import React, { useEffect, useRef, useState } from "react";
+import FormatDate from "../../../Validation/FormatDate";
 
 function SingleView({ materialData }) {
-  const tableRef = useRef(null);
-  const rowHeight = 50;
-  const [overallTotal, setOverallTotal] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredTotalRate, setFilteredTotalRate] = useState(0);
+  const [filteredMaterialData, setFilteredMaterialData] = useState([]);
+
+  const applySearchFilter = (data, term) => {
+    return data.filter((material) =>
+      material.name.toLowerCase().includes(term.toLowerCase())
+    );
+  };
 
   useEffect(() => {
-    if (tableRef.current && materialData) {
-      const documentCount = materialData.reduce(
-        (acc, data) => acc + data.Material.length,
-        0
-      );
-      const tableHeight = documentCount * rowHeight;
-      tableRef.current.style.height = `${tableHeight}px`;
+    if (materialData && materialData.length > 0) {
+      let totalRate = 0;
+      let filteredData = [];
 
-      const total = materialData.reduce((acc, data) => acc + parseFloat(data.TotalAmount || 0), 0);
-      setOverallTotal(total);
+      materialData.forEach((data) => {
+        let filteredMaterial = [];
+        if (searchTerm) {
+          filteredMaterial = applySearchFilter(data.Material, searchTerm);
+
+          if (filteredMaterial.length > 0) {
+            const materialTotal = filteredMaterial.reduce(
+              (acc, material) => acc + parseFloat(material.total || 0),
+              0
+            );
+            totalRate += materialTotal;
+            filteredData.push({ ...data, Material: filteredMaterial });
+          }
+        } else {
+          totalRate += parseFloat(data.TotalAmount || 0);
+          filteredData.push(data);
+        }
+      });
+
+      setFilteredTotalRate(searchTerm ? totalRate : totalRate);
+      setFilteredMaterialData(filteredData);
     }
-  }, [materialData]);
+  }, [materialData, searchTerm]);
+
   return (
     <>
-      <div className='flex justify-center mt-8'>
-        <div className="relative overflow-y-scroll shadow-md sm:rounded-lg" ref={tableRef}>
+   <div className="mx-20 mt-14 flex justify-between">
+  <input
+    type="text"
+    placeholder="Search Material Name"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 sm:w-[200px] w-[150px]"
+  />
+  {filteredTotalRate === 0 ? (
+    ""
+  ) : (
+    <div className="flex ml-4">
+      <p className="font-bold text-xl border-b-2 border-gray-300 pb-2 inline-block">
+        Total&nbsp;:{" "}
+        <span className="text-red-500 ms-4">{filteredTotalRate}</span>
+      </p>
+    </div>
+  )}
+</div>
+
+      <div className="flex justify-center mt-8">
+        <div className="w-[90%] relative overflow-y-scroll shadow-md sm:rounded-lg max-h-[500px]">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
               <tr>
@@ -41,50 +83,66 @@ function SingleView({ materialData }) {
                 <th scope="col" className="px-6 py-3">
                   Total
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Total Amount
-                </th>
+                {!searchTerm ? (
+                  <th scope="col" className="px-6 py-3">
+                    Total Amount
+                  </th>
+                ) : (
+                  ""
+                )}
               </tr>
             </thead>
             <tbody>
-              {materialData?.map((data, index) => (
-                <React.Fragment key={index}>
-                  {data.Material?.map((material, materialIndex) => (
-                    <tr key={materialIndex} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                      {materialIndex === 0 && (
-                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" rowSpan={data.Material.length}>
-                          {FormatDate(data.date)}
+              {filteredMaterialData.length > 0 ? (
+                filteredMaterialData.map((data, index) => (
+                  <React.Fragment key={index}>
+                    {data.Material.map((material, materialIndex) => (
+                      <tr
+                        key={materialIndex}
+                        className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
+                      >
+                        {materialIndex === 0 && (
+                          <td
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            rowSpan={data.Material.length}
+                          >
+                            {FormatDate(data.date)}
+                          </td>
+                        )}
+                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {material.name}
                         </td>
-                      )}
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {material.name}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {material.quantity}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {material.baseRate}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {material.total}
-                      </td>
-                      {materialIndex === 0 && (
-                        <td className=" px-6 py-4 font-medium  text-red-500 whitespace-nowrap dark:text-white" rowSpan={data.Material.length}>
-                          {data.TotalAmount}
+                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {material.quantity}
                         </td>
-                      )}
-                    </tr>
-                  ))}
-                </React.Fragment>
-              ))}
+                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {material.baseRate}
+                        </td>
+                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {material.total}
+                        </td>
+                        {!searchTerm && materialIndex === 0 && (
+                          <td
+                            className="px-6 py-4 font-medium text-red-500 whitespace-nowrap dark:text-white"
+                            rowSpan={data.Material.length}
+                          >
+                            {data.TotalAmount}
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center py-4">
+                    No matches found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-      </div>
-      <div className="text-center mt-8">
-        <p className="font-bold text-xl border-b-2 border-gray-300 pb-2 inline-block">
-          Total &nbsp;: <span className="text-red-500 ms-4">{overallTotal}</span>
-        </p>
       </div>
     </>
   );

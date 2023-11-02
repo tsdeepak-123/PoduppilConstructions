@@ -36,6 +36,8 @@ const SingleViewProject = () => {
   }
  }
 
+ console.log("purchaseeeeeeeeeeeeeeee",materialData);
+
   const handleCompletedProjects=async()=>{
    try {
    
@@ -66,7 +68,7 @@ const SingleViewProject = () => {
    }
 
   }
-
+console.log(projectData);
   // Data displaying when mounting
   useEffect(() => {
     fetchData();
