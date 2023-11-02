@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormatDate from "../../../Validation/FormatDate";
+import Search from "../../CommonComponents/Search/Search"
 
 function SingleView({ materialData }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,6 +11,10 @@ function SingleView({ materialData }) {
     return data.filter((material) =>
       material.name.toLowerCase().includes(term.toLowerCase())
     );
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   useEffect(() => {
@@ -43,25 +48,19 @@ function SingleView({ materialData }) {
 
   return (
     <>
-   <div className="mx-20 mt-14 flex justify-between">
-  <input
-    type="text"
-    placeholder="Search Material Name"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 sm:w-[200px] w-[150px]"
-  />
-  {filteredTotalRate === 0 ? (
-    ""
-  ) : (
-    <div className="flex ml-4">
-      <p className="font-bold text-xl border-b-2 border-gray-300 pb-2 inline-block">
-        Total&nbsp;:{" "}
-        <span className="text-red-500 ms-4">{filteredTotalRate}</span>
-      </p>
-    </div>
-  )}
-</div>
+      <div className="mx-20 mt-14 flex justify-between">
+        <Search value={searchTerm} onChange={handleSearch} />
+        {filteredTotalRate === 0 ? (
+          ""
+        ) : (
+          <div className="flex ml-4">
+            <p className="font-bold text-xl border-b-2 border-gray-300 pb-2 inline-block">
+              Total&nbsp;:{" "}
+              <span className="text-red-500 ms-4">{filteredTotalRate}</span>
+            </p>
+          </div>
+        )}
+      </div>
 
       <div className="flex justify-center mt-8">
         <div className="w-[90%] relative overflow-y-scroll shadow-md sm:rounded-lg max-h-[500px]">

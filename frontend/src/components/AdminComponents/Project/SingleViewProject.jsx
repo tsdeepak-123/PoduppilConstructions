@@ -6,6 +6,7 @@ import Buttons from '../../CommonComponents/Button/Buttons'
 import SingleView from '../../AdminComponents/Materials/SingleView'
 import PhotoAddModal from './PhotoAddModal';
 import Swal from 'sweetalert2'
+import CommonCard from "../../CommonComponents/CommonCard/CommonCard"
 
 const SingleViewProject = () => {
   const location = useLocation()
@@ -79,11 +80,15 @@ console.log(projectData);
 return (
   <>
     <ReturnButton />
+    <div className=''>
     {projectData && projectData.map((project, index) => (
       <div key={index} className="max-w-4xl mx-auto p-6 mt-6 bg-white rounded-lg shadow-lg">
   {
+     
     project.photos.length>0 ?(
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <>
+      <h1 className='flex justify-center font-bold text-3xl uppercase'> {project.name}</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
       <div className="mb-6 md:mb-0">
         <img src={project.photos[0]} alt="Project Image 1" className="w-full h-96 rounded-lg" />
       </div>
@@ -91,23 +96,22 @@ return (
         <img src={project.photos[1]} alt="Project Image 2" className="w-full h-96 rounded-lg" />
       </div>
     </div>
+    </>
     ):( 
        project.isCompleted==false ? <p className='text-red-500'>Please add project photos</p>:""
     )
 
   }
 
-        <div className="mt-6">
-          <h2 className="text-2xl font-bold mb-2">{project.name}</h2>
-          <p><strong>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.status}</p>
-          <p><strong>Pending&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.pending}</p>
-          <p><strong>Up-next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.upnext}</p>
-          <p><strong>Supervisor name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.supervisorname}</p>
-          <p><strong>Notes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> {project.notes}</p>
-        </div>
-        {
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+          <CommonCard value={project.status} label="Status"/>
+          <CommonCard value={project.pending} label="Pending"/>
+          <CommonCard value={project.upnext} label="Up-next"/>
+          <CommonCard value={project.supervisorname} label="Supervisor name"/>
+          <CommonCard value={project.notes} label="Notes"/>
+          {
           project.isCompleted==false ?(
-            <div className='flex justify-end gap-4 mt-14'>
+            <div className='flex justify-end gap-4 mt-4'>
             <div>
             <PhotoAddModal projectId={project._id}/>
             <p className='text-green-500'>You can add two photos</p>
@@ -122,9 +126,10 @@ return (
           )
 
         }
-
+        </div>
       </div>
     ))}
+    </div>
 
     <div className='flex flex-wrap justify-center mt-14'>
       <p className=' font-serif font-bold text-[30px]'>Material Used For This Project</p>

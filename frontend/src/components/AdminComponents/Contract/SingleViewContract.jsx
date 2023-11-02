@@ -4,11 +4,13 @@ import { axiosAdmin } from "../../../Api/Api";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
+import FormatDate from "../../../Validation/FormatDate";
+import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
 
 const SingleViewContract = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [contractData, setContractData] = useState([]);
+  const [contractData, setContractData] = useState({});
   const id = location?.state?.id;
 
   const fetchData = async () => {
@@ -23,7 +25,7 @@ const SingleViewContract = () => {
   const handleCompletedContracts = async () => {
     try {
       Swal.fire({
-        title: "Is the contract completed ?",
+        title: "Is the contract completed?",
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
@@ -59,66 +61,30 @@ const SingleViewContract = () => {
           Contract Work Details
         </h1>
 
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex flex-col">
-            <div>
-              <span className="text-base font-semibold">
-                Contract Work Name:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.Contractwork}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Contractor Name:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.Contractorname}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Contractor Phone Number:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">+91 {contractData.phone}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Contract Work Status:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.status}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Contract Amount:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.Amount}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Main Labours:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.totallabour}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Helpers:&nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.totalhelper}</span>
-            </div>
-            <div>
-              <span className="text-base font-semibold">
-                Date: &nbsp;&nbsp;&nbsp;
-              </span>
-              <span className="text-base">{contractData.date}</span>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CommonCard value={contractData.projectname} label="Project Name"/>
+          <CommonCard value={contractData.Contractwork} label="Contract Work Name"/>
+          <CommonCard value={contractData.Contractorname} label="Contractor Name"/>
+          <CommonCard value={contractData.Amount} label="Contract Amount"/>
+          <CommonCard value={contractData.status} label="Contract Work Status"/>
+          <CommonCard value={contractData.totallabour} label="Main Labours"/>
+          <CommonCard value={contractData.totalhelper} label="Helpers"/>
+          <CommonCard value={`+91 ${contractData.phone}`} label="Contractor Phone Number"/>
+          <CommonCard value={ FormatDate(contractData.date)} label="Started Date"/>
           </div>
-          {
-            contractData.isCompleted===false ?
-            <div className="flex justify-end">
-              <Buttons name="WORK COMPLETED" click={handleCompletedContracts} />
-            </div>:""
-          }
-        </div>
+          
+          {!contractData.isCompleted && (
+
+              <div className="flex justify-center gap-4 mt-8">
+                <Buttons name="WORK COMPLETED" click={handleCompletedContracts} />
+                <Buttons name="EDIT LABOUR COUNT" click={""} />
+              </div>
+            
+          )}
+        
       </div>
     </>
   );
 };
+
 export default SingleViewContract;
