@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 function Labour() {
   const navigate = useNavigate();
   const [labourData, setLabourData] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleAddLabourClick = () => {
     navigate("/admin/addlabour");
@@ -25,6 +26,13 @@ function Labour() {
     }
   };
 
+  const handleSearch=(e)=>{
+    setSearchTerm(e.target.value)
+  }
+  const filteredLabourData = labourData?.filter((obj) =>
+  obj.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
   //data displayin when mounting
   useEffect(() => {
     fetchData();
@@ -38,13 +46,13 @@ function Labour() {
     
     navigate('/admin/viewsalary',{ state: {id } })
   }
-  const handleAttendanceButton = (id,LabourName,photo,phone) => {
-    navigate("/admin/attendancesingle",{ state : {id,LabourName,photo,phone} } );
+  const handleAttendanceButton = (id,LabourName,phone,photo) => {
+    navigate("/admin/attendancesingle",{ state : {id,LabourName,phone,photo} } );
   };
   return (
     <>
-    <AddNav name="+ ADD NEW LABOUR" click={handleAddLabourClick}/>
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
+    <AddNav name="+ ADD NEW LABOUR" click={handleAddLabourClick} value={searchTerm} onChange={handleSearch}/>
+      <div class="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 mx-h-[500px]">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -78,8 +86,8 @@ function Labour() {
             </tr>
           </thead>
           <tbody>
-            {labourData && labourData.length > 0 ? (
-              labourData.map((obj) => (
+            {filteredLabourData && filteredLabourData .length > 0 ? (
+              filteredLabourData.map((obj) => (
                 <tr key={obj._id} class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <th
                     scope="row"
@@ -110,7 +118,7 @@ function Labour() {
                   <td class="px-6 py-4">{obj.adhar}</td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>salarypageNavigation(obj?._id)}>View
                   </td>
-                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>handleAttendanceButton(obj?._id,obj?.name,obj?.photo,obj?.phone)}>View
+                  <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer" onClick={()=>handleAttendanceButton(obj?._id,obj?.name,obj?.phone,obj?.photo)}>View
                   </td>
                   <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 cursor-pointer"  onClick={()=>nav(obj?._id)}>View
                   </td>

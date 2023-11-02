@@ -11,10 +11,8 @@ import EditIcon from '@mui/icons-material/Edit';
 function StaffDisplay() {
     const navigate= useNavigate()
     const [staffData,setStaffData]=useState(null)
+    const [searchTerm, setSearchTerm] = useState("");
 
-    const handleBackArrowClick=()=>{
-        navigate(-1)
-    }
     const handleAddStaffClick=()=>{
         navigate('/admin/addstaff')
     }
@@ -31,11 +29,15 @@ function StaffDisplay() {
       const response = await axiosAdmin.get("staffslist");
       console.log(response);
 
-      setStaffData(response.data.allStaffData);
+      setStaffData(response?.data?.allStaffData);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const filteredstaffData = staffData?.filter((obj) =>
+  obj.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   //data displaying when mounting
   useEffect(() => {
@@ -44,10 +46,13 @@ function StaffDisplay() {
   const nav =(id)=>{
     navigate('/admin/staffprofile',{ state: {id } })
   }
+  const handleSearch=(e)=>{
+    setSearchTerm(e.target.value)
+  }
   return (
     <>
-<AddNav name="+ ADD NEW STAFF" click={handleAddStaffClick}/>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
+<AddNav name="+ ADD NEW STAFF" click={handleAddStaffClick} value={searchTerm} onChange={handleSearch}/>
+    <div class="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 mx-h-[500px]">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -81,8 +86,8 @@ function StaffDisplay() {
             </tr>
         </thead>
         <tbody>
-        {staffData && staffData.length > 0 ? (
-              staffData.map((obj) => (
+        {filteredstaffData && filteredstaffData.length > 0 ? (
+              filteredstaffData.map((obj) => (
                 <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <th
                     scope="row"

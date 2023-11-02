@@ -7,6 +7,7 @@ import Buttons from '../../CommonComponents/Button/Buttons';
 function Project() {
     const navigate= useNavigate()
     const[ProjectData,setProjectData]=useState()
+    const [searchTerm, setSearchTerm] = useState("");
 
     const handleAddProjectClick=()=>{
         navigate('/admin/addproject')
@@ -41,16 +42,24 @@ function Project() {
   const nav=(id)=>{
     navigate('/admin/projectview',{ state: { id } })
   }
+
+  const filteredProjectData = ProjectData?.filter((obj) =>
+  obj.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+const handleSearch=(e)=>{
+  setSearchTerm(e.target.value)
+}
   return (
     <>
 <div className='w-full flex' >
   <div className='w-[80%]'>
-  <AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick}/>
+  <AddNav name="+ ADD NEW PROJECT" click={handleAddProjectClick} value={searchTerm} onChange={handleSearch}/>
   </div>
 <div className='w-[20%] mt-[14%]'>
 <Buttons name="COMPLETED PROJECT" click={handleCompletedProjects} />
 </div></div>
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11 ms-6 me-6">
+    <div className="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 mx-h-[500px]">
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -75,8 +84,8 @@ function Project() {
         </thead>
         <tbody>
         {
-          ProjectData && ProjectData.length>0 ?(
-           ProjectData?.map((data)=>{
+          filteredProjectData && filteredProjectData.length>0 ?(
+           filteredProjectData?.map((data)=>{
             return(   
                 <tr key={data?._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4">

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ReturnButton from "../../CommonComponents/Return/ReturnButton";
-import Buttons from '../../CommonComponents/Button/Buttons';
 import { axiosAdmin } from "../../../Api/Api";
+import AddNav from '../../CommonComponents/AddNav/AddNav';
+import Search from "../../CommonComponents/Search/Search";
 
 function ProjectList() {
-  const [purchaseData, setPurchaseData] = useState(null);
   const navigate = useNavigate();
+  const [purchaseData, setPurchaseData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handlePurchaseClick = () => {
     navigate('/admin/purchasematerial');
   };
+  const handleSearch=(e)=>{
+    setSearchTerm(e.target.value)
+  }
 
   const fetchData = async () => {
     try {
@@ -49,13 +53,14 @@ function ProjectList() {
    
   }, [purchaseData]);
 
+  const filteredPurchaseData = purchaseData?.filter((obj) =>
+  obj.projectname?.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
   return (
     <>
-      <ReturnButton /> 
-         <div className="flex justify-end mt-14 me-20">
-          <Buttons name="+ PURCHASE MATERIAL" click={handlePurchaseClick}/>
-        </div>
-        <div className=" w-[90%] overflow-x-auto shadow-md sm:rounded-lg mt-8 ms-16" >
+      <AddNav name="+ PURCHASE MATERIAL" click={ handlePurchaseClick} value={searchTerm} onChange={handleSearch}/>
+        <div className="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 mx-h-[500px]" >
           <table className="w-full  text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr >
@@ -68,7 +73,7 @@ function ProjectList() {
               </tr>
             </thead>
             <tbody>
-              {purchaseData && purchaseData.map((item, index) => (
+              {filteredPurchaseData && filteredPurchaseData.map((item, index) => (
                 <tr key={index} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {item.projectname} {/* Assuming project has a 'name' property */}
