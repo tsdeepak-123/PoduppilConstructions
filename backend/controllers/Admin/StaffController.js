@@ -586,7 +586,7 @@ const StaffAttendanceById=async(req,res)=>{
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.StaffId.equals(staffId)) {
-          const date = record.date.toISOString().split('T')[0]; 
+          const date = moment(record.date).format("YYYY-MM-DD")
           const status = attendanceRecord.status;
           // console.log(date,'date',status,'status');
           staffData[date] = status;
