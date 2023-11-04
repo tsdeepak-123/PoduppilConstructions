@@ -76,7 +76,6 @@ function MaterialDropdown({ materials, onDataPassed }) {
     const selectedMaterialname = e.target.value;
     setMaterialname(selectedMaterialname);
     onDataPassed(selectedMaterialname);
-    console.log(selectedMaterialname, "nameeeeeeeeeeeeeeeeeeeeeee");
   }
   return (
     <>

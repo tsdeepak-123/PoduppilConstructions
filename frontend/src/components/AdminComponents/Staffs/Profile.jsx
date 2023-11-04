@@ -14,17 +14,17 @@ function Profile() {
     try {
       const response = await axiosAdmin.get(
         `staffByid?id=${location?.state?.id}`
-      );
-      console.log(response?.data?.StaffData);
+      )
 
       setStaffData(response?.data?.StaffData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
-  console.log(StaffData, "StaffData");
-  //data displaying when mounting
+
   useEffect(() => {
     fetchData();
   }, []);

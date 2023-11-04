@@ -54,7 +54,9 @@ function PurchaseMaterial() {
 
       setProjectData(response?.data?.FindProject);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -65,7 +67,9 @@ function PurchaseMaterial() {
 
       setMaterialData(response?.data?.allMaterials);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -95,9 +99,11 @@ function PurchaseMaterial() {
         }
       });
 
-      console.log(careof);
+      
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

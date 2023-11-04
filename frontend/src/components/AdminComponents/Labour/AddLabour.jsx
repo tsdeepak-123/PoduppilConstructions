@@ -77,56 +77,60 @@ function AddLabour() {
 
 
   const handleSubmit=(e)=>{
-    console.log('submiting data');
-    e.preventDefault()
-    setLoading(true)
+try {
+  e.preventDefault()
+  setLoading(true)
 
-    const LabourData={
-      name,
-      age,
-      phone,
-      street,
-      post,
-      town,
-      district,
-      state,
-      pincode,
-      salary,
-      adhar,
-      date
+  const LabourData={
+    name,
+    age,
+    phone,
+    street,
+    post,
+    town,
+    district,
+    state,
+    pincode,
+    salary,
+    adhar,
+    date
+  }
+  const formData = new FormData();
+  
+  Object.entries(LabourData).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  console.log(idproof,'idproof');
+  for (const proof of idproof) {
+    formData.append("proof", proof);
+  }
+
+  // formData.append("proof",idproof);
+  formData.append("photo",photo);
+  axiosAdmin.post('addlabour',formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }  
+       
+       
+  }).then((response)=>{
+    setLoading(false)
+    if(response.data.success){
+      Swal.fire('Labour added successfully')
+      navigate('/admin/labourdetails')
     }
-    const formData = new FormData();
+    toast.error(response?.data?.message);
     
-    Object.entries(LabourData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    console.log(idproof,'idproof');
-    for (const proof of idproof) {
-      formData.append("proof", proof);
-    }
+   
+  })
+} catch (error) {
+  setLoading(false)
+  toast.error(error.response?.data?.message);
+  if (error.response && error.response.status === 401) {
+    window.location.replace("/admin/login")
+  }
+}
 
-    // formData.append("proof",idproof);
-    formData.append("photo",photo);
-    axiosAdmin.post('addlabour',formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }  
-         
-         
-    }).then((response)=>{
-      setLoading(false)
-      if(response.data.success){
-        Swal.fire('Labour added successfully')
-        navigate('/admin/labourdetails')
-      }
-      toast.error(response?.data?.message);
-      
-     
-    }).catch((error)=>{
-      setLoading(false)
-      toast.error(error.response?.data?.message);
-
-    })
   }
   return (
     <>

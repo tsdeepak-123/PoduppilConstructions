@@ -11,6 +11,7 @@ function EditContract() {
 
   const navigate = useNavigate();
   const location=useLocation()
+  const id=location.state.data._id
   console.log(location?.state?.data,'location data came in this page ');
 
   const [projectname,setProjectName]=useState("")
@@ -46,24 +47,27 @@ function EditContract() {
 
   const handleDataReceived = (projectname) => {
     setProjectName(projectname)
-  };
-  console.log(projectname,"theeeeeeeeee namweeeeeeeeeee");
+  }
   const handleSubmit = (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    axiosAdmin
-      .post("AddContract", {
-        projectname,Contractwork,totallabour,Contractorname,
-        totalhelper,Details,phone,date,Paymentdetails,status,Amount
-      })
-      .then((response) => {
-        console.log(response);
-        navigate("/admin/contractdetails");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axiosAdmin
+        .post(`EditContract?id=${id}`, {
+          projectname,Contractwork,totallabour,Contractorname,
+          totalhelper,Details,phone,date,Paymentdetails,status,Amount
+        })
+        .then((response) => {
+          console.log(response);
+          navigate("/admin/contractdetails");
+        })
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+    }
+   
   };
+}
 
   const fetchData = async () => {
     try {
@@ -72,7 +76,9 @@ function EditContract() {
 
       setProjectData(response?.data?.FindProject);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

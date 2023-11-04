@@ -26,12 +26,13 @@ function StaffDisplay() {
       // fetching data from backend
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get("staffslist");
-      console.log(response);
+      const response = await axiosAdmin.get("staffslist")
 
       setStaffData(response?.data?.allStaffData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

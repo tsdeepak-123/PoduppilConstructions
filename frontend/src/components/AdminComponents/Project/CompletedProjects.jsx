@@ -13,6 +13,9 @@ function CompletedProjects() {
       const response = await axiosAdmin.get("projectList?status=true");
       setProjectData(response?.data?.FindProject);
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
       console.log(error);
     }
   };

@@ -3,34 +3,30 @@ const jwt = require("jsonwebtoken");
 
 const AdminAuth = async (req, res, next) => {
     try {
-        console.log('request by Admin');
-       
-
-        const Header = req.headers.authorization;
-        console.log(Header);
-        if (!Header) {
+        const header = req.headers.authorization;
+        if (!header) {
             return res.status(401).json({ error: "Unauthorized" });
         }
-        // const jwtToken = Header.replace('Bearer', '').trim();
-        
 
-        const jwtToken=Header.replace('Bearer','')
-console.log(jwtToken);
-const key='AdminsecretKey'
-        const decodetoken = jwt.verify(jwtToken,key);
-        const Id = decodetoken.id;
-        const AdminData = await Admin.findById({ _id:Id });
+        const token = header.replace('Bearer ', ''); 
 
-        if (AdminData) {
-            console.log('done');
-            req.id = AdminData._id; 
-            next(); 
+        const secretKey = 'AdminsecretKey'; 
+
+        const decodedToken = jwt.verify(token, secretKey);
+        const userId = decodedToken.id;
+
+        const adminData = await Admin.findById({ _id: userId });
+
+        if (adminData) {
+            req.id = adminData._id;
+            next();
         } else {
-            return res.status(401).json({ error: "Unauthorized " });
+            return res.status(401).json({ error: "Unauthorized" })
         }
     } catch (error) {
         console.log(error);
+        return res.status(401).json({ error: "Invalid token" })
     }
 }
 
-module.exports={ AdminAuth}
+module.exports = { AdminAuth };

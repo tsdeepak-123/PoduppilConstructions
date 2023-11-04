@@ -49,22 +49,17 @@ const day = inputDate.getUTCDate();
 const month = months[inputDate.getUTCMonth()];
 const year = inputDate.getUTCFullYear();
 const formattedDate = `${day} / ${month} / ${year}`;
-  console.log(Number(StaffData?.lastweek)-Number(StaffData?.advance)??0);
+
 
   const salaryoflabour=async()=>{
     try {
-      // const id=StaffData?.StaffData?._id 
-      // console.log(selectedDate,'dateee');
       const response = await axiosAdmin.post(`salaryofStaff?staffId=${location?.state?.id}&staffSalarydate=${selectedDate}`);
-
-      console.log(response?.data,'response');
-      alert(response?.data?.message)
-      
       window.location.reload();
-  // navigate('/admin/viewsalary',{ state: {id } })
 
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
 
   }

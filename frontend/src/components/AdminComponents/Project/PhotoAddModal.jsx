@@ -65,9 +65,10 @@ function PhotoAddModal({ projectId }) {
         toast.success("Photo uploaded successfully");
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
       setLoading(false)
-      console.error("Error uploading photos:", error);
-      // Handle errors (display an error message, etc.)
     }
   };
   

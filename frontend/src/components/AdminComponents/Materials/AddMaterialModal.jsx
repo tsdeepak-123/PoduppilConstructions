@@ -32,10 +32,16 @@ function AddMaterialModal() {
     }
   
     const handleSubmit=async(e)=>{
-      e.preventDefault()
-      console.log(MaterialName);
-     await axiosAdmin.post('addmaterial',{MaterialName})
-       handleClose()
+      try {
+        console.log(MaterialName);
+        await axiosAdmin.post('addmaterial',{MaterialName})
+         handleClose()
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
+      }
+    
     }
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

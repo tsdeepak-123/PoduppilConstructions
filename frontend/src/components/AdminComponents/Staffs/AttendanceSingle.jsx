@@ -37,7 +37,9 @@ function AttendanceSingle() {
         setCurrentMonth(month);
       }
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

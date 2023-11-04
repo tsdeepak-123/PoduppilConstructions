@@ -25,7 +25,9 @@ const SingleViewProject = () => {
 
       setProjectData(response?.data?.FindProject);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
     }
   };
 
@@ -35,7 +37,9 @@ const SingleViewProject = () => {
      setMaterialData(response?.data?.PurchaseData)
     
   } catch (error) {
-    console.log(error);
+    if (error.response && error.response.status === 401) {
+      window.location.replace("/admin/login");
+    }
   }
  }
 
@@ -54,7 +58,7 @@ const SingleViewProject = () => {
         confirmButtonText: 'Yes, completed!'
       }).then((result) => {
           if (result.isConfirmed) {
-            axiosAdmin.post(`completedprojects?id=${id}`)
+            const response= axiosAdmin.post(`completedprojects?id=${id}`)
             Swal.fire(
               'Work completed',
               'The project is added to completed projects',
@@ -69,18 +73,17 @@ const SingleViewProject = () => {
      
     
    } catch (error) {
-    console.log(error);
+    if (error.response && error.response.status === 401) {
+      window.location.replace("/admin/login");
+    }
    }
 
   }
-console.log(projectData);
   // Data displaying when mounting
   useEffect(() => {
     fetchData();
     fetchMaterialData()
   }, [id]);
-
-  console.log(materialData,"from page");
 return (
   <>
     <ReturnButton />

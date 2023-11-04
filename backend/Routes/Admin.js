@@ -58,8 +58,16 @@ const {
   handleCompletedBills,
 } = require("../controllers/Admin/BillController");
 const upload = require("../Middleware/Multer");
-const Auth = require("../Middleware/Auth");
-const { handleMaterialAdding, handleMaterialList, handleMaterialPurchase, handleMaterialTotal,handlePurchaseById,handlePurchaseByDate, handleAllMaterials } = require("../controllers/Admin/MaterialController");
+const { AdminAuth } = require("../Middleware/Auth");
+const {
+  handleMaterialAdding,
+  handleMaterialList,
+  handleMaterialPurchase,
+  handleMaterialTotal,
+  handlePurchaseById,
+  handlePurchaseByDate,
+  handleAllMaterials,
+} = require("../controllers/Admin/MaterialController");
 
 //The routes for admin authentication
 
@@ -67,72 +75,75 @@ adminRoute.post("/login", handleSignIn);
 adminRoute.post("/signup", handleSignUp);
 adminRoute.post(
   "/addlabour",
+  AdminAuth,
   upload.fields([
     { name: "proof", maxCount: 2 },
     { name: "photo", maxCount: 1 },
   ]),
   handleLabourAdding
 );
-adminRoute.get("/labourslist", handleLabourDetails);
-adminRoute.get("/labourbyid", handleLabourById);
+adminRoute.get("/labourslist", AdminAuth, handleLabourDetails);
+adminRoute.get("/labourbyid", AdminAuth, handleLabourById);
 adminRoute.post(
   "/addstaff",
+  AdminAuth,
   upload.fields([
     { name: "proof", maxCount: 2 },
     { name: "photo", maxCount: 1 },
   ]),
   handleStaffAdding
 );
-adminRoute.get("/staffslist", handleStaffDetails);
-adminRoute.get("/staffByid", handleStaffById);
-adminRoute.post("/labourattendance", handleAttendance);
-adminRoute.get("/labourattendancelist", handleAttendanceList);
-adminRoute.post("/staffattendance", handleAttendanceofStaff);
+adminRoute.get("/staffslist", AdminAuth, handleStaffDetails);
+adminRoute.get("/staffByid", AdminAuth, handleStaffById);
+adminRoute.post("/labourattendance", AdminAuth, handleAttendance);
+adminRoute.get("/labourattendancelist", AdminAuth, handleAttendanceList);
+adminRoute.post("/staffattendance", AdminAuth, handleAttendanceofStaff);
 //.......attendancelist
-adminRoute.get("/staffattendanceList", handleAttendanceListofStaff);
-adminRoute.get("/salarycalculation", salarycalculationoflabour);
-adminRoute.post("/salaryoflabour", salarycalculation);
-adminRoute.post("/salaryofStaff", salarycalculationforStaff);
-adminRoute.get("/staffsalary", salarycalculationofStaff);
-adminRoute.post("/addproject", handleProjectAdding);
-adminRoute.patch("/editproject/:id", handleProjectEditing); //my edits
-adminRoute.post("/AddContract", handleAddContract);
-adminRoute.get("/ContractList", ContractList);
-adminRoute.get("/ContractById", ContractListById);
-adminRoute.get("/projectList", ProjectList);
-adminRoute.get("/projectById", ProjectListById);
-adminRoute.get("/labourattendanceById", labourAttendanceById);
-adminRoute.get("/staffattendanceById", StaffAttendanceById);
-adminRoute.post("/labouradvance", handleLabourAdvance);
-adminRoute.post("/staffadvance", handleStaffAdvance);
+adminRoute.get("/staffattendanceList", AdminAuth, handleAttendanceListofStaff);
+adminRoute.get("/salarycalculation", AdminAuth, salarycalculationoflabour);
+adminRoute.post("/salaryoflabour", AdminAuth, salarycalculation);
+adminRoute.post("/salaryofStaff", AdminAuth, salarycalculationforStaff);
+adminRoute.get("/staffsalary", AdminAuth, salarycalculationofStaff);
+adminRoute.post("/addproject", AdminAuth, handleProjectAdding);
+adminRoute.patch("/editproject/:id", AdminAuth, handleProjectEditing); //my edits
+adminRoute.post("/AddContract", AdminAuth, handleAddContract);
+adminRoute.get("/ContractList", AdminAuth, ContractList);
+adminRoute.get("/ContractById", AdminAuth, ContractListById);
+adminRoute.get("/projectList", AdminAuth, ProjectList);
+adminRoute.get("/projectById", AdminAuth, ProjectListById);
+adminRoute.get("/labourattendanceById", AdminAuth, labourAttendanceById);
+adminRoute.get("/staffattendanceById", AdminAuth, StaffAttendanceById);
+adminRoute.post("/labouradvance", AdminAuth, handleLabourAdvance);
+adminRoute.post("/staffadvance", AdminAuth, handleStaffAdvance);
 adminRoute.post(
   "/addbills",
+  AdminAuth,
   upload.fields([{ name: "photo", maxCount: 1 }]),
   handleBillAdding
 );
-adminRoute.get("/billslist", handleBillDetails);
-adminRoute.get("/laboursalaryhistory", handleLabourHIstory);
-adminRoute.get("/alllaboursalaryhistory", handleAllLabourHIstory);
-adminRoute.post("/labourAttendanceEdit", labourAttendanceEdit);
-adminRoute.post("/EditContract", handleEditContract);
-adminRoute.post("/staffAttendanceEdit", stafffAttendanceEdit);
-adminRoute.get("/allStaffsalaryhistory", handleAllStaffHIstory);
+adminRoute.get("/billslist", AdminAuth, handleBillDetails);
+adminRoute.get("/laboursalaryhistory", AdminAuth, handleLabourHIstory);
+adminRoute.get("/alllaboursalaryhistory", AdminAuth, handleAllLabourHIstory);
+adminRoute.post("/labourAttendanceEdit", AdminAuth, labourAttendanceEdit);
+adminRoute.post("/EditContract", AdminAuth, handleEditContract);
+adminRoute.post("/staffAttendanceEdit", AdminAuth, stafffAttendanceEdit);
+adminRoute.get("/allStaffsalaryhistory", AdminAuth, handleAllStaffHIstory);
 adminRoute.post(
   "/addprojectphotos",
+  AdminAuth,
   upload.fields([{ name: "photos", maxCount: 2 }]),
   handlePhotoAdding
 );
-adminRoute.post("/addmaterial", handleMaterialAdding);
-adminRoute.get("/allmateriallist", handleMaterialList);
-adminRoute.post("/purchasematerial", handleMaterialPurchase);
-adminRoute.post('/completedprojects',handleCompletedProjects)
-adminRoute.get('/materialtotal',handleMaterialTotal)
-adminRoute.get('/billsingle',handleBillSingleView)
-adminRoute.post('/paidbills',handleCompletedBills)
-adminRoute.get('/PurchaseBillById',handlePurchaseById)
-adminRoute.get('/PurchaseBillByDate',handlePurchaseByDate)
-adminRoute.post('/salarypaid',handleSalaryControll)
-adminRoute.post('/completedcontracts',handleCompletedContracts)
-
+adminRoute.post("/addmaterial", AdminAuth, handleMaterialAdding);
+adminRoute.get("/allmateriallist", AdminAuth, handleMaterialList);
+adminRoute.post("/purchasematerial", AdminAuth, handleMaterialPurchase);
+adminRoute.post("/completedprojects", AdminAuth, handleCompletedProjects);
+adminRoute.get("/materialtotal", AdminAuth, handleMaterialTotal);
+adminRoute.get("/billsingle", AdminAuth, handleBillSingleView);
+adminRoute.post("/paidbills", AdminAuth, handleCompletedBills);
+adminRoute.get("/PurchaseBillById", AdminAuth, handlePurchaseById);
+adminRoute.get("/PurchaseBillByDate", AdminAuth, handlePurchaseByDate);
+adminRoute.post("/salarypaid", AdminAuth, handleSalaryControll);
+adminRoute.post("/completedcontracts", AdminAuth, handleCompletedContracts);
 
 module.exports = adminRoute;

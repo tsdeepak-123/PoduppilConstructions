@@ -4,15 +4,17 @@ import { axiosAdmin } from "../../../Api/Api";
 import SalaryStatusDrodown from "./SalaryStatusDrodown";
 
 function WeeklySalary() {
-  const [salaryData, setSalaryData] = useState();
-  
-
+  const [salaryData, setSalaryData] = useState(); 
   const fetch = async () => {
     try {
       const response = await axiosAdmin.get("alllaboursalaryhistory");
       console.log(response?.data.updatedLabourSalaryData);
       setSalaryData(response?.data.updatedLabourSalaryData);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
+    }
   };
 
   useEffect(() => {

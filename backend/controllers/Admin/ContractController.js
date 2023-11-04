@@ -84,15 +84,12 @@ const ContractListById =async(req,res)=>{
 
 const handleEditContract = async (req, res) => {
   try {
-    // console.log(req.body, 'contract came');
-
+    const id=req.query.id
     const {
-     
       projectname,
       Contractwork,
       totallabour,
       Contractorname,
-      id,
       totalhelper,
       Details,
       phone,
@@ -104,18 +101,18 @@ const handleEditContract = async (req, res) => {
 
     const updateFields = {};
 
-   
     if (projectname) {
-      const FindProject = await Project.findOne({name:projectname})
-      console.log(FindProject._id,'FindProject');
-      if(FindProject){
+      const FindProject = await Project.findOne({ name: projectname });
+      console.log(FindProject, 'FindProject');
+
+      if (FindProject) {
         updateFields.project = FindProject._id;
-        updateFields.projectname = FindProject.name
-        
-      }else{
-        res.json({  messege: "can't find project details" });
-      }}
-   
+        updateFields.projectname = FindProject.name;
+      } else {
+        return res.status(404).json({ message: "Can't find project details" });
+      }
+    }
+
     if (Contractwork) updateFields.Contractwork = Contractwork;
     if (totallabour) updateFields.totallabour = totallabour;
     if (Contractorname) updateFields.Contractorname = Contractorname;
@@ -128,19 +125,20 @@ const handleEditContract = async (req, res) => {
     if (Amount) updateFields.Amount = Amount;
 
     const Findcontract = await contract.findById(id);
-    // console.log(Findcontract,'Findcontract');
+    console.log(Findcontract, 'Findcontract');
 
     if (!Findcontract) {
-      res.json({ success: false, message: "Can't find contract details" });
+      return res.status(404).json({ success: false, message: "Can't find contract details" });
     } else {
-      // console.log(Findcontract);
-
       Object.assign(Findcontract, updateFields);
-      await Findcontract.save();
 
-      res.status(200).json({ message: "Edited successfully", Findcontract });
+      const savedContract = await Findcontract.save();
+      console.log(savedContract, 'savedContract');
+
+      res.status(200).json({ message: "Edited successfully", contract: savedContract });
     }
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

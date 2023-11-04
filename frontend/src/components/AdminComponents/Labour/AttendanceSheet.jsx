@@ -21,7 +21,9 @@ function AttendanceSheet() {
       console.log(response?.data?.allLabourData, "response");
       setLabourdata(response?.data?.allLabourData);
     } catch (error) {
-      console.error("Error fetching labour data:", error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -31,7 +33,9 @@ function AttendanceSheet() {
       console.log(response?.data?.LabourAttendance, "response attendance");
       SetAttendanceData(response?.data?.LabourAttendance);
     } catch (error) {
-      console.error("Error fetching attendance data:", error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -62,16 +66,20 @@ function AttendanceSheet() {
   }, [labourData]);
 
   const updateAttendance = () => {
-    console.log(selectedValues);
+    try {
+      
     axiosAdmin
-      .post("labourattendance", { selectedValues })
-      .then((res) => {
-        console.log("res", res.data);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .post("labourattendance", { selectedValues })
+    .then((res) => {
+      console.log("res", res.data);
+      window.location.reload();
+    })
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
+    }
+
   };
 
   return (

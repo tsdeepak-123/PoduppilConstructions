@@ -79,8 +79,11 @@ function AddBill() {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
         toast.error(error.response.data.message);
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
+        
       });
   };
 

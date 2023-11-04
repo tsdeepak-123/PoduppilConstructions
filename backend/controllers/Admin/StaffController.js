@@ -588,7 +588,6 @@ const StaffAttendanceById=async(req,res)=>{
         if (attendanceRecord.StaffId.equals(staffId)) {
           const date = moment(record.date).format("YYYY-MM-DD")
           const status = attendanceRecord.status;
-          // console.log(date,'date',status,'status');
           staffData[date] = status;
         }
       });

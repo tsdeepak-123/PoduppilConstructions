@@ -18,7 +18,9 @@ function CompletedContracts() {
       const response = await axiosAdmin.get("ContractList?status=true");
       setContractData(response?.data?.FindContract || []);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     } finally {
       setLoading(false);
     }
@@ -36,9 +38,7 @@ function CompletedContracts() {
   return (
     <>
       <ReturnButton />
-      {loading ? (
-        <p>Loading...</p>
-      ) : contractData.length ? (
+      {contractData.length ? (
         <div className="flex justify-center mt-8">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

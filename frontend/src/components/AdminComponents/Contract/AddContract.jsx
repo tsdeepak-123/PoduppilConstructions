@@ -49,7 +49,9 @@ function AddContract() {
       .catch((error) => {
         setLoading(false)
         toast.error(error.response.data.message)
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
       });
   };
 

@@ -20,7 +20,9 @@ const StaffAttendanceSheet = () => {
       console.log(response?.data?.allStaffData, "response");
       setStaffData(response?.data?.allStaffData);
     } catch (error) {
-      console.error("Error fetching staff data:", error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -30,7 +32,9 @@ const StaffAttendanceSheet = () => {
       console.log(response?.data?.StaffAttendance);
       SetAttendanceData(response?.data?.StaffAttendance);
     } catch (error) {
-      console.error("Error fetching attendance data:", error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -68,8 +72,10 @@ const StaffAttendanceSheet = () => {
         console.log("res", res.data);
         window.location.reload();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
       });
   };
 

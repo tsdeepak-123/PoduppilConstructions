@@ -18,7 +18,9 @@ const SingleViewContract = () => {
       const response = await axiosAdmin.get(`ContractById?id=${id}`);
       setContractData(response?.data?.FindContract);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+    }
     }
   };
 
@@ -45,9 +47,11 @@ const SingleViewContract = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
     }
   };
+}
 
   useEffect(() => {
     fetchData();

@@ -385,7 +385,6 @@ const salarycalculation = async (req, res) => {
         advance: LaborData.advance,
         updatedSalary: salary - LaborData.advance,
       };
-
       SalaryData.records.addToSet(newRecord);
       await SalaryData.save();
     } else {

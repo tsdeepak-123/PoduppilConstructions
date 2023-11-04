@@ -41,7 +41,9 @@ function AttendanceEdit({labourData}) {
         console.log(response?.data?.messege);
         handleClose()
       } catch (error) {
-        
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+      }
       }
      
     }

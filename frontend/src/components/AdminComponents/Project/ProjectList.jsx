@@ -21,7 +21,9 @@ function ProjectList() {
       const response = await axiosAdmin.get('/materialtotal');
       setPurchaseData(response?.data?.materialData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
     }
   };
 
@@ -73,7 +75,7 @@ function ProjectList() {
               </tr>
             </thead>
             <tbody>
-              {filteredPurchaseData && filteredPurchaseData.map((item, index) => (
+              {filteredPurchaseData ? filteredPurchaseData && filteredPurchaseData.map((item, index) => (
                 <tr key={index} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {item.projectname} {/* Assuming project has a 'name' property */}
@@ -82,7 +84,14 @@ function ProjectList() {
                    <span className="flex justify-end">{item.TotalAmount}</span>         
                   </td>
                 </tr>
-              ))}
+              )):
+              <tr>
+              <td colspan="8" class="text-center py-4">
+                No data available
+                
+              </td>
+            </tr>
+              }
             </tbody>
           </table>
 

@@ -74,7 +74,9 @@ function AddProject() {
           Swal.fire('Project updated successfully')
         })
         .catch((error) => {
-          console.error(error);
+          if (error.response && error.response.status === 401) {
+            window.location.replace("/admin/login")
+          }
         });
     } else {
       //  add operation with the new Project Data
@@ -91,15 +93,18 @@ function AddProject() {
         })
         .then((response) => {
           setLoading(false)
-          if(response.data.success){
+          if(response?.data?.success){
             navigate("/admin/projectdetails");
             Swal.fire('Project added successfully')
           } 
-          toast.error(response.data.messege)
+          toast.error(response?.data?.messege)
         })
         .catch((error) => {  
+          if (error.response && error.response.status === 401) {
+            window.location.replace("/admin/login");
+          }
           setLoading(false)
-          toast.error(error.response.data.messege)
+          toast.error(error?.response?.data?.messege)
         });
     }
   };

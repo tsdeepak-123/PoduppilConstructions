@@ -4,7 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
 import EditIcon from "@mui/icons-material/Edit";
 import Buttons from "../../CommonComponents/Button/Buttons";
-import Search from "../../CommonComponents/Search/Search";
+
 
 
 
@@ -30,7 +30,9 @@ function Contract() {
       const response = await axiosAdmin.get("ContractList?status=false");
       setContractData([...response?.data?.FindContract]);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -42,9 +44,9 @@ function Contract() {
     navigate("/admin/contractview", { state: { id } });
   };
 
-  // const editpage = (data) => {
-  //   navigate("/admin/editcontract", { state: { data } });
-  // };
+  const editpage = (data) => {
+    navigate("/admin/editcontract", { state: { data } });
+  };
 
   const filteredContracts = contractData.filter((data) =>
     data.projectname.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,7 +72,7 @@ function Contract() {
               <th scope="col" class="px-6 py-3">Contract Work</th>
               <th scope="col" class="px-6 py-3">Total Amount</th>
               <th scope="col" class="px-6 py-3">Details</th>
-              {/* <th scope="col">Edit</th> */}
+              <th scope="col">Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -83,9 +85,9 @@ function Contract() {
                   <td className="py-4 px-6">{data.Contractwork}</td>
                   <td className="py-4 px-6">{data.Amount}</td>
                   <td className="text-blue-500 cursor-pointer py-4 px-6" onClick={() => nav(data._id)}>View</td>
-                  {/* <td className="font-medium cursor-pointer">
+                  <td className="font-medium cursor-pointer">
                     <EditIcon onClick={() => editpage(data)} className="text-yellow-600" />
-                  </td> */}
+                  </td>
                 </tr>
               ))
             ) : (

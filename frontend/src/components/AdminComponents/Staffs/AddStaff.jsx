@@ -73,8 +73,6 @@ function AddStaff() {
       setIdproof(file)
     }
     const handleImageChange=(e)=>{
-      // setIdproof(e.target.value)
-      console.log(e.target.files[0],'tagetfile');
       const file = e.target.files[0];
       setphoto(file)
     }
@@ -120,7 +118,9 @@ function AddStaff() {
         toast.error(response.data.message)
       }).catch((error)=>{
         setLoading(false)
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login");
+        }
       })
     }
 

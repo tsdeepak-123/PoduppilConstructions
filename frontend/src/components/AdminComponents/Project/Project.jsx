@@ -30,6 +30,9 @@ function Project() {
       const response = await axiosAdmin.get("projectList?status=false")
       setProjectData(response?.data?.FindProject);
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
       console.log(error);
     }
   };

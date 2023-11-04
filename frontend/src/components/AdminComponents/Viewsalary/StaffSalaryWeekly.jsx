@@ -10,7 +10,11 @@ function StaffSalaryWeekly() {
         const response = await axiosAdmin.get("allStaffsalaryhistory");
         console.log(response?.data.updatedStaffSalaryData);
         setSalaryData(response?.data.updatedStaffSalaryData);
-      } catch (error) {}
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
+      }
     };
     console.log(salaryData);
   

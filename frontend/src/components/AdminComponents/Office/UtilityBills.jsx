@@ -27,7 +27,9 @@ function UtilityBills() {
       const response = await axiosAdmin.get("billslist?status=false");
       setBillData(response.data.allBillData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

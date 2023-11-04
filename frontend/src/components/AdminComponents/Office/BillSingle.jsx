@@ -18,7 +18,9 @@ function BillSingle() {
       const response = await axiosAdmin.get(`billsingle?id=${id}`);
       setBillData(response?.data?.billData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -40,7 +42,9 @@ function BillSingle() {
         }
       });
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 

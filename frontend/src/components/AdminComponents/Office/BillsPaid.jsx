@@ -16,7 +16,9 @@ function BillsPaid() {
         console.log();
         setBillData(response?.data?.allBillData);
       } catch (error) {
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login")
+        }
       }
     };
   console.log(billData,"jiiiiiiiii");
