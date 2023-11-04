@@ -3,7 +3,7 @@ const Staffattendance = require("../../models/StaffAttendance");
 
 const StaffSalary = require("../../models/StaffSalaryModel");
 const cloudinary = require("../../Middleware/Cloudinary");
-const mongoose = require("mongoose");
+const moment= require('moment')
 
 // This function handles Staff Adding to database, taking in a request (req) and a response (res) as parameters.
 
@@ -148,12 +148,13 @@ const handleAttendanceofStaff = async (req, res) => {
     // console.log(req.body);
     const { selectedValues } = req.body;
 
-    const date = new Date();
+    const currentDate = moment();
+    const formattedDate = currentDate.format("YYYY-MM-DD");
 
-    let attendanceDocument = await Staffattendance.findOne({ date });
+    let attendanceDocument = await Staffattendance.findOne({ date:formattedDate });
 
     if (!attendanceDocument) {
-      attendanceDocument = new Staffattendance({ date, records: [] });
+      attendanceDocument = new Staffattendance({ date:formattedDate, records: [] });
     }
 
     for (const StaffId in selectedValues) {
@@ -183,18 +184,10 @@ const handleAttendanceofStaff = async (req, res) => {
 
 const handleAttendanceListofStaff = async (req, res) => {
   try {
-    const currentDate = new Date();
+    const currentDate = moment();
+    const formattedDate = currentDate.format("YYYY-MM-DD");
 
-    const StaffAttendance = await Staffattendance.aggregate([
-      {
-        $match: {
-          date: {
-            $gte: new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),0,0,0),
-            $lt: new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate() + 1,0,0,0),
-          },
-        },
-      },
-    ]);
+    const StaffAttendance = await Staffattendance.find({date:formattedDate})
 
     if (StaffAttendance.length === 0) {
       res.json({ message: "Attendance not found" });

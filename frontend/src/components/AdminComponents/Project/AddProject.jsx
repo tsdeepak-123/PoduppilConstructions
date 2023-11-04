@@ -17,7 +17,7 @@ function AddProject() {
   const { projectData } = location.state || {};
 
   const formattedDate = projectData?.date ? new Date(projectData.date).toISOString().split('T')[0] : "";
-
+  const [loading, setLoading] = useState(false)
   const [name, setName] = useState(projectData?.name || "");
   const [date, setDate] = useState(formattedDate || "");
   const [status, setStatus] = useState(projectData?.status || "");
@@ -54,6 +54,7 @@ function AddProject() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
 
     if (projectData) {
       //update operation with the edited values
@@ -89,6 +90,7 @@ function AddProject() {
           supervisorname,
         })
         .then((response) => {
+          setLoading(false)
           if(response.data.success){
             navigate("/admin/projectdetails");
             Swal.fire('Project added successfully')
@@ -96,6 +98,7 @@ function AddProject() {
           toast.error(response.data.messege)
         })
         .catch((error) => {  
+          setLoading(false)
           toast.error(error.response.data.messege)
         });
     }
@@ -158,7 +161,7 @@ function AddProject() {
          <div className="w-[400px]"></div>
       </div>
       <div className="flex justify-center mt-9 gap-2">
-      <Buttons name={projectData ? "UPDATE" : "ADD PROJECT"} classes={"sm:w-80"} click={handleSubmit} />
+      <Buttons name={loading ?"LOADING..." : projectData ? "UPDATE" : "ADD PROJECT"} classes={"sm:w-80"} click={handleSubmit} />
       </div>
      
     </>

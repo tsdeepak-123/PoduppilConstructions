@@ -140,7 +140,7 @@ const handlePhotoAdding = async (req, res) => {
     const findProject = await Project.findById(projectId); // Use findById instead of find
     //  console.log("findedddddddd",findProject);
     if (!findProject) {
-      return res.json({ message: "Can't find project", success: false });
+      return res.json({ success:false, message: "Can't find project", success: false });
     }
 
 

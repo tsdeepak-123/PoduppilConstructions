@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { axiosAdmin } from "../../../Api/Api";
 import { useLocation } from "react-router-dom";
+import toast,{Toaster} from "react-hot-toast"
 
 const modalStyle = {
   position: "absolute",
@@ -20,7 +21,8 @@ const modalStyle = {
 };
 
 function PhotoAddModal({ projectId }) {
-
+  const location = useLocation();
+  const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false);
   const [photos, setPhotos] = useState([]); // State to store multiple photos
 
@@ -35,36 +37,44 @@ function PhotoAddModal({ projectId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
+  
 
-    // Create a FormData object to store the photos
     const formData = new FormData();
-
-    // Append each selected photo to the FormData object
     for (let i = 0; i < photos.length; i++) {
       formData.append("photos", photos[i]);
     }
-
+  
     try {
-      // Send the FormData object to the backend using axios
       const response = await axiosAdmin.post(
         `addprojectphotos?projectId=${projectId}`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-
-      handleClose().then(()=>window.location.reload());
+      setLoading(false)
+      if (typeof handleClose === 'function') {
+        handleClose();
+      }
+      window.location.reload();
+  
+      if (response && response.data && response.data.success) {
+        toast.success("Photo uploaded successfully");
+      }
     } catch (error) {
+      setLoading(false)
       console.error("Error uploading photos:", error);
       // Handle errors (display an error message, etc.)
     }
   };
+  
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false} autoClose={5000}/>
       <Button onClick={handleOpen} variant="contained" color="success">
         ADD PROJECT PHOTO
       </Button>
@@ -92,7 +102,7 @@ function PhotoAddModal({ projectId }) {
             fullWidth
             onClick={handleSubmit}
           >
-            Submit
+            {loading ? 'Loading...' : 'Submit'}
           </Button>
         </Box>
       </Modal>

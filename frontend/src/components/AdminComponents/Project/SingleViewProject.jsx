@@ -7,8 +7,10 @@ import SingleView from '../../AdminComponents/Materials/SingleView'
 import PhotoAddModal from './PhotoAddModal';
 import Swal from 'sweetalert2'
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard"
+import {useNavigate} from "react-router-dom"
 
 const SingleViewProject = () => {
+  const navigate=useNavigate()
   const location = useLocation()
   const [projectData, setProjectData] = useState(null)
   const [materialData, setMaterialData] = useState(null)
@@ -57,7 +59,9 @@ const SingleViewProject = () => {
               'Work completed',
               'The project is added to completed projects',
               'success',
-            )
+            ).then(() => {
+              navigate("/admin/projectdetails");
+            });
         }
      
    
@@ -83,11 +87,11 @@ return (
     <div className=''>
     {projectData && projectData.map((project, index) => (
       <div key={index} className="max-w-4xl mx-auto p-6 mt-6 bg-white rounded-lg shadow-lg">
+         <h1 className='flex justify-center font-bold text-3xl uppercase'> {project.name}</h1>
   {
      
     project.photos.length>0 ?(
       <>
-      <h1 className='flex justify-center font-bold text-3xl uppercase'> {project.name}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
       <div className="mb-6 md:mb-0">
         <img src={project.photos[0]} alt="Project Image 1" className="w-full h-96 rounded-lg" />

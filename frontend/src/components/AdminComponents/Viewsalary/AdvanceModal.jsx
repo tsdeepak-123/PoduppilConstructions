@@ -29,12 +29,21 @@ function AdvancedModal({labourId,staffId}) {
   }
 
   const handleSubmit=async(e)=>{
-    e.preventDefault()
-    const id = labourId ? labourId : staffId;
-    const endpoint = labourId ? 'labouradvance' : 'staffadvance'; 
-   const response= await axiosAdmin.post(`${endpoint}?id=${id}`,{advance})
-   console.log(response.data,'res.data canmme');
-     handleClose()
+    try {
+      e.preventDefault()
+      const id = labourId ? labourId : staffId;
+      const endpoint = labourId ? 'labouradvance' : 'staffadvance'; 
+     await axiosAdmin.post(`${endpoint}?id=${id}`,{advance})
+  
+     if (typeof handleClose === 'function') {
+      handleClose();
+    }
+    window.location.reload();
+    
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   console.log(advance);

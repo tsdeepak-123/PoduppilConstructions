@@ -13,12 +13,12 @@ function Salary() {
   const [selectedDate, setselectedDate] = useState();
   // const[newDate,setnewDate]=useState()
   const navigate = useNavigate();
-  const handleProfileButton = () => {
-    navigate("/admin/viewprofile");
-  };
-  const handleAttendanceButton = () => {
-    navigate("/admin/attendancesingle",{ state : {id} } );
-  };
+  // const handleProfileButton = () => {
+  //   navigate("/admin/viewprofile");
+  // };
+  // const handleAttendanceButton = () => {
+  //   navigate("/admin/attendancesingle",{ state : {id} } );
+  // };
   const handleBackArrowClick = () => {
     navigate("/admin/labourdetails");
   };

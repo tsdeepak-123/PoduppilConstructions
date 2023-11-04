@@ -57,7 +57,7 @@ const handleMaterialPurchase = async (req, res) => {
           });
       }
 
-
+    //   console.log(materials, projectname, "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       const totalAmount = materials.reduce((acc, cur) => {
         return acc += cur.total;
       }, 0); 

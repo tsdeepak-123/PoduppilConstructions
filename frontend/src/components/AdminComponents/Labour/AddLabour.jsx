@@ -7,6 +7,7 @@ import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import TextField from "@mui/material/TextField";
 import toast, { Toaster } from 'react-hot-toast';
  import Swal from 'sweetalert2'
+ import Loading from "../../CommonComponents/Loading/Loading"
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -22,10 +23,9 @@ function AddLabour() {
   const [date,setDate] = useState('')
   const [idproof,setIdproof] = useState([])
   const [photo,setphoto] = useState(null)
+  const [loading, setLoading] = useState(false)
   const navigate= useNavigate()
-  const handleBackArrowClick=()=>{
-      navigate(-1)
-  }
+
 
   const handleNameChange=(e)=>{
     setName(e.target.value)
@@ -79,6 +79,7 @@ function AddLabour() {
   const handleSubmit=(e)=>{
     console.log('submiting data');
     e.preventDefault()
+    setLoading(true)
 
     const LabourData={
       name,
@@ -109,15 +110,20 @@ function AddLabour() {
     axiosAdmin.post('addlabour',formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-      },  
+      }  
+         
+         
     }).then((response)=>{
+      setLoading(false)
       if(response.data.success){
         Swal.fire('Labour added successfully')
         navigate('/admin/labourdetails')
       }
       toast.error(response?.data?.message);
+      
      
     }).catch((error)=>{
+      setLoading(false)
       toast.error(error.response?.data?.message);
 
     })
@@ -151,7 +157,7 @@ function AddLabour() {
               
             />
       <>
-      <Buttons click={handleSubmit} name="ADD LABOUR" classes={'sm:w-96'} />
+      <Buttons click={handleSubmit} name={loading ?"LOADING...":"ADD LABOUR"} classes={'sm:w-96'} />
       </>  
    </div>
 </>

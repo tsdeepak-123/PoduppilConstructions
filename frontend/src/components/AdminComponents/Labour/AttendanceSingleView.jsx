@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { axiosAdmin } from '../../../Api/Api';
-import ReturnButton from '../../CommonComponents/Return/ReturnButton';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { axiosAdmin } from "../../../Api/Api";
+import ReturnButton from "../../CommonComponents/Return/ReturnButton";
+import { useLocation } from "react-router-dom";
+import moment from 'moment'
+import Nodata from "../../CommonComponents/Nodata/Nodata";
 
 function AttendanceSingleView() {
   const location = useLocation();
@@ -13,24 +15,44 @@ function AttendanceSingleView() {
   const [data, setData] = useState();
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentMonth, 1);
-  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentMonth + 1, 0);
+  const lastDayOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentMonth + 1,
+    0
+  );
 
   const dates = [];
 
-  for (let date = firstDayOfMonth; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
+  for (
+    let date = firstDayOfMonth;
+    date <= lastDayOfMonth;
+    date.setDate(date.getDate() + 1)
+  ) {
     dates.push(new Date(date));
   }
 
   const fetchData = async () => {
     try {
-      const response = await axiosAdmin.get(`labourattendanceById?labourId=${id}`);
+      const response = await axiosAdmin.get(
+        `labourattendanceById?labourId=${id}`
+      );
       setData(response?.data?.laborData);
-
+      console.log(response?.data?.laborData);
       if (response?.data?.laborData) {
         const firstDataDate = Object.keys(response.data.laborData)[0];
         const month = new Date(firstDataDate).getMonth();
@@ -47,24 +69,30 @@ function AttendanceSingleView() {
 
   const getColorClass = (status) => {
     switch (status) {
-      case 'present':
-        return 'bg-green-500';
-      case 'halfday':
-        return 'bg-yellow-500';
-      case 'absent':
-        return 'bg-red-500';
+      case "present":
+        return "bg-green-500";
+      case "halfday":
+        return "bg-yellow-500";
+      case "absent":
+        return "bg-red-500";
       default:
-        return 'bg-gray-300';
+        return "bg-gray-300";
     }
   };
 
   return (
     <>
       <ReturnButton />
-      <div className="flex">
-        <div className="w-1/2 p-4 mt-20">
+      {
+        dates.length>0 ?(
+<div className="flex">
+        <div className="w-1/2 p-4 mt-24">
           <div className="text-center">
-            <img src={photo} alt="Labor Photo" className="w-32 h-32 rounded-full mx-auto mb-4" />
+            <img
+              src={photo}
+              alt="Labor Photo"
+              className="w-32 h-32 rounded-full mx-auto mb-4"
+            />
             <h2 className="text-2xl font-semibold">{name}</h2>
             <p>{phone}</p>
           </div>
@@ -76,25 +104,39 @@ function AttendanceSingleView() {
                 {monthNames[currentMonth]} {currentDate.getFullYear()}
               </div>
               <div className="grid grid-cols-7 gap-2 text-center">
-                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                  <div key={day} className="font-semibold text-gray-700">{day}</div>
-                ))}
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                  (day) => (
+                    <div key={day} className="font-semibold text-gray-700">
+                      {day}
+                    </div>
+                  )
+                )}
                 {dates.map((date) => {
-                  const dateString = `${date.getFullYear()}-${(date.getMonth() + 1 + '').padStart(2, '0')}-${(date.getDate() + '').padStart(2, '0')}`;
-                  const status = data && data[dateString] ? data[dateString] : 'gray';
+                  const dateString = `${date.getFullYear()}-${(
+                    date.getMonth() +
+                    1 +
+                    ""
+                  ).padStart(2, "0")}-${(date.getDate() + "").padStart(
+                    2,
+                    "0"
+                  )}`;
+                  const status =
+                    data && data[dateString] ? data[dateString] : "gray";
                   const className = getColorClass(status);
 
                   return (
                     <div
                       key={dateString}
                       className="w-12 h-12 flex items-center justify-center"
-                      style={{ borderRadius: '50%', border: '1px solid #ccc' }}
+                      style={{ borderRadius: "50%", border: "1px solid #ccc" }}
                     >
                       <div
                         className={`w-10 h-10 ${className} rounded-full flex items-center justify-center`}
                       >
                         <span
-                          className={status === 'absent' ? 'text-white' : 'text-black'}
+                          className={
+                            status === "absent" ? "text-white" : "text-black"
+                          }
                         >
                           {date.getDate()}
                         </span>
@@ -107,6 +149,13 @@ function AttendanceSingleView() {
           )}
         </div>
       </div>
+        ):(
+    <div>
+      <Nodata/>
+    </div>
+        )
+      }
+      
     </>
   );
 }

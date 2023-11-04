@@ -61,7 +61,7 @@ function PurchaseMaterial() {
   const fetchMaterialData = async () => {
     try {
       const response = await axiosAdmin.get("allmateriallist");
-      // console.log(response?.data?.allMaterials);
+     
 
       setMaterialData(response?.data?.allMaterials);
     } catch (error) {
@@ -140,7 +140,11 @@ function PurchaseMaterial() {
     }
   };
 
-  console.log(selectedValues, "selectedValuesssssss");
+  const handleDelete = (index) => {
+    const updatedValues = [...selectedValues];
+    updatedValues.splice(index, 1);
+    setSelectedValues(updatedValues);
+  };
 
   return (
     <div>
@@ -150,7 +154,7 @@ function PurchaseMaterial() {
 
       {projectname && date ? (
         <>
-          <p className="flex justify-center font-bold">
+          <p className="flex justify-center font-bold uppercase">
             {" "}
             PROJECT : &nbsp;&nbsp; {projectname}
           </p>
@@ -235,8 +239,7 @@ function PurchaseMaterial() {
           {table ? (
             <>
               <div className="flex justify-center">
-                <PurchaseTable values={selectedValues} />
-                {/* materialName={MaterialName} quantity={quantity} */}
+                <PurchaseTable values={selectedValues} handleDelete={handleDelete} />
               </div>
               <div className="flex justify-center mt-10">
                 <Buttons name="SUBMIT" click={handleMaterialSubmit} />

@@ -9,7 +9,7 @@ function SingleView({ materialData }) {
 
   const applySearchFilter = (data, term) => {
     return data.filter((material) =>
-      material.name.toLowerCase().includes(term.toLowerCase())
+      material.name?.toLowerCase().includes(term.toLowerCase())
     );
   };
 

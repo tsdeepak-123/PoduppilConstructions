@@ -23,6 +23,7 @@ function AddContract() {
   const [phone,setPhone] = useState('')
   const [date,setDate] = useState('')
   const [projectData,setProjectData] = useState('')
+  const [loading,setLoading]=useState(false)
 
   const handleDataReceived = (projectname) => {
     setProjectName(projectname)
@@ -30,6 +31,7 @@ function AddContract() {
   console.log(projectname,"theeeeeeeeee namweeeeeeeeeee");
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
 
     axiosAdmin
       .post("AddContract", {
@@ -37,6 +39,7 @@ function AddContract() {
         totalhelper,Details,phone,date,Paymentdetails,status,Amount
       })
       .then((response) => {
+        setLoading(false)
         if(response.data.success){
           Swal.fire("Contract added successfully")
           navigate("/admin/contractdetails");
@@ -44,6 +47,7 @@ function AddContract() {
         toast.error(response.data.messege)
       })
       .catch((error) => {
+        setLoading(false)
         toast.error(error.response.data.message)
         console.log(error);
       });
@@ -86,7 +90,7 @@ function AddContract() {
       <TextFields name="Payment details"  onChange={(e) => {setPaymentdetails(e.target.value)}} type="text"/> 
       <TextFields name="date" type="date"  onChange={(e) => {setDate(e.target.value)}} input={true}/> 
     <div className="flex justify-center mt-3">
-          <Buttons name="ADD CONTRACT" classes={"sm:w-96"} click={handleSubmit} />
+          <Buttons name={loading ?"LOADING...":"ADD CONTRACT"} classes={"sm:w-96"} click={handleSubmit} />
         </div>
    </div> 
     </>
