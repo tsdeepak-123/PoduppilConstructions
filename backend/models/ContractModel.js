@@ -22,7 +22,23 @@ const ContractSchema = new Schema({
   status: { type: String, required: true},
   Paymentdetails: { type: String, required: true},
   Amount: { type:Number, required: true},
-  isCompleted:{type:Boolean,default:false}
+  isCompleted:{type:Boolean,default:false},
+  workerCount: [
+       {
+         date: {
+           type: Date,
+           required: true,
+         },
+         mainLabour: {
+           type: Number,
+           default:0
+         },
+         helpers: {
+           type: Number,
+           default:0
+         },
+       },
+     ],
 
 });
 

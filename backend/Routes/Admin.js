@@ -39,6 +39,7 @@ const {
   ProjectListById,
   handlePhotoAdding,
   handleCompletedProjects,
+  handlepayment
 } = require("../controllers/Admin/ProjectController");
 const {
   handleAddContract,
@@ -46,11 +47,9 @@ const {
   ContractListById,
   handleEditContract,
   handleCompletedContracts,
+  handleWorkerCount
 } = require("../controllers/Admin/ContractController");
-// const{handleLabourAdding,handleLabourHIstory,handleLabourDetails,handleAllLabourHIstory,labourAttendanceEdit,handleAttendance,salarycalculationoflabour,handleLabourById,labourAttendanceById,salarycalculation,handleAttendanceList,handleLabourAdvance}=require('../controllers/Admin/LabourController')
-// const{handleStaffAdding,stafffAttendanceEdit,handleAllStaffHIstory,handleStaffDetails,handleAttendanceofStaff,salarycalculationofStaff,handleStaffById,handleAttendanceListofStaff,handleStaffAdvance,salarycalculationforStaff}=require('../controllers/Admin/StaffController')
-// const{handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById}=require('../controllers/Admin/ProjectController')
-// const{handleAddContract,ContractList,ContractListById,handleEditContract}=require('../controllers/Admin/ContractController')
+
 const {
   handleBillAdding,
   handleBillDetails,
@@ -145,5 +144,7 @@ adminRoute.get("/PurchaseBillById", AdminAuth, handlePurchaseById);
 adminRoute.get("/PurchaseBillByDate", AdminAuth, handlePurchaseByDate);
 adminRoute.post("/salarypaid", AdminAuth, handleSalaryControll);
 adminRoute.post("/completedcontracts", AdminAuth, handleCompletedContracts);
+adminRoute.patch("/handleWorkerCount", handleWorkerCount);
+adminRoute.patch("/handlepayment", handlepayment);
 
 module.exports = adminRoute;

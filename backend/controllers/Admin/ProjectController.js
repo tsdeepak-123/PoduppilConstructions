@@ -191,9 +191,48 @@ const handleCompletedProjects=async(req,res)=>{
 }
 
 
+//....................... project payment handling controller .....................
+
+const handlepayment = async (req, res) => {
+  try {
+    const { id, date, paytype, paymentAmount } = req.query;
+    const project = await Project.findById(id);
+
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+
+    const queryDate = new Date(date).toISOString();
+console.log(queryDate);
+    
+    const existingPayment = project.projectPayment.find((entry) =>
+      entry.date.toISOString() === queryDate
+    );
+
+    if (existingPayment) {
+      return res.status(400).json({ success: false, message: 'Date already exists' });
+    }
+
+    const paymentEntry = {
+      date: queryDate,
+      paymentAmount,
+      paytype
+    };
+
+    project.projectPayment.push(paymentEntry);
+    await project.save();
+
+    return res.status(200).json({ message: 'payment entry added successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 
 
 module.exports={
-  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById,handlePhotoAdding,handleCompletedProjects
+  handleProjectAdding,handleProjectEditing,ProjectList,ProjectListById,handlePhotoAdding,handleCompletedProjects,handlepayment
 }
