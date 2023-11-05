@@ -54,7 +54,7 @@ function AdvancedModal({labourId,staffId}) {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="outlined" color="primary">
+      <Button onClick={handleOpen} variant="outlined" color="success">
         SALARY ADVANCE
       </Button>
       <Modal
@@ -70,7 +70,7 @@ function AdvancedModal({labourId,staffId}) {
           <div className='mb-4'>
           <TextField label="Advance" type="number" fullWidth value={advance} onChange={handleAdvanceChange}/>
           </div>
-          <Button variant="contained" color="primary" fullWidth onClick={handleSubmit}>
+          <Button variant="contained" color="success" fullWidth onClick={handleSubmit}>
             Submit
           </Button>
         </Box>

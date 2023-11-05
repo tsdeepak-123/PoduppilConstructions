@@ -237,6 +237,18 @@ const handlepayment = async (req, res) => {
   }
 };
 
+
+//----------------get recieved cash
+
+const handleRecievedCash=async(req,res)=>{
+  try {
+    console.log("come");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   handleProjectAdding,
   handleProjectEditing,
@@ -245,4 +257,5 @@ module.exports = {
   handlePhotoAdding,
   handleCompletedProjects,
   handlepayment,
+  handleRecievedCash
 };

@@ -44,7 +44,8 @@ const {
   ProjectListById,
   handlePhotoAdding,
   handleCompletedProjects,
-  handlepayment
+  handlepayment,
+  handleRecievedCash
 } = require("../controllers/Admin/ProjectController");
 const {
   handleAddContract,
@@ -52,7 +53,8 @@ const {
   ContractListById,
   handleEditContract,
   handleCompletedContracts,
-  handleWorkerCount
+  handleWorkerCount,
+  handleFindLabourCount
 } = require("../controllers/Admin/ContractController");
 
 const {
@@ -70,7 +72,6 @@ const {
   handleMaterialTotal,
   handlePurchaseById,
   handlePurchaseByDate,
-  handleAllMaterials,
 } = require("../controllers/Admin/MaterialController");
 
 //The routes for admin authentication
@@ -141,5 +142,7 @@ adminRoute.get("/handleStaffSalaryById",AdminAuth,handleStaffSalaryById);
 // admin data for editing  
 adminRoute.get("/adminData",AdminAuth,adminData);
 adminRoute.put("/updateAdminData",AdminAuth,updateAdminData);
+adminRoute.get("/getlabourcount",AdminAuth,handleFindLabourCount);
+adminRoute.get("/recievedcash",AdminAuth,handleRecievedCash);
 
 module.exports = adminRoute;

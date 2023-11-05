@@ -10,7 +10,7 @@ import ReturnButton from '../../CommonComponents/Return/ReturnButton';
 
 function StaffSalarys() {
   const location=useLocation()
-  const id=location?.state?.id
+  const staffId=location?.state?.id
   console.log(location?.state?.id,'location?.state?.id');
   const[StaffData,setStaffData]=useState()
   const[selectedDate,setselectedDate]=useState()
@@ -198,7 +198,7 @@ if (datePortion) {
 
           <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold mb-2">Salary History</h2>
-            <p className="text-blue-500 cursor-pointer">View History</p>
+            <p className="text-blue-500 cursor-pointer" onClick={()=>{navigate("/admin/salaryhistory",{state:{staffId}})}}>View History</p>
           </div>
           <div className="mt-6 flex flex-row gap-4">
             {/* <TextFields onChange={(e) => {setselectedDate(e.target.value)}} min={datePortion} name='Date' type='date' input={true}/> */}

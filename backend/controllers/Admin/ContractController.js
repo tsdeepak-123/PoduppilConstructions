@@ -243,6 +243,20 @@ const handleWorkerCount = async (req, res) => {
   }
 };
 
+//----------------get labour count
+
+const handleFindLabourCount=async(req,res)=>{
+  try {
+    console.log("come");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+
+
+
 module.exports = {
   handleAddContract,
   ContractList,
@@ -250,4 +264,5 @@ module.exports = {
   handleEditContract,
   handleCompletedContracts,
   handleWorkerCount,
+  handleFindLabourCount
 };

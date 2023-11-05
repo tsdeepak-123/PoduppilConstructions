@@ -5,21 +5,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import { LuIndianRupee } from "react-icons/lu";
 import AdvanceModal from "./AdvanceModal";
-import moment from "moment";
 function Salary() {
   const location = useLocation();
-  const id = location?.state?.id;
-  // console.log(location?.state?.id,'cameee');
+  const labourId = location?.state?.id;
+
   const [LabourData, setLabourData] = useState();
   const [selectedDate, setselectedDate] = useState();
   // const[newDate,setnewDate]=useState()
   const navigate = useNavigate();
-  // const handleProfileButton = () => {
-  //   navigate("/admin/viewprofile");
-  // };
-  // const handleAttendanceButton = () => {
-  //   navigate("/admin/attendancesingle",{ state : {id} } );
-  // };
+
   const handleBackArrowClick = () => {
     navigate("/admin/labourdetails");
   };
@@ -222,7 +216,7 @@ function Salary() {
 
           <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold mb-2">Salary History</h2>
-            <p className="text-blue-500 cursor-pointer">View History</p>
+            <p className="text-blue-500 cursor-pointer"onClick={()=>{navigate("/admin/salaryhistory",{state:{labourId}})}} >View History</p>
           </div>
           <div className="mt-6 flex flex-row gap-4">
             {/* <TextFields onChange={(e) => {setselectedDate(e.target.value)}} min={datePortion} name='Date' type='date' input={true}/> */}

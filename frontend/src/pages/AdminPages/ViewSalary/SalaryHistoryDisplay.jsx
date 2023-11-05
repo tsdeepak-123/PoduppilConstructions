@@ -8,7 +8,10 @@ function SalaryHistoryDisplay() {
     <div>
 <Header headers='SALARY HISTORY'/>
 <SalaryHistory/>
+<div className='mt-60'>
 <Footer/>
+</div>
+
     </div>
   )
 }
