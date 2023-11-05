@@ -103,7 +103,7 @@ function UtilityBills() {
                   <td className="px-6 py-4">{item.paid}</td>
                   <td className="px-6 py-4">{item.pending}</td>
                   <td className="px-6 py-4 text-blue-600 cursor-pointer" onClick={() => viewBills(item._id)}>View</td>
-                  <td className="cursor-pointer"><EditIcon className="text-yellow-600"/></td>
+                  <td className="px-6 py-4 cursor-pointer"><EditIcon className="text-yellow-600"/></td>
                 </tr>
               ))
             ) : (

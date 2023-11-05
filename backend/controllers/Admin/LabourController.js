@@ -259,7 +259,7 @@ const salarycalculationoflabour = async (req, res) => {
         }
       });
     });
-    // console.log(attendanceStatus);
+    console.log("recordssss",attendanceStatus);
     // const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
     // if (!salaryDatas) {
 

@@ -5,6 +5,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import { useState } from "react";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
+import CommonCard from "../../CommonComponents/CommonCard/CommonCard"
 
 function BillSingle() {
   const navigate=useNavigate()
@@ -61,6 +62,7 @@ function BillSingle() {
             key={index}
             className="max-w-4xl mx-auto p-6 mt-6 bg-white rounded-lg shadow-lg"
           >
+            <h2 className="flex justify-center text-2xl font-bold mb-8 uppercase">{data.name}</h2>
             <div className="flex justify-center">
               <div>
                 <img
@@ -70,44 +72,14 @@ function BillSingle() {
                 />
               </div>
             </div>
-            <div className="mt-6">
-              <h2 className="text-2xl font-bold mb-2">{data.name}</h2>
-              <p>
-                <strong>
-                  Bill
-                  date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                </strong>{" "}
-                {data.date}
-              </p>
-              <p>
-                <strong>
-                  Bill
-                  amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                </strong>{" "}
-                {data.amount}
-              </p>
-              <p>
-                <strong>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>{" "}
-                {data.status}
-              </p>
-              <p>
-                <strong>
-                  Paid amount &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                </strong>{" "}
-                {data.paid}
-              </p>
-              <p>
-                <strong>Pending amount &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>{" "}
-                {data.pending}
-              </p>
-              <p>
-                <strong>Paid by &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>{" "}
-                {data.paidby}
-              </p>
-              <p>
-                <strong>Payment type &nbsp;&nbsp;&nbsp;&nbsp;:</strong>{" "}
-                {data.payment}
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            <CommonCard value={data.date} label="Bill date"/>
+            <CommonCard value={data.amount} label="Bill amount"/>
+            <CommonCard value={data.status} label="Bill status"/>
+            <CommonCard value={data.paid} label=" paid"/>
+            <CommonCard value={data.pending} label="pending"/>
+            <CommonCard value={data.paidby} label="Bill paid by"/>
+            <CommonCard value={data.payment} label="payment type"/>
             </div>
             {
               data.isPaid==false ?

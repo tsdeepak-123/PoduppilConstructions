@@ -33,7 +33,9 @@ function Salary() {
 
       setLabourData(response?.data?.salaryData);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
@@ -71,9 +73,7 @@ function Salary() {
         `salaryoflabour?laborId=${location?.state?.id}&laborSalarydate=${selectedDate}`
       );
 
-      console.log(response?.data?.message, "response");
-      alert(response?.data?.message);
-
+      console.log(response?.data?.message, "response")
       window.location.reload();
       // navigate('/admin/viewsalary',{ state: {id } })
     } catch (error) {
