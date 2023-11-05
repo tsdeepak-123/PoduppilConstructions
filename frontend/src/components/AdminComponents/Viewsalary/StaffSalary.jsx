@@ -72,7 +72,7 @@ if (datePortion) {
   const originalDate = new Date(datePortion);
 
  
-  originalDate.setDate(originalDate.getDate() + 1);
+  originalDate.setDate(originalDate.getDate());
 
 
   const year = originalDate.getFullYear();
@@ -106,7 +106,7 @@ if (datePortion) {
         </div>
         <div className="flex justify-end">
           <AdvanceModal
-            labourId={StaffData?.StaffData?._id}
+            staffId={StaffData?.StaffData?._id}
             fetchData={fetchData}
           />
         </div>

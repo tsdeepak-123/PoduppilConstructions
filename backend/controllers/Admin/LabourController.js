@@ -323,7 +323,14 @@ const salarycalculation = async (req, res) => {
 
     const endDate = new Date(laborSalarydate);
     const today = new Date();
-    const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
+     let startDate;
+
+    if (LaborData.lastsalaryDate) {
+      startDate = new Date(LaborData.lastsalaryDate);
+      startDate.setDate(startDate.getDate() + 1); // Add one day to the lastsalaryDate
+    } else {
+      startDate = new Date(LaborData.date);
+    }
     // console.log(startDate,endDate,'dates');
     const startdatePart = startDate.toISOString().slice(0, 10);
     const enddatePart = endDate.toISOString().slice(0, 10);

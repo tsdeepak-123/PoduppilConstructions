@@ -89,7 +89,7 @@ function Salary() {
   if (datePortion) {
     const originalDate = new Date(datePortion);
 
-    originalDate.setDate(originalDate.getDate() + 1);
+    originalDate.setDate(originalDate.getDate());
 
     const year = originalDate.getFullYear();
     const month = String(originalDate.getMonth() + 1).padStart(2, "0");

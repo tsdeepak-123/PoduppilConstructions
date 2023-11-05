@@ -207,12 +207,10 @@ const handleAttendanceListofStaff = async (req, res) => {
       );
       await Promise.all(promises);
       // console.log(StaffAttendance, 'attendanceDocuments');
-      res
-        .status(200)
-        .json({
-          message: "Attendance retrieved successfully",
-          StaffAttendance,
-        });
+      res.status(200).json({
+        message: "Attendance retrieved successfully",
+        StaffAttendance,
+      });
     }
   } catch (error) {
     console.error(error);
@@ -339,9 +337,15 @@ const salarycalculationforStaff = async (req, res) => {
     }
 
     const endDate = new Date(staffSalarydate);
-    const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
+    // const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
+    let startDate;
+    if (StaffData.lastsalaryDate) {
+      startDate = new Date(StaffData.lastsalaryDate);
+      startDate.setDate(startDate.getDate() + 1); // Add one day to the lastsalaryDate
+    } else {
+      startDate = new Date(StaffData.date);
+    }
     const today = new Date();
-    // console.log(startDate,endDate,'dates......');
 
     const startdatePart = startDate.toISOString().slice(0, 10);
     const enddatePart = endDate.toISOString().slice(0, 10);
