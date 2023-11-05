@@ -59,7 +59,7 @@ function StaffSalaryWeekly() {
                 <td
                   scope="row"
                   class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                ><SalaryStatusDrodown/></td>
+                ><SalaryStatusDrodown status={item.records[0].Is_status} staffId={item?.records[0]?._id}/></td>
               </tr>
                 )):(
                     <tr>

@@ -226,7 +226,6 @@ const salarycalculationoflabour = async (req, res) => {
 
     if (LaborData.lastsalaryDate) {
       LaborData.lastsalaryDate.setDate(LaborData.lastsalaryDate.getDate() + 1);
-      console.log(LaborData.lastsalaryDate, "got it");
     }
 
     const endDate = new Date();
@@ -426,8 +425,7 @@ const salarycalculation = async (req, res) => {
     await Labour.findByIdAndUpdate(
       { _id: LaborData._id },
       { lastsalaryDate: latestRecord.calculateTo }
-    );
-
+    )
     res.status(200).json({ message: "Salary calculated successfully" });
   } catch (error) {
     console.error(error);
@@ -583,21 +581,27 @@ const labourAttendanceEdit = async (req, res) => {
   }
 };
 
+//--------------------here is the changing status of labour
+
 const handleSalaryControll = async (req, res) => {
   try {
     const id = req.query.id;
-    await Salary.updateOne(
-      { _id: id },
-      { $set: { "records.0.Is_status": "paid" } }
+    const status = req.body.status;
+    console.log(status, id);
+
+    await Salary.findOneAndUpdate(
+      { "records._id": id },
+      { $set: { "records.$[elem].Is_status": status } },
+      { arrayFilters: [{ "elem._id": id }] }
     );
+
     res.json({ success: true, message: "salary status updated successfully" });
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Error updating salary status" });
+    res.status(500).json({ success: false, message: "Error updating salary status" });
   }
 };
+
 
 module.exports = {
   handleLabourAdding,

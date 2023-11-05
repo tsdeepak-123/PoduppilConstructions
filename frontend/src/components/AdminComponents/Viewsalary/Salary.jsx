@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import { LuIndianRupee } from "react-icons/lu";
 import AdvanceModal from "./AdvanceModal";
-import moment from "moment"
+import moment from "moment";
 function Salary() {
   const location = useLocation();
   const id = location?.state?.id;
@@ -34,7 +34,7 @@ function Salary() {
       setLabourData(response?.data?.salaryData);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        window.location.replace("/admin/login")
+        window.location.replace("/admin/login");
       }
     }
   };
@@ -73,12 +73,12 @@ function Salary() {
         `salaryoflabour?laborId=${location?.state?.id}&laborSalarydate=${selectedDate}`
       );
 
-      console.log(response?.data?.message, "response")
+      console.log(response?.data?.message, "response");
       window.location.reload();
       // navigate('/admin/viewsalary',{ state: {id } })
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        window.location.replace("/admin/login")
+        window.location.replace("/admin/login");
       }
     }
   };

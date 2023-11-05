@@ -31,6 +31,7 @@ const {
   stafffAttendanceEdit,
   handleAllStaffHIstory,
   StaffAttendanceById,
+  handleStaffSalaryControll,
 } = require("../controllers/Admin/StaffController");
 const {
   handleProjectAdding,
@@ -143,7 +144,8 @@ adminRoute.get("/billsingle", AdminAuth, handleBillSingleView);
 adminRoute.post("/paidbills", AdminAuth, handleCompletedBills);
 adminRoute.get("/PurchaseBillById", AdminAuth, handlePurchaseById);
 adminRoute.get("/PurchaseBillByDate", AdminAuth, handlePurchaseByDate);
-adminRoute.post("/salarypaid", AdminAuth, handleSalaryControll);
+adminRoute.post("/laboursalarystatus", AdminAuth, handleSalaryControll);
 adminRoute.post("/completedcontracts", AdminAuth, handleCompletedContracts);
+adminRoute.post("/staffsalarystatus", AdminAuth, handleStaffSalaryControll);
 
 module.exports = adminRoute;
