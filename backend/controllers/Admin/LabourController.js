@@ -514,7 +514,8 @@ const handleAllLabourHIstory = async (req, res) => {
   try {
     // const {labourId} = req.query;
     // const {advance}=req.body;
-    const LabourSalaryData = await Salary.find().populate("laborerId");
+
+    const LabourSalaryData = await Salary.find({}).populate("laborerId");
 
     if (!LabourSalaryData) {
       res.json({ message: "No labour found" });

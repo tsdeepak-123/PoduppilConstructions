@@ -14,10 +14,14 @@ function SalaryStatusDrodown({status,laborerId,staffId}) {
     if (newStatus) {
       try {
         if(laborerId){
-          await axiosAdmin.post(`laboursalarystatus?id=${laborerId}`, { status: newStatus });
+          await axiosAdmin.post(`laboursalarystatus?id=${laborerId}`, { status: newStatus }).then(()=>{
+            window.location.reload()
+          })
         }
         else{
-          await axiosAdmin.post(`staffsalarystatus?id=${staffId}`, { status: newStatus });
+          await axiosAdmin.post(`staffsalarystatus?id=${staffId}`, { status: newStatus }).then(()=>{
+            window.location.reload()
+          })
         }
         
       } catch (error) {
@@ -33,20 +37,31 @@ function SalaryStatusDrodown({status,laborerId,staffId}) {
   
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <Select
-          value={selectedStatus}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value="">
-            {status}
-          </MenuItem>
-          <MenuItem value={"paid"} className='text-green-500  '>Paid </MenuItem>
-          <MenuItem value={"pending"}>pending</MenuItem>
-        </Select>
-      </FormControl>
+      {
+         status && status==="paid" ?(
+              <>
+              <p className='text-green-500'>Paid</p>
+              </>
+         ):(
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            value={selectedStatus}
+            onChange={handleChange}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value="">
+              
+              
+              {status}
+            </MenuItem>
+            <MenuItem value={"paid"} >Paid </MenuItem>
+            <MenuItem value={"pending"}>pending</MenuItem>
+          </Select>
+        </FormControl>
+         )
+      }
+    
     </div>
   )
 }

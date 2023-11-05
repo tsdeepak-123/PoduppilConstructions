@@ -41,6 +41,7 @@ import Purchase from '../pages/AdminPages/Materials/Purchase'
 import PaidBills from '../pages/AdminPages/Office/PaidBills'
 import Attendence from '../pages/AdminPages/Staff/Attendence'
 import ContractsCompleted from '../pages/AdminPages/Contract/ContractsCompleted'
+import RecievedCashes from '../pages/AdminPages/Project/RecievedCashes'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -96,6 +97,7 @@ function AdminRoutes() {
        <Route path='/purchasematerial' element={adminToken?<Purchase/>:<LoginPage/>}/>
        <Route path='/staffattendencesingle' element={adminToken?<Attendence/>:<LoginPage/>}/>
        <Route path='/completedcontracts' element={adminToken?<ContractsCompleted/>:<LoginPage/>}/>
+       <Route path='/recievedcash' element={adminToken?<RecievedCashes/>:<LoginPage/>}/>
     </Routes>
     </div>
   )

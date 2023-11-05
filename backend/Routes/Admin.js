@@ -93,6 +93,12 @@ adminRoute.post(
   ]),
   handleStaffAdding
 );
+
+
+
+
+
+
 adminRoute.get("/staffslist", AdminAuth, handleStaffDetails);
 adminRoute.get("/staffByid", AdminAuth, handleStaffById);
 adminRoute.post("/labourattendance", AdminAuth, handleAttendance);

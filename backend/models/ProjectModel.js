@@ -19,11 +19,11 @@ const ProjectSchema = new Schema({
         type: Date,
         required: true,
       },
-      paymentAmount: {
+      amount: {
         type: Number,
         default:0
       },
-      paytype: {
+      payment: {
         type: String,
       },
     },

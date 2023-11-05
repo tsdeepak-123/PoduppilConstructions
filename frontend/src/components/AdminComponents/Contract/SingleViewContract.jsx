@@ -6,6 +6,7 @@ import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
 import FormatDate from "../../../Validation/FormatDate";
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
+import WorkerModal from "../../AdminComponents/Contract/WorkerModal"
 
 const SingleViewContract = () => {
   const navigate = useNavigate();
@@ -66,22 +67,22 @@ const SingleViewContract = () => {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <CommonCard value={contractData.projectname} label="Project Name"/>
-          <CommonCard value={contractData.Contractwork} label="Contract Work Name"/>
-          <CommonCard value={contractData.Contractorname} label="Contractor Name"/>
-          <CommonCard value={contractData.Amount} label="Contract Amount"/>
-          <CommonCard value={contractData.status} label="Contract Work Status"/>
-          <CommonCard value={contractData.totallabour} label="Main Labours"/>
-          <CommonCard value={contractData.totalhelper} label="Helpers"/>
-          <CommonCard value={`+91 ${contractData.phone}`} label="Contractor Phone Number"/>
-          <CommonCard value={ FormatDate(contractData.date)} label="Started Date"/>
+          <CommonCard value={contractData?.projectname} label="Project Name"/>
+          <CommonCard value={contractData?.Contractwork} label="Contract Work Name"/>
+          <CommonCard value={contractData?.Contractorname} label="Contractor Name"/>
+          <CommonCard value={contractData?.Amount} label="Contract Amount"/>
+          <CommonCard value={contractData?.status} label="Contract Work Status"/>
+          <CommonCard value={contractData?.totallabour} label="Main Labours"/>
+          <CommonCard value={contractData?.totalhelper} label="Helpers"/>
+          <CommonCard value={`+91 ${contractData?.phone}`} label="Contractor Phone Number"/>
+          <CommonCard value={ FormatDate(contractData?.date)} label="Started Date"/>
           </div>
           
-          {!contractData.isCompleted && (
+          {!contractData?.isCompleted && (
 
               <div className="flex justify-center gap-4 mt-8">
                 <Buttons name="WORK COMPLETED" click={handleCompletedContracts} />
-                <Buttons name="EDIT LABOUR COUNT" click={""} />
+                <WorkerModal projectId={contractData?._id}/>
               </div>
             
           )}

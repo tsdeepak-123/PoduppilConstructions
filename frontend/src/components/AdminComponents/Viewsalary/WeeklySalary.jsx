@@ -17,6 +17,8 @@ function WeeklySalary() {
     }
   };
 
+  console.log(salaryData);
+
   useEffect(() => {
     fetch();
   }, []);
