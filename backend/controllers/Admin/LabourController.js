@@ -538,6 +538,29 @@ const handleAllLabourHIstory = async (req, res) => {
   }
 };
 
+//............................labour salary by id ...........................................
+const handleLabourSalaryById = async (req, res) => {
+  try {
+    const { id } = req.query;
+
+    if (!id) {
+      return res.status(400).json({ message: "Missing laborerId in query parameters" });
+    }
+
+    const LabourSalaryData = await Salary.find({ laborerId: id }).populate("laborerId");
+
+    if (!LabourSalaryData || LabourSalaryData.length === 0) {
+      return res.status(404).json({ message: "No laborer found with the given laborerId" });
+    }
+
+    res.status(200).json({ message: "Successfully found laborer's salary data", LabourSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 // ............................. attendace edit .........................................
 
 const labourAttendanceEdit = async (req, res) => {
@@ -624,4 +647,5 @@ module.exports = {
   handleAllLabourHIstory,
   labourAttendanceEdit,
   handleSalaryControll,
+  handleLabourSalaryById
 };

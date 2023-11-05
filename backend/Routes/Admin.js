@@ -3,6 +3,8 @@ const adminRoute = express();
 const {
   handleSignIn,
   handleSignUp,
+  adminData,
+  updateAdminData
 } = require("../controllers/Admin/AdminController");
 const {
   handleLabourAdding,
@@ -18,6 +20,7 @@ const {
   labourAttendanceEdit,
   handleAllLabourHIstory,
   handleSalaryControll,
+  handleLabourSalaryById
 } = require("../controllers/Admin/LabourController");
 const {
   handleStaffAdding,
@@ -32,6 +35,7 @@ const {
   handleAllStaffHIstory,
   StaffAttendanceById,
   handleStaffSalaryControll,
+  handleStaffSalaryById
 } = require("../controllers/Admin/StaffController");
 const {
   handleProjectAdding,
@@ -73,26 +77,10 @@ const {
 
 adminRoute.post("/login", handleSignIn);
 adminRoute.post("/signup", handleSignUp);
-adminRoute.post(
-  "/addlabour",
-  AdminAuth,
-  upload.fields([
-    { name: "proof", maxCount: 2 },
-    { name: "photo", maxCount: 1 },
-  ]),
-  handleLabourAdding
-);
+adminRoute.post(  "/addlabour",AdminAuth,upload.fields([{ name: "proof", maxCount: 2 },{ name: "photo", maxCount: 1 },]),handleLabourAdding);
 adminRoute.get("/labourslist", AdminAuth, handleLabourDetails);
 adminRoute.get("/labourbyid", AdminAuth, handleLabourById);
-adminRoute.post(
-  "/addstaff",
-  AdminAuth,
-  upload.fields([
-    { name: "proof", maxCount: 2 },
-    { name: "photo", maxCount: 1 },
-  ]),
-  handleStaffAdding
-);
+adminRoute.post("/addstaff", AdminAuth,upload.fields([{ name: "proof", maxCount: 2 },{ name: "photo", maxCount: 1 },]),handleStaffAdding);
 adminRoute.get("/staffslist", AdminAuth, handleStaffDetails);
 adminRoute.get("/staffByid", AdminAuth, handleStaffById);
 adminRoute.post("/labourattendance", AdminAuth, handleAttendance);
@@ -105,7 +93,7 @@ adminRoute.post("/salaryoflabour", AdminAuth, salarycalculation);
 adminRoute.post("/salaryofStaff", AdminAuth, salarycalculationforStaff);
 adminRoute.get("/staffsalary", AdminAuth, salarycalculationofStaff);
 adminRoute.post("/addproject", AdminAuth, handleProjectAdding);
-adminRoute.patch("/editproject/:id", AdminAuth, handleProjectEditing); //my edits
+adminRoute.patch("/editproject/:id", AdminAuth, handleProjectEditing);
 adminRoute.post("/AddContract", AdminAuth, handleAddContract);
 adminRoute.get("/ContractList", AdminAuth, ContractList);
 adminRoute.get("/ContractById", AdminAuth, ContractListById);
@@ -115,12 +103,7 @@ adminRoute.get("/labourattendanceById", AdminAuth, labourAttendanceById);
 adminRoute.get("/staffattendanceById", AdminAuth, StaffAttendanceById);
 adminRoute.post("/labouradvance", AdminAuth, handleLabourAdvance);
 adminRoute.post("/staffadvance", AdminAuth, handleStaffAdvance);
-adminRoute.post(
-  "/addbills",
-  AdminAuth,
-  upload.fields([{ name: "photo", maxCount: 1 }]),
-  handleBillAdding
-);
+adminRoute.post("/addbills",AdminAuth,upload.fields([{ name: "photo", maxCount: 1 }]),handleBillAdding);
 adminRoute.get("/billslist", AdminAuth, handleBillDetails);
 adminRoute.get("/laboursalaryhistory", AdminAuth, handleLabourHIstory);
 adminRoute.get("/alllaboursalaryhistory", AdminAuth, handleAllLabourHIstory);
@@ -128,12 +111,7 @@ adminRoute.post("/labourAttendanceEdit", AdminAuth, labourAttendanceEdit);
 adminRoute.post("/EditContract", AdminAuth, handleEditContract);
 adminRoute.post("/staffAttendanceEdit", AdminAuth, stafffAttendanceEdit);
 adminRoute.get("/allStaffsalaryhistory", AdminAuth, handleAllStaffHIstory);
-adminRoute.post(
-  "/addprojectphotos",
-  AdminAuth,
-  upload.fields([{ name: "photos", maxCount: 2 }]),
-  handlePhotoAdding
-);
+adminRoute.post("/addprojectphotos",AdminAuth,upload.fields([{ name: "photos", maxCount: 2 }]),handlePhotoAdding);
 adminRoute.post("/addmaterial", AdminAuth, handleMaterialAdding);
 adminRoute.get("/allmateriallist", AdminAuth, handleMaterialList);
 adminRoute.post("/purchasematerial", AdminAuth, handleMaterialPurchase);
@@ -145,8 +123,15 @@ adminRoute.get("/PurchaseBillById", AdminAuth, handlePurchaseById);
 adminRoute.get("/PurchaseBillByDate", AdminAuth, handlePurchaseByDate);
 adminRoute.post("/laboursalarystatus", AdminAuth, handleSalaryControll);
 adminRoute.post("/completedcontracts", AdminAuth, handleCompletedContracts);
-adminRoute.patch("/handleWorkerCount", handleWorkerCount);
-adminRoute.patch("/handlepayment", handlepayment);
+adminRoute.patch("/handleWorkerCount",AdminAuth, handleWorkerCount);
+adminRoute.patch("/handlepayment",AdminAuth, handlepayment);
 adminRoute.post("/staffsalarystatus", AdminAuth, handleStaffSalaryControll);
+
+//  salary by id
+adminRoute.get("/handleLabourSalaryById",AdminAuth,handleLabourSalaryById);
+adminRoute.get("/handleStaffSalaryById",AdminAuth,handleStaffSalaryById);
+// admin data for editing  
+adminRoute.get("/adminData",AdminAuth,adminData);
+adminRoute.put("/updateAdminData",AdminAuth,updateAdminData);
 
 module.exports = adminRoute;

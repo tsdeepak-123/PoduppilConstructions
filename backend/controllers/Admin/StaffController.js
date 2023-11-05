@@ -570,6 +570,29 @@ const handleAllStaffHIstory = async (req, res) => {
   }
 };
 
+
+//........................  saff salary by id .....................................................
+
+const handleStaffSalaryById = async (req, res) => {
+  try {
+    const { id } = req.query; 
+    if (!id) {
+      return res.status(400).json({ message: "Missing StaffId in query parameters" });
+    }
+
+    const StaffSalaryData = await StaffSalary.find({ StaffId: id }).populate("StaffId");
+
+    if (!StaffSalaryData || StaffSalaryData.length === 0) {
+      return res.status(404).json({ message: "No staff found with the given StaffId" });
+    }
+
+    res.status(200).json({ message: "Successfully found staff's salary data", StaffSalaryData });
+  } catch (error) {
+    console.error("Error updating advance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 //-----------------------------------------------
 
 const StaffAttendanceById = async (req, res) => {
@@ -632,4 +655,5 @@ module.exports = {
   handleAllStaffHIstory,
   StaffAttendanceById,
   handleStaffSalaryControll,
+  handleStaffSalaryById
 };

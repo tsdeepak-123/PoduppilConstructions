@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const handleSignUp = async (req, res) => {
   try {
-    console.log('came',req.body);
+    // console.log('came',req.body);
     const { email, password } = req.body;
     const adminData = new admin({
      
@@ -20,6 +20,49 @@ const handleSignUp = async (req, res) => {
     res.status(500).json({ error: error.messege });
   }
 };
+//........................get admin data.........................
+const adminData=async(req,res)=>{
+  try {
+    const adminData = await admin.findOne();
+    if (!adminData) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+    return res.status(200).json({adminData })
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+//.........................update admin id and password..............................
+
+const updateAdminData = async (req, res) => {
+  try {
+    const adminId = req.query.id;
+    const { email, password,currentPassword } = req.body;
+    const adminData = await admin.findById(adminId);
+
+    if (!adminData) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    if (currentPassword === adminData.password) {
+
+      adminData.email = email;
+      adminData.password = password;
+      
+    await adminData.save(); 
+    return res.status(200).json({ message: "Admin data updated successfully" });
+    }else{
+      
+      return res.status(400).json({ message: "Please provide a correct password" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 // This function handles admin sign-in, taking in a request (req) and a response (res) as parameters.
 
@@ -73,4 +116,4 @@ const handleSignIn = async (req, res) => {
 
 
 
-module.exports = { handleSignIn,handleSignUp};
+module.exports = { handleSignIn,handleSignUp,adminData,updateAdminData};
