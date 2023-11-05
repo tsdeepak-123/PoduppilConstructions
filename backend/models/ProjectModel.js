@@ -12,7 +12,22 @@ const ProjectSchema = new Schema({
   projectnumber: { type: String, required: true},
   notes: { type: String, required: true},
   photos: { type: [String]},
-  isCompleted:{type:Boolean,default:false}
+  isCompleted:{type:Boolean,default:false},
+  projectPayment: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      paymentAmount: {
+        type: Number,
+        default:0
+      },
+      paytype: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const Project =new mongoose.model('Project', ProjectSchema);

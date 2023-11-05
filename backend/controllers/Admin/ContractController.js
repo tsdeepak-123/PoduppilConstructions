@@ -153,8 +153,45 @@ const handleCompletedContracts=async(req,res)=>{
     console.log(error);
   }
 }
+
+
+    // .................................     workerCount adding  ..............................
   
+
+    const handleWorkerCount = async (req, res) => {
+      try {
+        // console.log('came to  workerCount');
+        const { id, date, mainLabour, helpers } = req.query;
+        const Contract = await contract.findById(id);
+    
+        if (!Contract) {
+          return res.status(404).json({ success: false, message: 'Contract not found' });
+        }
+        const formattedDate = new Date(date);
+        // console.log(formattedDate);
+        const existingWorkerCount = Contract.workerCount.find((entry) => entry.date.toString() == formattedDate.toString());
+
+        if (existingWorkerCount) {
+          return res.status(400).json({ success: false, message: 'Date already exists in workerCount' });
+        }
+
+        const WorkerCount = {
+          date,
+          mainLabour,
+          helpers,
+        };
+        Contract.workerCount.push(WorkerCount);
+        await Contract.save();
+    
+        return res.status(200).json({message: 'Worker count entry added successfully'});
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({  message: 'Internal server error' });
+      }
+    };
+    
   
   module.exports={
-    handleAddContract,ContractList,ContractListById,handleEditContract,handleCompletedContracts
+    handleAddContract,ContractList,ContractListById,handleEditContract,handleCompletedContracts,
+    handleWorkerCount
   }
