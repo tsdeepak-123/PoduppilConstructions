@@ -60,7 +60,7 @@ function WeeklySalary() {
                 <td
                   scope="row"
                   class="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                ><SalaryStatusDrodown status={item.records[0].Is_status}/></td>
+                ><SalaryStatusDrodown status={item.records[0].Is_status} laborerId={item?.records[0]?._id}/></td>
               </tr>
                 )):(
                     <tr>

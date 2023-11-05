@@ -1,21 +1,28 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Buttons from '../../CommonComponents/Button/Buttons'
+import Search from "../../CommonComponents/Search/Search"
 
-function AttendanceBar({click,name}) {
+function AttendanceBar({click,name,value,onChange}) {
     const navigate=useNavigate()
   return (
 
     <div className='flex justify-around me-7 mb-10'>
+
     <nav className="w-full sm:flex justify-around gap-2 sm:ml-32">
-              <div onClick={()=> navigate('/admin/labourattendance')} className="flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#e4ece5] hover:text-black transition duration-500">
+
+       <div className='mt-5'> 
+      <Search value={value} onChange={onChange}/>
+      </div>
+
+              <div onClick={()=> navigate('/admin/labourattendance')} className="cursor-pointer flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#e4ece5] hover:text-black transition duration-500">
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-6 h-6 "
                 >
                   <path
                     strokeLinecap="round"
@@ -25,7 +32,7 @@ function AttendanceBar({click,name}) {
                 </svg>
                 Labour-Attendance
               </div>
-              <div  onClick={()=>navigate('/admin/staffattendance')} className="flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#ebeeec] hover:text-black transition duration-500">
+              <div  onClick={()=>navigate('/admin/staffattendance')} className="cursor-pointer flex text-[#5f655f] bg-transparent outline ml-2 rounded-md font-medium my-6 px-4 py-1 w-[auto] self-center hover:bg-[#ebeeec] hover:text-black transition duration-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

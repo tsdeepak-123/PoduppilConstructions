@@ -133,7 +133,7 @@ function AddStaff() {
     <form action='' className='flex flex-wrap justify-around px-16 mt-24' onSubmit={handleSubmit}>
       <TextFields name="Staff name" type="text" value={name} onChange={handleNameChange}/>
       <TextFields name="Age" type="number" value={age} onChange={handleAgeChange}/>
-      <TextFields name="Phone number" type="text" value={phone} onChange={handlePhoneChange}/>
+      <TextFields name="Phone number" type="number  " value={phone} onChange={handlePhoneChange}/>
       <TextFields name="Street name" type="text" value={street} onChange={handleStreetChange}/>
       <TextFields name="Post office" type="text" value={post} onChange={handlePostChange}/>
       <TextFields name="Town" type="text" value={town} onChange={handleTownChange}/>
