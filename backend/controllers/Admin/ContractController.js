@@ -82,7 +82,6 @@ const ContractList = async (req, res) => {
     const FindContract = await contract
       .find({ isCompleted: req.query.status })
       .populate("project");
-    console.log(FindContract);
     if (!FindContract) {
       res.json({ success: false, messege: "cant find contract details " });
     }
@@ -100,7 +99,6 @@ const ContractListById = async (req, res) => {
     const FindContract = await contract
       .findOne({ _id: id })
       .populate("project");
-    console.log(FindContract);
     if (!FindContract) {
       res.json({ success: false, messege: "cant find contract details " });
     }
@@ -206,7 +204,6 @@ const handleWorkerCount = async (req, res) => {
           .json({ success: false, message: "Contract not found" });
       }
       const formattedDate = new Date(date);
-      // console.log(formattedDate);
       const existingWorkerCount = Contract.workerCount.find(
         (entry) => entry.date.toString() == formattedDate.toString()
       );
@@ -227,6 +224,9 @@ const handleWorkerCount = async (req, res) => {
       };
       Contract.workerCount.push(WorkerCount);
       await Contract.save();
+      const UpdatedmainLabour = Number(Contract.totallabour) + Number(mainLabour);
+      const Updatedhelpers = Number(Contract.totalhelper) + Number(helpers);
+      await contract.findByIdAndUpdate({_id:id},{$set:{totallabour: UpdatedmainLabour,totalhelper:Updatedhelpers}})
 
       return res
         .status(200)

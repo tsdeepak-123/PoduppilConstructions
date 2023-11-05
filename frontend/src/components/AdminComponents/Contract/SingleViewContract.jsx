@@ -57,7 +57,7 @@ const SingleViewContract = () => {
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [id,contractData]);
 
   return (
     <>

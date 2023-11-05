@@ -6,7 +6,6 @@ const handleSignUp = async (req, res) => {
     // console.log('came',req.body);
     const { email, password } = req.body;
     const adminData = new admin({
-     
       email,
       password,
     });
@@ -21,48 +20,50 @@ const handleSignUp = async (req, res) => {
   }
 };
 //........................get admin data.........................
-const adminData=async(req,res)=>{
+const adminData = async (req, res) => {
   try {
     const adminData = await admin.findOne();
     if (!adminData) {
       return res.status(404).json({ message: "Admin not found" });
     }
-    return res.status(200).json({adminData })
-
+    return res.status(200).json({ adminData });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 //.........................update admin id and password..............................
 
 const updateAdminData = async (req, res) => {
   try {
     const adminId = req.query.id;
-    const { email, password,currentPassword } = req.body;
-    const adminData = await admin.findById(adminId);
-
-    if (!adminData) {
-      return res.status(404).json({ message: "Admin not found" });
-    }
-
-    if (currentPassword === adminData.password) {
-
-      adminData.email = email;
-      adminData.password = password;
-      
-    await adminData.save(); 
-    return res.status(200).json({ message: "Admin data updated successfully" });
+    const { email, newPassword, currentPassword } = req.body;
+    if(adminId&&email, newPassword, currentPassword){
+      const adminData = await admin.findById(adminId);
+      if (!adminData) {
+        return res.status(404).json({ message: "Admin not found" });
+      }
+      if (currentPassword === adminData.password) {
+        adminData.email = email;
+        adminData.password = newPassword;
+  
+        await adminData.save();
+        return res
+          .status(200)
+          .json({success:true, message: "Admin data updated successfully" })
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Please provide a correct password" });
+      }
     }else{
-      
-      return res.status(400).json({ message: "Please provide a correct password" });
+      res.json({success:false,message:"All fields required"})
     }
+   
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 // This function handles admin sign-in, taking in a request (req) and a response (res) as parameters.
 
@@ -72,34 +73,34 @@ const handleSignIn = async (req, res) => {
       Status: false,
       message: null,
       token: null,
-     
     };
     const { email, password } = req.body;
     console.log(email, password);
     if (email && password) {
       const AdminData = await admin.findOne({ email: email });
-      
-      console.log(AdminData,'dataofadmin');
+
+      console.log(AdminData, "dataofadmin");
       if (!AdminData) {
         res.status(404).json({ success: false, messege: "Invalid email" });
       } else {
         if (password === AdminData.password) {
-
-
           // console.log(AdminData,'dataofadmin');
-          const payload = { id: AdminData._id }
-          const expiresIn = '24h';
-          let AdminToken = jwt.sign(payload,'AdminsecretKey',{expiresIn });
+          const payload = { id: AdminData._id };
+          const expiresIn = "24h";
+          let AdminToken = jwt.sign(payload, "AdminsecretKey", { expiresIn });
           // console.log(AdminToken,'token...');
-
 
           adminSignin.token = AdminToken;
           adminSignin.Status = true;
-          adminSignin.message= "Authenticated"
-         
-          res.status(200).json({adminSignin, success: true, messege: "Authenticated" });
+          adminSignin.message = "Authenticated";
+
+          res
+            .status(200)
+            .json({ adminSignin, success: true, messege: "Authenticated" });
         } else {
-          res.status(401).json({ success: false, messege: "Incorrect Password" });
+          res
+            .status(401)
+            .json({ success: false, messege: "Incorrect Password" });
         }
       }
     } else {
@@ -110,10 +111,4 @@ const handleSignIn = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-module.exports = { handleSignIn,handleSignUp,adminData,updateAdminData};
+module.exports = { handleSignIn, handleSignUp, adminData, updateAdminData };
