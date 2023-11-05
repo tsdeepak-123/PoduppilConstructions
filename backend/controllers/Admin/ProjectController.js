@@ -1,6 +1,7 @@
 const Project = require("../../models/ProjectModel");
 const cloudinary = require("../../Middleware/Cloudinary");
 const Labour = require("../../models/LabourModal");
+const mongoose = require("mongoose");
 
 // This function handles Project Adding to database, taking in a request (req) and a response (res) as parameters.
 
@@ -202,10 +203,10 @@ const handlepayment = async (req, res) => {
     console.log("com on baby");
     const id = req.query.id;
     const { date, payment, amount } = req.body;
-    console.log(date, payment, amount,id);
-    if(date&&payment&&amount &&id){
+    console.log(date, payment, amount, id);
+    if (date && payment && amount && id) {
       const project = await Project.findById(id);
-      console.log("finded",project);
+      console.log("finded", project);
 
       if (!project) {
         return res
@@ -220,34 +221,67 @@ const handlepayment = async (req, res) => {
       };
 
       console.log(paymentEntry);
-  
+
       project.projectPayment.push(paymentEntry);
       await project.save();
-  
+
       return res
         .status(200)
-        .json({success:true, message: "payment entry added successfully" });
-    }else{
-      res.json({success:false,message:"All fields required"})
+        .json({ success: true, message: "payment entry added successfully" });
+    } else {
+      res.json({ success: false, message: "All fields required" });
     }
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
+//--------------------get all project recieved cash------------------------//
 
-//----------------get recieved cash
-
-const handleRecievedCash=async(req,res)=>{
+const handleRecievedCash = async (req, res) => {
   try {
-    
+    const totalReceived = await Project.aggregate([
+      {
+        $unwind: "$projectPayment",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          projectName: { $first: "$name" },
+          totalAmountReceived: { $sum: "$projectPayment.amount" },
+        },
+      },
+    ]);
+
+    if (totalReceived.length > 0) {
+      return res.json({ totalAmountReceived: totalReceived });
+    } else {
+      return res.status(404).json({ message: "No projects found" });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
+
+//--------------------get all project recieved cash------------------------//
+
+const handleRecievedCashByProject = async (req, res) => {
+  try {
+    const projectId = req.query.id;
+    console.log(projectId);
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+    const paymentRecords = project.projectPayment;
+    return res.status(200).json({paymentRecords });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   handleProjectAdding,
@@ -257,5 +291,6 @@ module.exports = {
   handlePhotoAdding,
   handleCompletedProjects,
   handlepayment,
-  handleRecievedCash
+  handleRecievedCash,
+  handleRecievedCashByProject,
 };

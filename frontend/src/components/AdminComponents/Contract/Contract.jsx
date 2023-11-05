@@ -79,11 +79,11 @@ function Contract() {
             {filteredContracts && filteredContracts.length > 0 ? (
               filteredContracts.map((data) => (
                 <tr key={data._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                  <td className="py-4 px-6">{data.project.name}</td>
-                  <td className="py-4 px-6">{data.Contractorname}</td>
-                  <td className="py-4 px-6">{data.phone}</td>
-                  <td className="py-4 px-6">{data.Contractwork}</td>
-                  <td className="py-4 px-6">{data.Amount}</td>
+                  <td className="py-4 px-6">{data?.project?.name}</td>
+                  <td className="py-4 px-6">{data?.Contractorname}</td>
+                  <td className="py-4 px-6">{data?.phone}</td>
+                  <td className="py-4 px-6">{data?.Contractwork}</td>
+                  <td className="py-4 px-6">{data?.Amount}</td>
                   <td className="text-blue-500 cursor-pointer py-4 px-6" onClick={() => nav(data._id)}>View</td>
                   <td className="font-medium cursor-pointer">
                     <EditIcon onClick={() => editpage(data)} className="text-yellow-600" />

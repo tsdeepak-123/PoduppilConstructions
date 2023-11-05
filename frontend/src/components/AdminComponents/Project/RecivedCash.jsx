@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import RecivedCashModal from './RecivedCashModal'
 import CashTable from "../../AdminComponents/Project/CashTable"
@@ -10,7 +10,7 @@ const[cashData,setCashData]=useState()
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get("recievedcash")
-      // setCashData(response?.data);
+      setCashData(response?.data?.totalAmountReceived);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
@@ -19,17 +19,13 @@ const[cashData,setCashData]=useState()
     }
   };
 
-  //data displayin when mounting
-  useEffect(() => {
-    fetchData();
-  }, []);
   return (
     <>
     <ReturnButton/>
     <div className='flex justify-end me-36 mt-14'>
     <RecivedCashModal/>
     </div>
-    <CashTable/>
+    <CashTable RecievedData={cashData} fetchData={fetchData}/>
     </>
   )
 }

@@ -8,6 +8,7 @@ import PhotoAddModal from './PhotoAddModal';
 import Swal from 'sweetalert2';
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
 import { useNavigate } from "react-router-dom";
+import Payments from "../../AdminComponents/Project/Payments"
 
 const SingleViewProject = () => {
   const navigate = useNavigate();
@@ -132,6 +133,13 @@ const SingleViewProject = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div>
+        <div className='flex flex-wrap justify-center mt-14'>
+        <p className=' font-serif font-bold text-[30px]'>Project Recieved Cash And Date</p>
+        </div>
+        <Payments projectId={id}/>
       </div>
 
       <div className='flex flex-wrap justify-center mt-14'>

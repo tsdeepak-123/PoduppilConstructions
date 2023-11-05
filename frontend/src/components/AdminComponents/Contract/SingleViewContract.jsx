@@ -6,7 +6,8 @@ import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
 import FormatDate from "../../../utils/FormatDate";
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
-import WorkerModal from "../../AdminComponents/Contract/WorkerModal"
+import WorkerModal from "../../AdminComponents/Contract/WorkerModal";
+import LabourCount from "../../AdminComponents/Contract/LabourCount";
 
 const SingleViewContract = () => {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ const SingleViewContract = () => {
       setContractData(response?.data?.FindContract);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        window.location.replace("/admin/login")
-    }
+        window.location.replace("/admin/login");
+      }
     }
   };
 
@@ -49,10 +50,10 @@ const SingleViewContract = () => {
       });
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        window.location.replace("/admin/login")
+        window.location.replace("/admin/login");
+      }
     }
   };
-}
 
   useEffect(() => {
     fetchData();
@@ -67,27 +68,45 @@ const SingleViewContract = () => {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <CommonCard value={contractData?.projectname} label="Project Name"/>
-          <CommonCard value={contractData?.Contractwork} label="Contract Work Name"/>
-          <CommonCard value={contractData?.Contractorname} label="Contractor Name"/>
-          <CommonCard value={contractData?.Amount} label="Contract Amount"/>
-          <CommonCard value={contractData?.status} label="Contract Work Status"/>
-          <CommonCard value={contractData?.totallabour} label="Main Labours"/>
-          <CommonCard value={contractData?.totalhelper} label="Helpers"/>
-          <CommonCard value={`+91 ${contractData?.phone}`} label="Contractor Phone Number"/>
-          <CommonCard value={ FormatDate(contractData?.date)} label="Started Date"/>
-          </div>
-          
-          {!contractData?.isCompleted && (
+          <CommonCard value={contractData?.projectname} label="Project Name" />
+          <CommonCard
+            value={contractData?.Contractwork}
+            label="Contract Work Name"
+          />
+          <CommonCard
+            value={contractData?.Contractorname}
+            label="Contractor Name"
+          />
+          <CommonCard value={contractData?.Amount} label="Contract Amount" />
+          <CommonCard
+            value={contractData?.status}
+            label="Contract Work Status"
+          />
+          <CommonCard value={contractData?.totallabour} label="Main Labours" />
+          <CommonCard value={contractData?.totalhelper} label="Helpers" />
+          <CommonCard
+            value={`+91 ${contractData?.phone}`}
+            label="Contractor Phone Number"
+          />
+          <CommonCard
+            value={FormatDate(contractData?.date)}
+            label="Started Date"
+          />
+        </div>
 
-              <div className="flex justify-center gap-4 mt-8">
-                <Buttons name="WORK COMPLETED" click={handleCompletedContracts} />
-                <WorkerModal projectId={contractData?._id}/>
-              </div>
-            
-          )}
-        
+        {!contractData?.isCompleted && (
+          <div className="flex justify-center gap-4 mt-8">
+            <Buttons name="WORK COMPLETED" click={handleCompletedContracts} />
+            <WorkerModal projectId={contractData?._id} />
+          </div>
+        )}
       </div>
+        <div >
+          <p className="flex flex-wrap justify-center mt-14 font-serif font-bold text-[30px]">
+            Dates and Labour count
+          </p>
+        </div>
+      <LabourCount contractId={id} />
     </>
   );
 };

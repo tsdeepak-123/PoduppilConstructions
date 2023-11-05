@@ -255,6 +255,23 @@ const handleFindLabourCount=async(req,res)=>{
 }
 
 
+//--------------------get labour count of singe contract------------------------//
+
+const handleLabourCountById = async (req, res) => {
+  try {
+    const contractId = req.query.id;
+    const contracts = await contract.findById(contractId);
+    if (!contracts) {
+      return res.status(404).json({ message: "contract not found" });
+    }
+    const LabourRecords = contracts.workerCount;
+    return res.status(200).json({LabourRecords});
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
 module.exports = {
@@ -264,5 +281,6 @@ module.exports = {
   handleEditContract,
   handleCompletedContracts,
   handleWorkerCount,
-  handleFindLabourCount
+  handleFindLabourCount,
+  handleLabourCountById
 };

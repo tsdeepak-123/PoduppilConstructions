@@ -32,7 +32,7 @@ function CompletedProjects() {
     <>
       <ReturnButton />
       {
-        ProjectData.length>0 ?(
+        ProjectData?.length>0 ?(
           <div className="flex justify-center mt-8">
           <div class=" overflow-y-scroll relative overflow-x-auto shadow-md sm:rounded-lg max-h-[500px]">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
