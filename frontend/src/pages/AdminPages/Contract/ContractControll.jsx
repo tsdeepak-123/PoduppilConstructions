@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from "../../components/AdminComponents/Header/Header"
-import Contract from '../../components/AdminComponents/Contract/Contract'
-import Footer from '../../components/AdminComponents/Footer/Footer'
+import Header from "../../../components/AdminComponents/Header/Header"
+import Contract from '../../../components/AdminComponents/Contract/Contract'
+import Footer from '../../../components/AdminComponents/Footer/Footer'
 function ContractControll() {
   return (
     <div>

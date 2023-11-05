@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
-import dateFormat from "../../../Validation/FormatDate";
+import FormatDate from "../../../utils/FormatDate";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
 import EditIcon from '@mui/icons-material/Edit';
 import Buttons from "../../CommonComponents/Button/Buttons";
@@ -37,10 +37,7 @@ function UtilityBills() {
     fetchData();
   }, []);
 
-  // Formatting the date
-  const formattedDate = (date) => {
-    return dateFormat(date);
-  };
+  
 
   const viewBills = (id) => {
     navigate("/admin/billsingleview", { state: { id } });
@@ -97,7 +94,7 @@ function UtilityBills() {
               filteredBills.map((item) => (
                 <tr key={item._id} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <td className="px-6 py-4">{item.name}</td>
-                  <td className="px-6 py-4">{formattedDate(item.date)}</td>
+                  <td className="px-6 py-4">{FormatDate(item.date)}</td>
                   <td className="px-6 py-4">{item.amount}</td>
                   <td className="px-6 py-4">{item.status}</td>
                   <td className="px-6 py-4">{item.paid}</td>

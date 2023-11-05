@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from "../../components/AdminComponents/Header/Header"
-import StaffDisplay from '../../components/AdminComponents/Staffs/StaffDisplay'
-import Footer from '../../components/AdminComponents/Footer/Footer'
+import Header from "../../../components/AdminComponents/Header/Header"
+import StaffDisplay from '../../../components/AdminComponents/Staffs/StaffDisplay'
+import Footer from '../../../components/AdminComponents/Footer/Footer'
 
 function StaffControll() {
   return (

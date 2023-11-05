@@ -6,6 +6,7 @@ import { useState } from "react";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard"
+import FormatDate from "../../../utils/FormatDate"
 
 function BillSingle() {
   const navigate=useNavigate()
@@ -73,7 +74,7 @@ function BillSingle() {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-            <CommonCard value={data.date} label="Bill date"/>
+            <CommonCard value={FormatDate(data.date)} label="Bill date"/>
             <CommonCard value={data.amount} label="Bill amount"/>
             <CommonCard value={data.status} label="Bill status"/>
             <CommonCard value={data.paid} label=" paid"/>

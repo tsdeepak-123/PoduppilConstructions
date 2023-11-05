@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { axiosAdmin } from '../../../Api/Api';
 import ReturnButton from '../../CommonComponents/Return/ReturnButton';
-import dateFormat from '../../../Validation/FormatDate';
+import dateFormat from '../../../utils/FormatDate';
 import Nodata from "../../CommonComponents/Nodata/Nodata"
 
 function BillsPaid() {

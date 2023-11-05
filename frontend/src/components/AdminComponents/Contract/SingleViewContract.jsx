@@ -4,7 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import Swal from "sweetalert2";
-import FormatDate from "../../../Validation/FormatDate";
+import FormatDate from "../../../utils/FormatDate";
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
 import WorkerModal from "../../AdminComponents/Contract/WorkerModal"
 

@@ -1,5 +1,5 @@
 import React from "react";
-import dateFormat from "../../../Validation/FormatDate";
+import dateFormat from "../../../utils/FormatDate";
 
 function AttendanceDisplay({ attendanceData }) {
   //formatting the date

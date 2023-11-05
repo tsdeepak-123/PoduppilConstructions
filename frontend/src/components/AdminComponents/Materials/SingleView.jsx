@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import FormatDate from "../../../Validation/FormatDate";
+import FormatDate from "../../../utils/FormatDate";
 import Search from "../../CommonComponents/Search/Search"
 
 function SingleView({ materialData }) {

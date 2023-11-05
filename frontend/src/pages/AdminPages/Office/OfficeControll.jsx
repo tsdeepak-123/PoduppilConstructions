@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from "../../components/AdminComponents/Header/Header"
-import Office from '../../components/AdminComponents/Office/Office'
-import Footer from '../../components/AdminComponents/Footer/Footer'
+import Header from "../../../components/AdminComponents/Header/Header"
+import Office from '../../../components/AdminComponents/Office/Office'
+import Footer from '../../../components/AdminComponents/Footer/Footer'
 
 function OfficeControll() {
   return (

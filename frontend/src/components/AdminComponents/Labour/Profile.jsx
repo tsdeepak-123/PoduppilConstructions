@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import { useNavigate } from "react-router-dom";
-import FormatDate from "../../../Validation/FormatDate";
+import FormatDate from "../../../utils/FormatDate";
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import AttendanceEdit from "../Attendance/AttendanceEdit";
 

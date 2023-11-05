@@ -1,26 +1,35 @@
-import React from 'react'
-import TextFields from '../../CommonComponents/TextFields/TextFields'
+import React, { useEffect, useState } from 'react'
 import ReturnButton from '../../CommonComponents/Return/ReturnButton'
-import Buttons from '../../CommonComponents/Button/Buttons'
 import RecivedCashModal from './RecivedCashModal'
+import CashTable from "../../AdminComponents/Project/CashTable"
+import { axiosAdmin } from '../../../Api/Api';
 
 function RecivedCash() {
+const[cashData,setCashData]=useState()
+
+  const fetchData = async () => {
+    try {
+      const response = await axiosAdmin.get("recievedcash")
+      // setCashData(response?.data);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
+      console.log(error);
+    }
+  };
+
+  //data displayin when mounting
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
     <ReturnButton/>
-    {/* <div className='mt-14 flex flex-row flex-wrap justify-center gap-4'>
-    <TextFields name="Date" type="date" input={true} value={""} onChange={""}/>
-    <TextFields name="Amount recieved"  type="number"  value={""} onChange={""}/>
-    <TextFields name="Payment type" type="text"  value={""} onChange={""}/>
-    </div>
-    <div className='flex justify-center mt-8'>
-    <Buttons name="Recieve Amount"/>
-    </div> */}
     <div className='flex justify-end me-36 mt-14'>
     <RecivedCashModal/>
     </div>
-  
-
+    <CashTable/>
     </>
   )
 }

@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
-import AdminHome from '../pages/AdminPages/AdminHome'
+import AdminHome from '../pages/AdminPages/Login/AdminHome'
 import { Routes,Route } from 'react-router-dom'
-import AdminDashboard from '../pages/AdminPages/AdminDashboard'
-import LoginPage from '../pages/AdminPages/LoginPage'
+import AdminDashboard from '../pages/AdminPages/Dashboard/AdminDashboard'
+import LoginPage from '../pages/AdminPages/Login/LoginPage'
 import LabourControll from '../pages/AdminPages/Labour/LabourControll'
-import ProjectDisplay from '../pages/AdminPages/ProjectDisplay'
-import StaffControll from '../pages/AdminPages/StaffControll'
-import OfficeControll from '../pages/AdminPages/OfficeControll'
-import ContractControll from '../pages/AdminPages/ContractControll'
+import ProjectDisplay from '../pages/AdminPages/Project/ProjectDisplay'
+import StaffControll from '../pages/AdminPages/Staff/StaffControll'
+import OfficeControll from '../pages/AdminPages/Office/OfficeControll'
+import ContractControll from '../pages/AdminPages/Contract/ContractControll'
 import LabourAdding from '../pages/AdminPages/Labour/LabourAdding'
 import ContractAdding from '../pages/AdminPages/Contract/ContractAdding'
 import ContractEdit from '../pages/AdminPages/Contract/ContractEdit'
 import Addbills from '../pages/AdminPages/Office/Addbills'
 import ProjectAdding from '../pages/AdminPages/Project/ProjectAdding'
 import StaffAdding from '../pages/AdminPages/Staff/StaffAdding'
-import Materials from '../pages/AdminPages/Materials/Materials'
+// import Materials from '../pages/AdminPages/Materials/Materials'
 import ProjectLists from '../pages/AdminPages/Project/ProjectLists'
 import LabourAttendance from '../pages/AdminPages/Office/LabourAttendance'
 import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
@@ -66,7 +66,7 @@ function AdminRoutes() {
        <Route path='/staffdetails' element={adminToken?<StaffControll/>:<LoginPage/>}/>
        <Route path='/officedetails' element={adminToken?<OfficeControll/>:<LoginPage/>}/>
        <Route path='/contractdetails' element={adminToken?<ContractControll/>:<LoginPage/>}/>
-       <Route path='/materials' element={adminToken?<Materials/>:<LoginPage/>}/>
+       {/* <Route path='/materials' element={adminToken?<Materials/>:<LoginPage/>}/> */}
        <Route path='/addlabour' element={adminToken?<LabourAdding/>:<LoginPage/>}/>
        <Route path='/addcontract' element={adminToken?<ContractAdding/>:<LoginPage/>}/>
        <Route path='/addbills' element={adminToken?<Addbills/>:<LoginPage/>}/>

@@ -242,7 +242,7 @@ const handlepayment = async (req, res) => {
 
 const handleRecievedCash=async(req,res)=>{
   try {
-    console.log("come");
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
