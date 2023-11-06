@@ -119,10 +119,10 @@ function PasswordChangeModal() {
           <TextField label="Email" type="email" fullWidth value={email}  onChange={handleEmailChange}/>
           </div>
           <div className='mb-4'>
-          <TextField label="Current passsword" type="text" fullWidth value={currentPassword} onChange={handleCurrentPasswordChange}/>
+          <TextField label="Current passsword" type="password" fullWidth value={currentPassword} onChange={handleCurrentPasswordChange}/>
           </div>
           <div className='mb-4'>
-          <TextField label="New password" type="text" fullWidth value={newPassword} onChange={handleNewPasswordChange}/>
+          <TextField label="New password" type="password" fullWidth value={newPassword} onChange={handleNewPasswordChange}/>
           </div>
           <Button variant="contained" color="success" fullWidth onClick={handleSubmit}>
             Submit

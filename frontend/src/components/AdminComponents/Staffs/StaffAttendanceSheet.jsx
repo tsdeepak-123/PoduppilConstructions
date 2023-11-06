@@ -44,8 +44,8 @@ function StaffAttendanceSheet() {
     fetchAttendance();
   }, []);
 
-  const handleAddLabour = () => {
-    navigate("/admin/addlabour");
+  const handleAddStaff = () => {
+    navigate("/admin/addstaff");
   };
 
   const handleRadioButtonChange = (event, id) => {
@@ -88,7 +88,7 @@ function StaffAttendanceSheet() {
   return (
     <>
       <ReturnButton />
-      <AttendanceBar click={handleAddLabour} name="+ ADD NEW LABOUR"  value={searchTerm} onChange={handleSearch} />
+      <AttendanceBar click={handleAddStaff} name="+ ADD NEW STAFF"  value={searchTerm} onChange={handleSearch} />
 
       {searchResults?.length === 0 ? (
         <Nodata />

@@ -43,6 +43,7 @@ import Attendence from '../pages/AdminPages/Staff/Attendence'
 import ContractsCompleted from '../pages/AdminPages/Contract/ContractsCompleted'
 import RecievedCashes from '../pages/AdminPages/Project/RecievedCashes'
 import Account from '../pages/AdminPages/Account/Account'
+import UserHomeControll from '../pages/AdminPages/UserHome/UserHomeControll'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -100,6 +101,7 @@ function AdminRoutes() {
        <Route path='/completedcontracts' element={adminToken?<ContractsCompleted/>:<LoginPage/>}/>
        <Route path='/recievedcash' element={adminToken?<RecievedCashes/>:<LoginPage/>}/>
        <Route path='/adminaacount' element={adminToken?<Account/>:<LoginPage/>}/>
+       <Route path='/userhomecontroll' element={adminToken?<UserHomeControll/>:<LoginPage/>}/>
     </Routes>
     </div>
   )

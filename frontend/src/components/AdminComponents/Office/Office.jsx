@@ -14,6 +14,9 @@ function Office() {
     const handleUtilitybills=()=>{
       navigate('/admin/utilitybills')
     }
+    const handleUserHome=()=>{
+      navigate('/admin/userhomecontroll')
+    }
 
     const handleAdminAccount=()=>{
         navigate('/admin/adminaacount')
@@ -32,7 +35,7 @@ function Office() {
       <ItemCard classes={'mx-16 mt-16'} name="UTILITY BILLS" discription="" navigation={handleUtilitybills}/>
       <ItemCard classes={'mx-16 mt-16'} name="SALARY MANAGEMENT" discription="" navigation={handleSalaryClick}/>
       <ItemCard classes={'mx-16 mt-16'} name="RECIEVED CASH" discription="" navigation={handleRecievedCash}/>
-      <ItemCard classes={'mx-16 mt-16'} name="USER HOME CONTROLL" discription="" navigation={""}/>
+      <ItemCard classes={'mx-16 mt-16'} name="USER HOME CONTROLL" discription="" navigation={handleUserHome}/>
       <ItemCard classes={'mx-16 mt-16'} name="ADMIN ACCOUNT" discription="" navigation={ handleAdminAccount}/>
 
     </div>
