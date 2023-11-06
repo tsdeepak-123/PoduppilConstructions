@@ -41,7 +41,6 @@ const SingleViewProject = () => {
     }
   };
 
-  console.log("purchaseeeeeeeeeeeeeeee", materialData);
 
   const handleCompletedProjects = async () => {
     try {

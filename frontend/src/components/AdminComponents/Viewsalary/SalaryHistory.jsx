@@ -21,7 +21,9 @@ function SalaryHistory() {
         setSalaryData(response?.data?.LabourSalaryData || []);
       }
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
     }
   };
 

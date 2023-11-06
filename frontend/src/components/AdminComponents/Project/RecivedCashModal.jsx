@@ -76,7 +76,6 @@ function RecivedCashModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(projectId, "one");
   //fetching data of projects
 
   const fetchData = async () => {
@@ -84,7 +83,9 @@ function RecivedCashModal() {
       const response = await axiosAdmin.get("projectList?status=false");
       setProjectData(response?.data?.FindProject);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login");
+      }
     }
   };
 

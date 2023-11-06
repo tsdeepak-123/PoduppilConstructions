@@ -8,7 +8,6 @@ function WeeklySalary() {
   const fetch = async () => {
     try {
       const response = await axiosAdmin.get("alllaboursalaryhistory");
-      console.log(response?.data.updatedLabourSalaryData);
       setSalaryData(response?.data.updatedLabourSalaryData);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -16,8 +15,6 @@ function WeeklySalary() {
       }
     }
   };
-
-  console.log(salaryData);
 
   useEffect(() => {
     fetch();

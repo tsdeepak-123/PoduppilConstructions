@@ -44,7 +44,6 @@ function AttendanceSingle() {
     }
   };
 
-   console.log(data);
 
   useEffect(() => {
     fetchData();
@@ -63,7 +62,6 @@ function AttendanceSingle() {
     }
   };
 
-  console.log(data);
 
   return (
     <>

@@ -1,13 +1,11 @@
 import React from "react";
-import dateFormat from "../../../utils/FormatDate";
+import FormatDate from "../../../utils/FormatDate";
 
 function AttendanceDisplay({ attendanceData }) {
-  //formatting the date
- const date= dateFormat(attendanceData[0]?.date)
   return (
     <>
       <div className="flex justify-center mb-14 font-bold">
-        Date &nbsp;&nbsp; : &nbsp;&nbsp;{date}
+        Date &nbsp;&nbsp; : &nbsp;&nbsp;{FormatDate(attendanceData[0]?.date)}
       </div>
       <div className="flex justify-center ">
         <div class="w-[70%] relative overflow-y-scroll overflow-x-auto shadow-md sm:rounded-lg max-h-[500px] ">

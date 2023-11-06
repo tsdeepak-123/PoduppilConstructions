@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { axiosAdmin } from '../../../Api/Api'
 import Buttons from '../../CommonComponents/Button/Buttons';
+import toast ,{Toaster} from "react-hot-toast"
 
 
 
@@ -28,7 +29,6 @@ function AttendanceEdit({labourData}) {
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
  
-    console.log(labourData);
     const handleRadioButtonChange = (event, id) => {
       const { value } = event.target;
   
@@ -38,9 +38,13 @@ function AttendanceEdit({labourData}) {
       try {
         e.preventDefault()
         const response=await axiosAdmin.post('labourAttendanceEdit',{status:selectedValues,labourId:labourData?._id})
-        console.log(response?.data?.messege);
-        handleClose()
+        if(response?.data?.success){
+          handleClose()
+          toast.success("Labour attandence Edited successfully")
+        }
+        toast.error(response?.data?.messege)
       } catch (error) {
+        toast.error(error?.response?.data?.messege)
         if (error.response && error.response.status === 401) {
           window.location.replace("/admin/login")
       }
@@ -50,6 +54,7 @@ function AttendanceEdit({labourData}) {
    
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false}/>
     <Button onClick={handleOpen} variant="outlined" color="primary">
      EDIT ATTENDANCE
     </Button>

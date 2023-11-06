@@ -1,7 +1,6 @@
 import React from 'react'
 import StaffSalaryWeekly from './StaffSalaryWeekly'
 import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
 import WeeklySalary from './WeeklySalary'
 
 function SalaryList() {

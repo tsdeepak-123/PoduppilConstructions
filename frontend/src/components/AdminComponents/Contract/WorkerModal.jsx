@@ -45,7 +45,6 @@ function WorkerModal({projectId}) {
         setDate("")
         setHelper("")
         setMainlabour("")
-        console.log("data",projectId,date,mainLabour,helpers);
         const response= await axiosAdmin.patch(`handleWorkerCount?id=${projectId}`,{date,mainLabour,helpers})
        
         if(response.data.success){

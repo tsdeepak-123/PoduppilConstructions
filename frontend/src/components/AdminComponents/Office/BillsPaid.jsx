@@ -14,7 +14,6 @@ function BillsPaid() {
     const fetchData = async () => {
       try {
         const response = await axiosAdmin.get("billslist?status=true");
-        console.log();
         setBillData(response?.data?.allBillData);
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -22,7 +21,6 @@ function BillsPaid() {
         }
       }
     };
-  console.log(billData,"jiiiiiiiii");
     //data displayin when mounting
     useEffect(() => {
       fetchData();

@@ -13,7 +13,6 @@ function Payments({ projectId }) {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
       }
-      console.log(error);
     }
   };
 

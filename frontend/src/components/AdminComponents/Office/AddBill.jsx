@@ -45,7 +45,6 @@ function AddBill() {
     setPayment(e.target.value);
   };
   const handlephotoChange = (e) => {
-    console.log(e.target.files[0], "tagetfile");
     const file = e.target.files[0];
     setphoto(file);
   };

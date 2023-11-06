@@ -22,7 +22,6 @@ function AdvancedModal({labourId,staffId}) {
   const [open, setOpen] = useState(false);
   const [advance, setAdvance] = useState()
    
-  console.log(labourId,staffId);
 
   const handleAdvanceChange=(e)=>{
     setAdvance(e.target.value)
@@ -47,8 +46,6 @@ function AdvancedModal({labourId,staffId}) {
       }
     }
   }
-
-  console.log(advance);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

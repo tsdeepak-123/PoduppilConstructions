@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 function Labour() {
@@ -18,8 +17,6 @@ function Labour() {
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get("labourslist");
-      console.log(response);
-
       setLabourData(response.data.allLabourData);
     } catch (error) {
       if (error.response && error.response.status === 401) {

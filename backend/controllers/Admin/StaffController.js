@@ -54,7 +54,6 @@ const handleStaffAdding = async (req, res) => {
 
       const proofUrls = [];
       for (const proof of req.files.proof) {
-        console.log(proof, "proof");
         const proofUpload = await cloudinary.uploader.upload(proof.path);
         if (!proofUpload.secure_url) {
           return res.json({
@@ -64,10 +63,6 @@ const handleStaffAdding = async (req, res) => {
         }
         proofUrls.push(proofUpload.secure_url);
       }
-
-      // const proofUpload = await cloudinary.uploader.upload(
-      //   req.files.proof[0].path
-      // );
       const photoUpload = await cloudinary.uploader.upload(
         req.files.photo[0].path
       );
@@ -145,7 +140,6 @@ const handleStaffById = async (req, res) => {
 
 const handleAttendanceofStaff = async (req, res) => {
   try {
-    // console.log(req.body);
     const { selectedValues } = req.body;
 
     const currentDate = moment();
@@ -180,7 +174,6 @@ const handleAttendanceofStaff = async (req, res) => {
 
     res.status(200).json({ message: "Attendance updated successfully" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -206,14 +199,12 @@ const handleAttendanceListofStaff = async (req, res) => {
         )
       );
       await Promise.all(promises);
-      // console.log(StaffAttendance, 'attendanceDocuments');
       res.status(200).json({
         message: "Attendance retrieved successfully",
         StaffAttendance,
       });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -222,13 +213,9 @@ const handleAttendanceListofStaff = async (req, res) => {
 
 const salarycalculationofStaff = async (req, res) => {
   try {
-    // console.log('cameeeee');
     const { staffId } = req.query;
-    //  console.log(staffId);
 
     const StaffData = await Staff.findById({ _id: staffId });
-
-    // console.log(StaffData,'StaffData');
 
     if (!StaffData) {
       return res.status(404).json({
@@ -241,14 +228,12 @@ const salarycalculationofStaff = async (req, res) => {
 
     const endDate = new Date();
     const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
-    // console.log(startDate,endDate,'dates');
 
     const attendanceRecords = await Staffattendance.find({
       "records.StaffId": staffId,
       date: { $gte: startDate, $lte: endDate },
     });
 
-    // console.log(attendanceRecords,'attendanceRecords');
     if (!attendanceRecords) {
       return res.status(404).json({
         message: "staff attendance records not found for the specified period.",
@@ -268,15 +253,11 @@ const salarycalculationofStaff = async (req, res) => {
         }
       });
     });
-    // console.log(attendanceStatus);
-    // const salaryDatas = await StaffSalary.findOne({ StaffId: staffId }).populate('StaffId');
-    // if (!salaryDatas) {
 
     const salary =
       StaffData?.salary * attendanceStatus?.present +
       (StaffData?.salary * attendanceStatus?.halfday) / 2;
 
-    // console.log('datasss',attendanceStatus);
     const salaryData = {
       StaffData: StaffData,
       present: attendanceStatus?.present ?? 0,
@@ -286,31 +267,8 @@ const salarycalculationofStaff = async (req, res) => {
       lastweek: salary,
       balance: salary - StaffData.advance,
     };
-    // console.log(salaryData,'salarydata !sdatas');
     return res.json({ salaryData, message: "salarydata not found." });
-    // }
-
-    // salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
-    // const latestRecord = salaryDatas.records[0];
-    // console.log(latestRecord,'salarydata');
-
-    // const salaryData = {
-    //   StaffData:StaffData,
-    //   calculateFrom: latestRecord.calculateFrom,
-    //   calculateTo: latestRecord.calculateTo,
-    //   present: latestRecord?.present??0,
-    //   halfday: latestRecord?.halfday??0,
-    //   absent: latestRecord?.absent??0,
-    //   salary: latestRecord.totalSalary,
-    //   advance: latestRecord.advance,
-    //   updatedSalary: latestRecord.updatedSalary,
-    //   basic: StaffData?.salary,
-
-    // };
-
-    // res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ message: "An error occurred during salary calculation." });
@@ -321,14 +279,10 @@ const salarycalculationofStaff = async (req, res) => {
 
 const salarycalculationforStaff = async (req, res) => {
   try {
-    // console.log('logggggggggggggggggggggggggggg');
-
-    // console.log(req.query);
     const { staffId } = req.query;
     const { staffSalarydate } = req.query;
 
     const StaffData = await Staff.findById({ _id: staffId });
-    // console.log(StaffData,'staffData');
 
     if (!StaffData) {
       return res.status(404).json({
@@ -337,11 +291,10 @@ const salarycalculationforStaff = async (req, res) => {
     }
 
     const endDate = new Date(staffSalarydate);
-    // const startDate = new Date(StaffData.lastsalaryDate || StaffData.date);
     let startDate;
     if (StaffData.lastsalaryDate) {
       startDate = new Date(StaffData.lastsalaryDate);
-      startDate.setDate(startDate.getDate() + 1); // Add one day to the lastsalaryDate
+      startDate.setDate(startDate.getDate() + 1);
     } else {
       startDate = new Date(StaffData.date);
     }
@@ -351,11 +304,8 @@ const salarycalculationforStaff = async (req, res) => {
     const enddatePart = endDate.toISOString().slice(0, 10);
     const todayPart = today.toISOString().slice(0, 10);
 
-    // console.log(enddatePart==startdatePart,'datesequel....');
-
     if (todayPart == enddatePart) {
       endDate.setDate(endDate.getDate() + 1);
-      // console.log('eque',endDate);
     }
 
     const attendanceRecords = await Staffattendance.find({
@@ -363,7 +313,6 @@ const salarycalculationforStaff = async (req, res) => {
       date: { $gte: startDate, $lte: endDate },
     });
 
-    // console.log(attendanceRecords,'attendanceRecords');
     if (!attendanceRecords) {
       return res.status(404).json({
         message: "staff attendance records not found for the specified period.",
@@ -384,23 +333,16 @@ const salarycalculationforStaff = async (req, res) => {
       });
     });
 
-    // console.log(attendanceStatus,'attendanceStatus');
-
     if (todayPart == enddatePart) {
       endDate.setDate(endDate.getDate() - 1);
-      // console.log('minus',endDate);
     }
     const salary =
       StaffData?.salary * attendanceStatus?.present +
       (StaffData?.salary * attendanceStatus?.halfday) / 2;
 
-    //  console.log(salary,'salary');
-
     const SalaryData = await StaffSalary.findOne({ StaffId: staffId });
-    // console.log(SalaryData,'SalaryData');
 
     if (SalaryData) {
-      // console.log(attendanceStatus.present);
       const newRecord = {
         calculateFrom: startDate,
         calculateTo: endDate,
@@ -413,13 +355,9 @@ const salarycalculationforStaff = async (req, res) => {
         updatedSalary: salary - StaffData.advance,
       };
 
-      // console.log(SalaryData,'SalaryData');
-
       SalaryData.records.addToSet(newRecord);
       await SalaryData.save();
     } else {
-      // console.log('new here  ');
-
       const salaryofStaff = new StaffSalary({
         StaffId: staffId,
         records: [
@@ -452,7 +390,6 @@ const salarycalculationforStaff = async (req, res) => {
     const salaryDatas = await StaffSalary.findOne({
       StaffId: staffId,
     }).populate("StaffId");
-    // console.log(salaryDatas,'salaryDatas');
 
     salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
     const latestRecord = salaryDatas.records[0];
@@ -464,7 +401,6 @@ const salarycalculationforStaff = async (req, res) => {
 
     res.status(200).json({ message: "Salary calculated successfully" });
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ message: "An error occurred during salary calculation." });
@@ -482,11 +418,9 @@ const handleStaffAdvance = async (req, res) => {
       res.json({ message: "No staff found" });
     }
     const updatedAdvance = staffData.advance + parseFloat(advance);
-    //  console.log(updatedAdvance);
     await Staff.updateOne({ _id: id }, { $set: { advance: updatedAdvance } });
     res.json({ message: "Advance updated successfully" });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -495,8 +429,6 @@ const handleStaffAdvance = async (req, res) => {
 
 const stafffAttendanceEdit = async (req, res) => {
   try {
-    // console.log('came', req.body);
-
     const { staffId, status } = req.body;
 
     const currentDate = new Date();
@@ -512,16 +444,12 @@ const stafffAttendanceEdit = async (req, res) => {
       date: { $gte: startOfDay, $lt: endOfDay },
     });
 
-    // console.log(attendanceRecords);
-
     attendanceRecords.forEach(async (record) => {
       const matchingRecord = record.records.find((r) => r.StaffId == staffId);
 
       if (matchingRecord) {
         matchingRecord.status = status;
       } else {
-        // console.log('came');
-
         record.records.push({ StaffId: staffId, status });
       }
     });
@@ -530,12 +458,8 @@ const stafffAttendanceEdit = async (req, res) => {
       attendanceRecords.map((record) => record.save())
     );
 
-    // console.log(updatedRecords);
-
     res.status(200).json({ message: "successfull", updatedRecords });
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -544,8 +468,6 @@ const stafffAttendanceEdit = async (req, res) => {
 
 const handleAllStaffHIstory = async (req, res) => {
   try {
-    // const {labourId} = req.query;
-    // const {advance}=req.body;
     const StaffSalaryData = await StaffSalary.find().populate("StaffId");
 
     if (!StaffSalaryData) {
@@ -561,34 +483,42 @@ const handleAllStaffHIstory = async (req, res) => {
         staff.records = [latestRecord];
       }
       return staff;
-    }); // Closing parenthesis should be here
+    });
 
     res.status(200).json({ message: "successfull", updatedStaffSalaryData });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 //........................  saff salary by id .....................................................
 
 const handleStaffSalaryById = async (req, res) => {
   try {
-    const { id } = req.query; 
+    const { id } = req.query;
     if (!id) {
-      return res.status(400).json({ message: "Missing StaffId in query parameters" });
+      return res
+        .status(400)
+        .json({ message: "Missing StaffId in query parameters" });
     }
 
-    const StaffSalaryData = await StaffSalary.find({ StaffId: id }).populate("StaffId");
+    const StaffSalaryData = await StaffSalary.find({ StaffId: id }).populate(
+      "StaffId"
+    );
 
     if (!StaffSalaryData || StaffSalaryData.length === 0) {
-      return res.status(404).json({ message: "No staff found with the given StaffId" });
+      return res
+        .status(404)
+        .json({ message: "No staff found with the given StaffId" });
     }
 
-    res.status(200).json({ message: "Successfully found staff's salary data", StaffSalaryData });
+    res
+      .status(200)
+      .json({
+        message: "Successfully found staff's salary data",
+        StaffSalaryData,
+      });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -601,7 +531,6 @@ const StaffAttendanceById = async (req, res) => {
     const attendanceRecords = await Staffattendance.find({
       "records.StaffId": staffId,
     });
-    console.log(attendanceRecords, "records");
     const staffData = {};
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
@@ -614,7 +543,6 @@ const StaffAttendanceById = async (req, res) => {
     });
     res.status(200).json({ staffData });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -625,7 +553,6 @@ const handleStaffSalaryControll = async (req, res) => {
   try {
     const id = req.query.id;
     const status = req.body.status;
-    console.log(status, id);
 
     await StaffSalary.findOneAndUpdate(
       { "records._id": id },
@@ -635,7 +562,6 @@ const handleStaffSalaryControll = async (req, res) => {
 
     res.json({ success: true, message: "salary status updated successfully" });
   } catch (error) {
-    console.log(error);
     res
       .status(500)
       .json({ success: false, message: "Error updating salary status" });
@@ -655,5 +581,5 @@ module.exports = {
   handleAllStaffHIstory,
   StaffAttendanceById,
   handleStaffSalaryControll,
-  handleStaffSalaryById
+  handleStaffSalaryById,
 };

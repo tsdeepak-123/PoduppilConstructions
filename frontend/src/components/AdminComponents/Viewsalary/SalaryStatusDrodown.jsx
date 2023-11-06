@@ -29,8 +29,6 @@ function SalaryStatusDrodown({status,laborerId,staffId}) {
           window.location.replace("/admin/login");
         }
       }
-    } else {
-      console.error('No status selected');
     }
   };
 

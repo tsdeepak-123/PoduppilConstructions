@@ -5,25 +5,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import { LuIndianRupee } from "react-icons/lu";
 import AdvanceModal from "./AdvanceModal";
+import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 function Salary() {
   const location = useLocation();
   const labourId = location?.state?.id;
 
   const [LabourData, setLabourData] = useState();
   const [selectedDate, setselectedDate] = useState();
-  // const[newDate,setnewDate]=useState()
   const navigate = useNavigate();
 
-  const handleBackArrowClick = () => {
-    navigate("/admin/labourdetails");
-  };
   // fetching data from backend
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get(
         `salarycalculation?laborId=${location?.state?.id}`
       );
-      console.log(response?.data?.salaryData);
 
       setLabourData(response?.data?.salaryData);
     } catch (error) {
@@ -57,19 +53,15 @@ function Salary() {
   const month = months[inputDate.getUTCMonth()];
   const year = inputDate.getUTCFullYear();
   const formattedDate = `${day} / ${month} / ${year}`;
-  console.log(Number(LabourData?.lastweek) - Number(LabourData?.advance) ?? 0);
 
   const salaryoflabour = async () => {
     try {
-      // const id=LabourData?.LabourData?._id
-      // console.log(selectedDate,'dateee');
+    
       const response = await axiosAdmin.post(
         `salaryoflabour?laborId=${location?.state?.id}&laborSalarydate=${selectedDate}`
       );
 
-      console.log(response?.data?.message, "response");
       window.location.reload();
-      // navigate('/admin/viewsalary',{ state: {id } })
     } catch (error) {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
@@ -91,21 +83,10 @@ function Salary() {
 
     var newDate = `${year}-${month}-${day}`;
 
-    console.log(newDate);
-  } else {
-    console.log("Date portion is undefined or invalid.");
   }
-
-  console.log(datePortion, "datePortion", newDate);
   return (
     <>
-      <div className="flex justify-start mt-40">
-        <KeyboardReturnIcon
-          className="ms-14 cursor-pointer"
-          onClick={handleBackArrowClick}
-        />
-      </div>
-
+   <ReturnButton/>
       <div class="container mx-auto p-4">
         <div class="flex items-center justify-center gap-5 mb-4">
           <div>
@@ -147,17 +128,7 @@ function Salary() {
             <p>
               Absent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {LabourData?.absent} days
             </p>
-            {/* <p>Over Time : {LabourData?.overtime} hours</p> */}
           </div>
-
-          {/* { LabourData?.balance ? 
-   <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
-      
-      <br/>
-      {LabourData?.balance&&<p className='flex'>< LuIndianRupee className='mt-1'/>{LabourData?.balance}</p>}
-      </div>
-       :''}  */}
 
           {LabourData?.lastweek ? (
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -219,7 +190,6 @@ function Salary() {
             <p className="text-blue-500 cursor-pointer"onClick={()=>{navigate("/admin/salaryhistory",{state:{labourId}})}} >View History</p>
           </div>
           <div className="mt-6 flex flex-row gap-4">
-            {/* <TextFields onChange={(e) => {setselectedDate(e.target.value)}} min={datePortion} name='Date' type='date' input={true}/> */}
 
             <input
               type="date"
@@ -239,15 +209,6 @@ function Salary() {
           </div>
         </div>
       </div>
-
-      {/* <div className="flex flex-wrap justify-around mb-7">
-        <Buttons name="VIEW LABOUR PROFILE" click={handleProfileButton} />
-        <Buttons
-          name="VIEW LABOUR ATTENDANCE"
-          classes={"ms-4"}
-          click={handleAttendanceButton}
-        />
-      </div> */}
     </>
   );
 }

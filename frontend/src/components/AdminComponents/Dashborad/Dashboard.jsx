@@ -30,9 +30,6 @@ function Dashboard() {
       <ItemCard classes={'mx-16 mt-16'} name="OFFICE" discription="" navigation={handleOfficeView}/>
       <ItemCard classes={'mx-16 mt-16'} name="CONTRACT WORK" discription="" navigation={handleContractView}/>
       <ItemCard classes={'mx-16 mt-16'} name="MATERIAL PURCHASE" discription="" navigation={handleMaterialView}/>
-  
-  
-
     </div>
   )
 }

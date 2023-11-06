@@ -4,32 +4,26 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { axiosAdmin } from '../../../Api/Api'
 import{LuIndianRupee}from 'react-icons/lu'
-import TextFields from '../../CommonComponents/TextFields/TextFields';
 import AdvanceModal from './AdvanceModal';
 import ReturnButton from '../../CommonComponents/Return/ReturnButton';
 
 function StaffSalarys() {
   const location=useLocation()
   const staffId=location?.state?.id
-  console.log(location?.state?.id,'location?.state?.id');
   const[StaffData,setStaffData]=useState()
   const[selectedDate,setselectedDate]=useState()
 const navigate=useNavigate()
-  const handleProfileButton=()=>{
-    navigate('/admin/viewprofile')
-  }
-  const handleAttendanceButton=()=>{
-    navigate('/admin/attendancesingle')
-  }
+
     // fetching data from backend
     const fetchData = async () => {
       try {
         const response = await axiosAdmin.get(`staffsalary?staffId=${location?.state?.id}`);
-        console.log(response?.data?.salaryData,'salarydata');
   
         setStaffData(response?.data?.salaryData);
       } catch (error) {
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          window.location.replace("/admin/login");
+        }
       }
     };
   
@@ -80,10 +74,7 @@ if (datePortion) {
   const day = String(originalDate.getDate()).padStart(2, "0");
 
  var newDate = `${year}-${month}-${day}`;
-  console.log(newDate); 
-} else {
-  console.log("Date portion is undefined or invalid.");
-}
+} 
 
   return (
     <>
@@ -129,17 +120,7 @@ if (datePortion) {
             <p>
               Absent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {StaffData?.absent} days
             </p>
-            {/* <p>Over Time : {StaffData?.overtime} hours</p> */}
           </div>
-
-          {/* { StaffData?.balance ? 
-   <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Balance This Week</h2>
-      
-      <br/>
-      {StaffData?.balance&&<p className='flex'>< LuIndianRupee className='mt-1'/>{StaffData?.balance}</p>}
-      </div>
-       :''}  */}
 
           {StaffData?.lastweek ? (
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -201,7 +182,6 @@ if (datePortion) {
             <p className="text-blue-500 cursor-pointer" onClick={()=>{navigate("/admin/salaryhistory",{state:{staffId}})}}>View History</p>
           </div>
           <div className="mt-6 flex flex-row gap-4">
-            {/* <TextFields onChange={(e) => {setselectedDate(e.target.value)}} min={datePortion} name='Date' type='date' input={true}/> */}
 
             <input
               type="date"
@@ -221,15 +201,6 @@ if (datePortion) {
           </div>
         </div>
       </div>
-
-      {/* <div className="flex flex-wrap justify-around mb-7">
-        <Buttons name="VIEW LABOUR PROFILE" click={handleProfileButton} />
-        <Buttons
-          name="VIEW LABOUR ATTENDANCE"
-          classes={"ms-4"}
-          click={handleAttendanceButton}
-        />
-      </div> */}
     
     </>
   )

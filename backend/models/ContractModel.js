@@ -10,7 +10,6 @@ const ContractSchema = new Schema({
         required: true,
       
  },
-//  projectnumber: { type: String, required: true},
  Contractwork: { type: String, required: true},
  projectname: { type: String, required: true},
  totallabour: { type: Number, required: true},

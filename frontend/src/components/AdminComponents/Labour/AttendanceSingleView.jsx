@@ -52,7 +52,6 @@ function AttendanceSingleView() {
         `labourattendanceById?labourId=${id}`
       );
       setData(response?.data?.laborData);
-      console.log(response?.data?.laborData);
       if (response?.data?.laborData) {
         const firstDataDate = Object.keys(response.data.laborData)[0];
         const month = new Date(firstDataDate).getMonth();

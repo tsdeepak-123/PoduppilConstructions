@@ -32,7 +32,6 @@ function PhotoAddModal({ projectId }) {
   const handlePhotoChange = (event) => {
     const selectedPhotos = event.target.files;
     setPhotos(selectedPhotos);
-    // console.log("Selected photos:", selectedPhotos);
   };
 
   const handleSubmit = async (e) => {
@@ -92,7 +91,7 @@ function PhotoAddModal({ projectId }) {
           <div className="mb-4">
             <TextField
               type="file"
-              inputProps={{ multiple: true }} // Allow multiple file selection
+              inputProps={{ multiple: true }} 
               fullWidth
               onChange={handlePhotoChange}
             />

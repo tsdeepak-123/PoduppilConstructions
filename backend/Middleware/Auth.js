@@ -24,7 +24,6 @@ const AdminAuth = async (req, res, next) => {
             return res.status(401).json({ error: "Unauthorized" })
         }
     } catch (error) {
-        console.log(error);
         return res.status(401).json({ error: "Invalid token" })
     }
 }

@@ -144,7 +144,7 @@ adminRoute.get("/handleStaffSalaryById",AdminAuth,handleStaffSalaryById);
 // admin data for editing  
 adminRoute.get("/admindata",AdminAuth,adminData);
 adminRoute.patch("/updateAdminData",AdminAuth,updateAdminData);
-adminRoute.get("/getlabourcount",AdminAuth,handleFindLabourCount);
+// adminRoute.get("/getlabourcount",AdminAuth,handleFindLabourCount);
 adminRoute.get("/recievedcash",AdminAuth,handleRecievedCash);
 adminRoute.get("/recievedcashbyproject",AdminAuth,handleRecievedCashByProject);
 adminRoute.get("/getlabourcountbyid",AdminAuth,handleLabourCountById);

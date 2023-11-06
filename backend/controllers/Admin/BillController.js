@@ -7,10 +7,6 @@ const cloudinary = require('../../Middleware/Cloudinary')
 
 const handleBillAdding = async (req, res) => {
     try {
-  console.log("hiiiiiiiiiiiiiiiiiiii");
-  console.log(req.body)
-  console.log(req.files.photo,"photoooooooo");
-//   console.log(req.body);
       const {
         name,
         date,
@@ -32,16 +28,6 @@ const handleBillAdding = async (req, res) => {
         paidby&&
         payment
       ) {
-         
-        console.log("clearrrrrrrrrrrrrr")
-        // const BillExist = await Bill.findOne({name});
-  
-        // if (BillExist) {
-        //   return res.json({
-        //     success: false,
-        //     message: "Bill already exists. Please check the Bill List.",
-        //   });
-        // }
         
         if (!req.files|| !req.files.photo) {
           return res.json({
@@ -49,9 +35,7 @@ const handleBillAdding = async (req, res) => {
             message: "photo must be uploaded.",
           });
         }
-        console.log(req.files.photo[0].path,"photo pathhhhhhhhhhhhhhhhhhhhhhhhhhh");
         const photoUpload = await cloudinary.uploader.upload(req.files.photo[0].path);
-    console.log(photoUpload.secure_url,"urllllllllll");
         if (!photoUpload.secure_url) {
           return res.json({
             success: false,
@@ -73,7 +57,6 @@ const handleBillAdding = async (req, res) => {
         });
   
         await newBill.save()
-        console.log("Bill added successfully.");
         return res.status(200).json({ success: true, message: "Bill added successfully." });
       } else {
         return res.json({
@@ -92,7 +75,6 @@ const handleBillAdding = async (req, res) => {
   const handleBillDetails=async (req,res)=>{
     try { 
         const allBillData=await Bill.find({isPaid:req.query.status})
-        console.log(allBillData,"alll bills");
         res.json({success:true,allBillData})
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -103,29 +85,24 @@ const handleBillAdding = async (req, res) => {
 const handleBillSingleView=async(req,res)=>{
   try {
     const id=req.query.id
-    console.log(req.query.id);
     const billData=await Bill.find({_id:id})
     if(!billData){
       res.json({message:"bill not finded",success:true})
     }
-    console.log(billData);
     res.json({message:"bill finded",success:true,billData})
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error: error.message })
   }
 }
 
 
 const handleCompletedBills=async(req,res)=>{
   try {
-    console.log("hiiiiiiiiiiiiiiiiiiiii");
     const id= req.query.id
-    console.log(id,"idddddddddd");
-    const findedBills=await Bill.findByIdAndUpdate({_id:id},{$set:{isPaid:true}})
-    console.log(findedBills);
+    await Bill.findByIdAndUpdate({_id:id},{$set:{isPaid:true}})
     res.json({success:true,messege:"bill status updated successfully"})
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error: error.message })
   }
 }
 

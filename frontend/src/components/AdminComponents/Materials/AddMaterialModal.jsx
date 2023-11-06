@@ -33,7 +33,6 @@ function AddMaterialModal() {
   
     const handleSubmit=async(e)=>{
       try {
-        console.log(MaterialName);
         await axiosAdmin.post('addmaterial',{MaterialName})
          handleClose()
       } catch (error) {

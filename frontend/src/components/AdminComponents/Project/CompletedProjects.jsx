@@ -17,11 +17,10 @@ function CompletedProjects() {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
       }
-      console.log(error);
     }
   };
 
-  //data displayin when mounting
+  //data display when mounting
   useEffect(() => {
     fetchData();
   }, []);

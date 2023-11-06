@@ -144,7 +144,6 @@ function AddStaff() {
       <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
       <TextFields name="photo" type="file" input={true} onChange={handleImageChange}/>
-      {/* <TextFields name="IDProof" type="file" input={true} inputProps={{ multiple: true }} onChange={handleproofChange} /> */}
       <TextField
               type="file"
               label="idproof"

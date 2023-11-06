@@ -38,23 +38,20 @@ function Login() {
     axiosAdmin
       .post('login', { email, password })
       .then((response) => {
-        console.log(response?.data?.adminSignin,'response');
         if (response?.data?.success) {
 
           const currentDate = new Date();
           const ageInMinutes = 60
-          const expirationDate = new Date(currentDate.getTime() + ageInMinutes * 60 * 1000); // Calculate expiration date
+          const expirationDate = new Date(currentDate.getTime() + ageInMinutes * 60 * 1000); 
           
           setCookies('AdminsecretKey',response?.data?.adminSignin?.token, { path: '/', expires: expirationDate });
           dispatch(AdminAction.AddAdmin({ token: response?.data?.adminSignin?.token}));
           
           navigate('/admin/dashboard');
         }
-        console.log(response);
       })
       .catch((error) => {
         setError(error?.response?.data?.message);
-        console.log('error:', error?.response?.data?.message);
       });
   };
 

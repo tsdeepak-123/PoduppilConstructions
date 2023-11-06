@@ -50,8 +50,6 @@ function PurchaseMaterial() {
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get("projectList?status=false");
-      console.log(response?.data?.FindProject);
-
       setProjectData(response?.data?.FindProject);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -116,11 +114,10 @@ function PurchaseMaterial() {
   const handleChange = (e) => {
     const selectedMaterialname = e.target.value;
     setMaterialName(selectedMaterialname);
-    console.log(selectedMaterialname, "nameeeeeeeeeeeeeeeeeeeeeee");
   };
 
   const handleMaterials = (material, quantity, rate, careof) => {
-    if (material && quantity && rate && careof) {
+    if (material && quantity && rate) {
       setTable(true);
 
       const newMaterial = {
@@ -231,7 +228,6 @@ function PurchaseMaterial() {
               />
             </div>
 
-            {/* <Buttons name="SUBMIT" click={handleMaterialSubmit} /> */}
           </div>
           <div className=" flex justify-center mt-2">
             <Buttons

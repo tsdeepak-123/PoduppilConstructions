@@ -78,7 +78,7 @@ function ProjectList() {
               {filteredPurchaseData ? filteredPurchaseData && filteredPurchaseData.map((item, index) => (
                 <tr key={index} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {item.projectname} {/* Assuming project has a 'name' property */}
+                    {item.projectname}
                   </td>
                   <td className="px-6 py-4 font-medium text-green-500 whitespace-nowrap dark:text-white">
                    <span className="flex justify-end">{item.TotalAmount}</span>         

@@ -7,8 +7,6 @@ const mongoose = require("mongoose");
 
 const handleAddContract = async (req, res) => {
   try {
-    console.log(req.body, "contract came");
-
     const {
       projectname,
       Contractwork,
@@ -37,7 +35,6 @@ const handleAddContract = async (req, res) => {
       Amount
     ) {
       const FindProject = await Project.findOne({ name: projectname });
-      console.log(FindProject);
       if (!FindProject) {
         res.json({
           success: false,
@@ -45,7 +42,6 @@ const handleAddContract = async (req, res) => {
             "cant find project based on project name and number enter proper number and name of the project ",
         });
       } else {
-        console.log(req.body);
         const newContract = new contract({
           project: FindProject._id,
           projectname,
@@ -60,8 +56,6 @@ const handleAddContract = async (req, res) => {
           status,
           Amount,
         });
-
-        console.log(newContract, "new contracttt");
         await newContract.save();
         res
           .status(200)
@@ -131,7 +125,6 @@ const handleEditContract = async (req, res) => {
 
     if (projectname) {
       const FindProject = await Project.findOne({ name: projectname });
-      console.log(FindProject, "FindProject");
 
       if (FindProject) {
         updateFields.project = FindProject._id;
@@ -153,7 +146,6 @@ const handleEditContract = async (req, res) => {
     if (Amount) updateFields.Amount = Amount;
 
     const Findcontract = await contract.findById(id);
-    console.log(Findcontract, "Findcontract");
 
     if (!Findcontract) {
       return res
@@ -163,14 +155,12 @@ const handleEditContract = async (req, res) => {
       Object.assign(Findcontract, updateFields);
 
       const savedContract = await Findcontract.save();
-      console.log(savedContract, "savedContract");
 
       res
         .status(200)
         .json({ message: "Edited successfully", contract: savedContract });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -184,7 +174,7 @@ const handleCompletedContracts = async (req, res) => {
     );
     res.json({ success: true, messege: "Project status updated successfully" });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -209,12 +199,10 @@ const handleWorkerCount = async (req, res) => {
       );
 
       if (existingWorkerCount) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Already added in that date",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Already added in that date",
+        });
       }
 
       const WorkerCount = {
@@ -224,36 +212,27 @@ const handleWorkerCount = async (req, res) => {
       };
       Contract.workerCount.push(WorkerCount);
       await Contract.save();
-      const UpdatedmainLabour = Number(Contract.totallabour) + Number(mainLabour);
+      const UpdatedmainLabour =
+        Number(Contract.totallabour) + Number(mainLabour);
       const Updatedhelpers = Number(Contract.totalhelper) + Number(helpers);
-      await contract.findByIdAndUpdate({_id:id},{$set:{totallabour: UpdatedmainLabour,totalhelper:Updatedhelpers}})
+      await contract.findByIdAndUpdate(
+        { _id: id },
+        {
+          $set: { totallabour: UpdatedmainLabour, totalhelper: Updatedhelpers },
+        }
+      );
 
-      return res
-        .status(200)
-        .json({
-          success: true,
-          message: "Worker count entry added successfully",
-        });
+      return res.status(200).json({
+        success: true,
+        message: "Worker count entry added successfully",
+      });
     }
 
-    res.json({success:false,message:"All fields required"})
+    res.json({ success: false, message: "All fields required" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-//----------------get labour count
-
-const handleFindLabourCount=async(req,res)=>{
-  try {
-    console.log("come");
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-}
-
 
 //--------------------get labour count of singe contract------------------------//
 
@@ -265,14 +244,11 @@ const handleLabourCountById = async (req, res) => {
       return res.status(404).json({ message: "contract not found" });
     }
     const LabourRecords = contracts.workerCount;
-    return res.status(200).json({LabourRecords});
+    return res.status(200).json({ LabourRecords });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
 
 module.exports = {
   handleAddContract,
@@ -281,6 +257,5 @@ module.exports = {
   handleEditContract,
   handleCompletedContracts,
   handleWorkerCount,
-  handleFindLabourCount,
-  handleLabourCountById
+  handleLabourCountById,
 };

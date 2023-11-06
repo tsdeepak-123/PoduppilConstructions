@@ -47,7 +47,6 @@ const handleMaterialPurchase = async (req, res) => {
     try {
     
       const { materials, projectname,date,careof } = req.body;
-      console.log(careof,"careeeeeeeeeofffffffffffff");
       const findProject=await Project.findOne({name:projectname})
       if(!findProject){
 

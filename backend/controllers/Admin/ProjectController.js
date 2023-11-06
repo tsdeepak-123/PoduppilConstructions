@@ -74,7 +74,6 @@ const handleProjectEditing = async (req, res) => {
       !req.body.supervisorname ||
       !req.body.projectnumber
     ) {
-      console.log("cccccccccccc");
       return res
         .status(400)
         .json({ success: false, messege: "All fields must be field " });
@@ -94,7 +93,6 @@ const handleProjectEditing = async (req, res) => {
       .status(200)
       .json({ success: true, messege: "Project Updated successfully" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -104,7 +102,6 @@ const handleProjectEditing = async (req, res) => {
 const ProjectList = async (req, res) => {
   try {
     const FindProject = await Project.find({ isCompleted: req.query.status });
-    console.log(FindProject);
     if (!FindProject) {
       res.json({ success: false, messege: "cant find Project details " });
     }
@@ -120,7 +117,6 @@ const ProjectListById = async (req, res) => {
   try {
     const id = req.query.id;
     const FindProject = await Project.find({ _id: id });
-    console.log(FindProject);
     if (!FindProject) {
       res.json({ success: false, messege: "cant find Project details " });
     }
@@ -134,11 +130,8 @@ const ProjectListById = async (req, res) => {
 
 const handlePhotoAdding = async (req, res) => {
   try {
-    console.log("iam fileeeeeeeeeeeeeeeeeeeeeees", req.files.photos);
-    // console.log(req.query.projectId);
     const projectId = req.query.projectId;
-    const findProject = await Project.findById(projectId); // Use findById instead of find
-    //  console.log("findedddddddd",findProject);
+    const findProject = await Project.findById(projectId)
     if (!findProject) {
       return res.json({
         success: false,
@@ -147,7 +140,6 @@ const handlePhotoAdding = async (req, res) => {
       });
     }
 
-    console.log("iam photoooooooos", req.files.photos);
     if (!req.files || !req.files.photos || req.files.photos.length === 0) {
       return res.json({
         success: false,
@@ -159,7 +151,6 @@ const handlePhotoAdding = async (req, res) => {
 
     // Upload each photo to Cloudinary and store the secure URLs
     for (const photo of req.files.photos) {
-      console.log(photo.path, "nooooooooooooooooooooo");
       const photoUpload = await cloudinary.uploader.upload(photo.path);
       if (!photoUpload.secure_url) {
         return res.json({
@@ -178,7 +169,6 @@ const handlePhotoAdding = async (req, res) => {
 
     res.json({ success: true, message: "Photos uploaded successfully." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -192,7 +182,6 @@ const handleCompletedProjects = async (req, res) => {
     );
     res.json({ success: true, messege: "Project status updated successfully" });
   } catch (error) {
-    console.log(error);
   }
 };
 
@@ -200,13 +189,10 @@ const handleCompletedProjects = async (req, res) => {
 
 const handlepayment = async (req, res) => {
   try {
-    console.log("com on baby");
     const id = req.query.id;
     const { date, payment, amount } = req.body;
-    console.log(date, payment, amount, id);
     if (date && payment && amount && id) {
       const project = await Project.findById(id);
-      console.log("finded", project);
 
       if (!project) {
         return res
@@ -220,7 +206,6 @@ const handlepayment = async (req, res) => {
         payment,
       };
 
-      console.log(paymentEntry);
 
       project.projectPayment.push(paymentEntry);
       await project.save();
@@ -232,7 +217,6 @@ const handlepayment = async (req, res) => {
       res.json({ success: false, message: "All fields required" });
     }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -260,7 +244,6 @@ const handleRecievedCash = async (req, res) => {
       return res.status(404).json({ message: "No projects found" });
     }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -270,7 +253,6 @@ const handleRecievedCash = async (req, res) => {
 const handleRecievedCashByProject = async (req, res) => {
   try {
     const projectId = req.query.id;
-    console.log(projectId);
     const project = await Project.findById(projectId);
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
@@ -278,7 +260,6 @@ const handleRecievedCashByProject = async (req, res) => {
     const paymentRecords = project.projectPayment;
     return res.status(200).json({paymentRecords });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

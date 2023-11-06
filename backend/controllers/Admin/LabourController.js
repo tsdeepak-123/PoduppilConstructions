@@ -8,7 +8,6 @@ const moment = require("moment");
 
 const handleLabourAdding = async (req, res) => {
   try {
-    // console.log(req.body);
     const {
       name,
       age,
@@ -53,7 +52,6 @@ const handleLabourAdding = async (req, res) => {
       }
       const proofUrls = [];
       for (const proof of req.files.proof) {
-        console.log(proof, "proof");
         const proofUpload = await cloudinary.uploader.upload(proof.path);
         if (!proofUpload.secure_url) {
           return res.json({
@@ -141,9 +139,7 @@ const handleLabourById = async (req, res) => {
 
 const handleAttendance = async (req, res) => {
   try {
-    // console.log(req.body);
     const { selectedValues } = req.body;
-
     const currentDate = moment();
     const formattedDate = currentDate.format("YYYY-MM-DD");
 
@@ -159,7 +155,7 @@ const handleAttendance = async (req, res) => {
         record.laborerId.equals(laborerId)
       );
 
-      if (recordIndex !== -1) { 
+      if (recordIndex !== -1) {
         attendanceDocument.records[recordIndex].status = status;
       } else {
         attendanceDocument.records.push({ laborerId, status });
@@ -167,12 +163,8 @@ const handleAttendance = async (req, res) => {
     }
 
     await attendanceDocument.save();
-
-    //console.log(attendanceDocument,'attendanceDocument');
-
     res.status(200).json({ message: "Attendance updated successfully" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -183,9 +175,7 @@ const handleAttendanceList = async (req, res) => {
   try {
     const currentDate = moment();
     const formattedDate = currentDate.format("YYYY-MM-DD");
-
     const LabourAttendance = await Attendance.find({ date: formattedDate });
-
     if (LabourAttendance.length === 0) {
       res.json({ message: "Attendance not found" });
     } else {
@@ -197,15 +187,12 @@ const handleAttendanceList = async (req, res) => {
       });
       await Promise.all(promises);
 
-      res
-        .status(200)
-        .json({
-          message: "Attendance retrieved successfully",
-          LabourAttendance,
-        });
+      res.status(200).json({
+        message: "Attendance retrieved successfully",
+        LabourAttendance,
+      });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -230,14 +217,11 @@ const salarycalculationoflabour = async (req, res) => {
 
     const endDate = new Date();
     const startDate = new Date(LaborData.lastsalaryDate || LaborData.date);
-    // console.log(startDate,endDate,'dates');
 
     const attendanceRecords = await Attendance.find({
       "records.laborerId": laborId,
       date: { $gte: startDate, $lte: endDate },
     });
-
-    // console.log(attendanceRecords);
     if (!attendanceRecords) {
       return res.status(404).json({
         message:
@@ -258,15 +242,10 @@ const salarycalculationoflabour = async (req, res) => {
         }
       });
     });
-    console.log("recordssss",attendanceStatus);
-    // const salaryDatas = await Salary.findOne({ laborerId: laborId }).populate('laborerId');
-    // if (!salaryDatas) {
 
     const salary =
       LaborData?.salary * attendanceStatus?.present +
       (LaborData?.salary * attendanceStatus?.halfday) / 2;
-
-    // console.log('datasss',attendanceStatus);
     const salaryData = {
       LabourData: LaborData,
       present: attendanceStatus?.present ?? 0,
@@ -277,28 +256,7 @@ const salarycalculationoflabour = async (req, res) => {
       balance: salary - LaborData.advance,
     };
     return res.json({ salaryData, message: "salarydata not found." });
-    // }
-
-    // salaryDatas.records.sort((a, b) => b.calculateTo - a.calculateTo);
-    // const latestRecord = salaryDatas.records[0];
-
-    // const salaryData = {
-    //   LabourData:LaborData,
-    //   calculateFrom: latestRecord.calculateFrom,
-    //   calculateTo: latestRecord.calculateTo,
-    //   present: latestRecord?.present??0,
-    //   halfday: latestRecord?.halfday??0,
-    //   absent: latestRecord?.absent??0,
-    //   salary: latestRecord.totalSalary,
-    //   advance: latestRecord.advance,
-    //   updatedSalary: latestRecord.updatedSalary,
-    //   basic: LaborData?.salary,
-
-    // };
-
-    // res.status(200).json({ message: 'Salarydata fetched successfully', salaryData });
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ message: "An error occurred during salary calculation." });
@@ -309,7 +267,6 @@ const salarycalculationoflabour = async (req, res) => {
 
 const salarycalculation = async (req, res) => {
   try {
-    // console.log(req.query);
     const { laborId } = req.query;
     const { laborSalarydate } = req.query;
 
@@ -323,23 +280,20 @@ const salarycalculation = async (req, res) => {
 
     const endDate = new Date(laborSalarydate);
     const today = new Date();
-     let startDate;
+    let startDate;
 
     if (LaborData.lastsalaryDate) {
       startDate = new Date(LaborData.lastsalaryDate);
-      startDate.setDate(startDate.getDate() + 1); // Add one day to the lastsalaryDate
+      startDate.setDate(startDate.getDate() + 1);
     } else {
       startDate = new Date(LaborData.date);
     }
-    // console.log(startDate,endDate,'dates');
     const startdatePart = startDate.toISOString().slice(0, 10);
     const enddatePart = endDate.toISOString().slice(0, 10);
     const todayPart = today.toISOString().slice(0, 10);
-    // console.log(enddatePart==startdatePart,'datesequel');
 
     if (todayPart == enddatePart) {
       endDate.setDate(endDate.getDate() + 1);
-      // console.log('eque',endDate);
     }
 
     const attendanceRecords = await Attendance.find({
@@ -370,7 +324,6 @@ const salarycalculation = async (req, res) => {
 
     if (todayPart == enddatePart) {
       endDate.setDate(endDate.getDate() - 1);
-      // console.log('minus',endDate);
     }
     const salary =
       LaborData?.salary * attendanceStatus?.present +
@@ -379,7 +332,6 @@ const salarycalculation = async (req, res) => {
     const SalaryData = await Salary.findOne({ laborerId: laborId });
 
     if (SalaryData) {
-      // console.log(attendanceStatus.present);
       const newRecord = {
         calculateFrom: startDate,
         calculateTo: endDate,
@@ -432,10 +384,9 @@ const salarycalculation = async (req, res) => {
     await Labour.findByIdAndUpdate(
       { _id: LaborData._id },
       { lastsalaryDate: latestRecord.calculateTo }
-    )
+    );
     res.status(200).json({ message: "Salary calculated successfully" });
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ message: "An error occurred during salary calculation." });
@@ -450,21 +401,18 @@ const labourAttendanceById = async (req, res) => {
     const attendanceRecords = await Attendance.find({
       "records.laborerId": labourId,
     });
-    // console.log(attendanceRecords);
     const laborData = {};
     attendanceRecords.forEach((record) => {
       record.records.forEach((attendanceRecord) => {
         if (attendanceRecord.laborerId.equals(labourId)) {
-          const date = moment(record.date).format("YYYY-MM-DD")
+          const date = moment(record.date).format("YYYY-MM-DD");
           const status = attendanceRecord.status;
-          // console.log(date,'date',status,'status');
           laborData[date] = status;
         }
       });
     });
     res.status(200).json({ laborData });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -480,11 +428,9 @@ const handleLabourAdvance = async (req, res) => {
       res.json({ message: "No labour found" });
     }
     const updatedAdvance = LabourData.advance + parseFloat(advance);
-    //  console.log(updatedAdvance);
     await Labour.updateOne({ _id: id }, { $set: { advance: updatedAdvance } });
     res.json({ message: "Advance updated successfully" });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -494,7 +440,6 @@ const handleLabourAdvance = async (req, res) => {
 const handleLabourHIstory = async (req, res) => {
   try {
     const { labourId } = req.query;
-    // const {advance}=req.body;
     const LabourSalaryData = await Salary.findOne({
       laborerId: labourId,
     }).populate("laborerId");
@@ -504,7 +449,6 @@ const handleLabourHIstory = async (req, res) => {
 
     res.status(200).json({ message: "successfull", LabourSalaryData });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -512,9 +456,6 @@ const handleLabourHIstory = async (req, res) => {
 
 const handleAllLabourHIstory = async (req, res) => {
   try {
-    // const {labourId} = req.query;
-    // const {advance}=req.body;
-
     const LabourSalaryData = await Salary.find({}).populate("laborerId");
 
     if (!LabourSalaryData) {
@@ -534,7 +475,6 @@ const handleAllLabourHIstory = async (req, res) => {
 
     res.status(200).json({ message: "successfull", updatedLabourSalaryData });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -542,27 +482,32 @@ const handleAllLabourHIstory = async (req, res) => {
 //............................labour salary by id ...........................................
 const handleLabourSalaryById = async (req, res) => {
   try {
-    const  id  = req.query.id;
-    const LabourSalaryData = await Salary.find({ laborerId: id }).populate("laborerId");
+    const id = req.query.id;
+    const LabourSalaryData = await Salary.find({ laborerId: id }).populate(
+      "laborerId"
+    );
 
     if (!LabourSalaryData || LabourSalaryData.length === 0) {
-      return res.status(404).json({ message: "No labour found with the given labourId" });
+      return res
+        .status(404)
+        .json({ message: "No labour found with the given labourId" });
     }
 
-    res.status(200).json({ message: "Successfully found laborer's salary data", LabourSalaryData });
+    res
+      .status(200)
+      .json({
+        message: "Successfully found laborer's salary data",
+        LabourSalaryData,
+      });
   } catch (error) {
-    console.error("Error updating advance:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 // ............................. attendace edit .........................................
 
 const labourAttendanceEdit = async (req, res) => {
   try {
-    // console.log('came', req.body);
-
     const { labourId, status } = req.body;
 
     const currentDate = new Date();
@@ -578,13 +523,10 @@ const labourAttendanceEdit = async (req, res) => {
       date: { $gte: startOfDay, $lt: endOfDay },
     });
 
-    // console.log(attendanceRecords);
-
     attendanceRecords.forEach(async (record) => {
       const matchingRecord = record.records.find(
         (r) => r.laborerId == labourId
       );
-      // console.log(matchingRecord);
 
       if (matchingRecord) {
         matchingRecord.status = status;
@@ -597,12 +539,8 @@ const labourAttendanceEdit = async (req, res) => {
       attendanceRecords.map((record) => record.save())
     );
 
-    // console.log(updatedRecords);
-
     res.status(200).json({ message: "successfull", updatedRecords });
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -613,7 +551,6 @@ const handleSalaryControll = async (req, res) => {
   try {
     const id = req.query.id;
     const status = req.body.status;
-    console.log(status, id);
 
     await Salary.findOneAndUpdate(
       { "records._id": id },
@@ -623,11 +560,11 @@ const handleSalaryControll = async (req, res) => {
 
     res.json({ success: true, message: "salary status updated successfully" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Error updating salary status" });
+    res
+      .status(500)
+      .json({ success: false, message: "Error updating salary status" });
   }
 };
-
 
 module.exports = {
   handleLabourAdding,
@@ -643,5 +580,5 @@ module.exports = {
   handleAllLabourHIstory,
   labourAttendanceEdit,
   handleSalaryControll,
-  handleLabourSalaryById
+  handleLabourSalaryById,
 };

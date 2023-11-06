@@ -7,7 +7,6 @@ import ReturnButton from '../../CommonComponents/Return/ReturnButton'
 import TextField from "@mui/material/TextField";
 import toast, { Toaster } from 'react-hot-toast';
  import Swal from 'sweetalert2'
- import Loading from "../../CommonComponents/Loading/Loading"
 function AddLabour() {
   const [name,setName]=useState("")
   const [age,setAge]=useState("")
@@ -100,7 +99,6 @@ try {
   Object.entries(LabourData).forEach(([key, value]) => {
     formData.append(key, value);
   });
-  console.log(idproof,'idproof');
   for (const proof of idproof) {
     formData.append("proof", proof);
   }
@@ -150,12 +148,11 @@ try {
       <TextFields name="Basic salary" type="number" value={salary} onChange={handleSalaryChange}/>
       <TextFields name="Date of joining" type="date"  value={date} onChange={handleDateChange} input={true}/>
       <TextFields name="photo" type="file"  input={true} onChange={handleImageChange}/>
-      {/* <TextFields name="IDProof" type="file" input={true} inputProps={{ multiple: true }} onChange={handleproofChange} /> */}
       <TextField
               type="file"
               label="idproof"
               InputLabelProps={{shrink:true}}
-              inputProps={{ multiple: true }} // Allow multiple file selection
+              inputProps={{ multiple: true }}
               className='sm:w-96 w-80'
               onChange={handleproofChange}
               

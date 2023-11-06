@@ -19,7 +19,6 @@ function AddContract() {
   const [status,setStatus]=useState("")
   const [Amount,setAmount]=useState(0)
   const [Paymentdetails,setPaymentdetails]=useState(0)
-  // const [age,setAge]=useState("")
   const [phone,setPhone] = useState('')
   const [date,setDate] = useState('')
   const [projectData,setProjectData] = useState('')
@@ -28,7 +27,6 @@ function AddContract() {
   const handleDataReceived = (projectname) => {
     setProjectName(projectname)
   };
-  console.log(projectname,"theeeeeeeeee namweeeeeeeeeee");
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
@@ -58,15 +56,16 @@ function AddContract() {
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get("projectList?status=false");
-      console.log(response?.data?.FindProject,"listtttttttttttttttt");
 
       setProjectData(response?.data?.FindProject);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        window.location.replace("/admin/login")
+      }
     }
   };
 
-  //data displayin when mounting
+  //data display when mounting
   useEffect(() => {
     fetchData();
   }, []);

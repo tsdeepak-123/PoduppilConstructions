@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { axiosAdmin } from '../../../Api/Api'
 import Buttons from '../../CommonComponents/Button/Buttons';
+import toast ,{Toaster} from "react-hot-toast"
 
 const modalStyle = {
     position: 'absolute',
@@ -34,9 +35,13 @@ function AttendanceEditStaff({staffData}) {
       try {
         e.preventDefault()
         const response=await axiosAdmin.post('staffAttendanceEdit',{status:selectedValues,staffId:staffData?._id})
-        console.log(response?.data?.messege);
-        handleClose()
+        if(response?.data?.success){
+          handleClose()
+          toast.success("Labour attandence Edited successfully")
+        }
+        toast.error(response?.data?.messege)
       } catch (error) {
+        toast.error(error?.response?.data?.messege)
         if (error.response && error.response.status === 401) {
           window.location.replace("/admin/login")
       }
@@ -45,6 +50,7 @@ function AttendanceEditStaff({staffData}) {
     }
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false}/>
     <Button onClick={handleOpen} variant="outlined" color="primary">
      EDIT ATTENDANCE
     </Button>

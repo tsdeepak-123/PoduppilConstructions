@@ -8,7 +8,6 @@ function StaffSalaryWeekly() {
     const fetch = async () => {
       try {
         const response = await axiosAdmin.get("allStaffsalaryhistory");
-        console.log(response?.data.updatedStaffSalaryData);
         setSalaryData(response?.data.updatedStaffSalaryData);
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -16,7 +15,6 @@ function StaffSalaryWeekly() {
         }
       }
     };
-    console.log(salaryData);
   
     useEffect(() => {
       fetch();

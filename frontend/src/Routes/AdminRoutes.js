@@ -14,11 +14,9 @@ import ContractEdit from '../pages/AdminPages/Contract/ContractEdit'
 import Addbills from '../pages/AdminPages/Office/Addbills'
 import ProjectAdding from '../pages/AdminPages/Project/ProjectAdding'
 import StaffAdding from '../pages/AdminPages/Staff/StaffAdding'
-// import Materials from '../pages/AdminPages/Materials/Materials'
 import ProjectLists from '../pages/AdminPages/Project/ProjectLists'
 import LabourAttendance from '../pages/AdminPages/Office/LabourAttendance'
 import BillSingleView from '../pages/AdminPages/Office/BillSingleView'
-import CompletedBills from '../pages/AdminPages/Office/CompletedBills'
 import StaffAttendance from '../pages/AdminPages/Office/StaffAttendance'
 import UtilityBill from '../pages/AdminPages/Office/UtilityBill'
 import { useCookies } from 'react-cookie';
@@ -68,7 +66,6 @@ function AdminRoutes() {
        <Route path='/staffdetails' element={adminToken?<StaffControll/>:<LoginPage/>}/>
        <Route path='/officedetails' element={adminToken?<OfficeControll/>:<LoginPage/>}/>
        <Route path='/contractdetails' element={adminToken?<ContractControll/>:<LoginPage/>}/>
-       {/* <Route path='/materials' element={adminToken?<Materials/>:<LoginPage/>}/> */}
        <Route path='/addlabour' element={adminToken?<LabourAdding/>:<LoginPage/>}/>
        <Route path='/addcontract' element={adminToken?<ContractAdding/>:<LoginPage/>}/>
        <Route path='/addbills' element={adminToken?<Addbills/>:<LoginPage/>}/>

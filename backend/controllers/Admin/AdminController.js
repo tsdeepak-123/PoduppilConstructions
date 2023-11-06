@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const handleSignUp = async (req, res) => {
   try {
-    // console.log('came',req.body);
     const { email, password } = req.body;
     const adminData = new admin({
       email,
@@ -75,20 +74,15 @@ const handleSignIn = async (req, res) => {
       token: null,
     };
     const { email, password } = req.body;
-    console.log(email, password);
     if (email && password) {
       const AdminData = await admin.findOne({ email: email });
-
-      console.log(AdminData, "dataofadmin");
       if (!AdminData) {
         res.status(404).json({ success: false, messege: "Invalid email" });
       } else {
         if (password === AdminData.password) {
-          // console.log(AdminData,'dataofadmin');
           const payload = { id: AdminData._id };
           const expiresIn = "24h";
           let AdminToken = jwt.sign(payload, "AdminsecretKey", { expiresIn });
-          // console.log(AdminToken,'token...');
 
           adminSignin.token = AdminToken;
           adminSignin.Status = true;
