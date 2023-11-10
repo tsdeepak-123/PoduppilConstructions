@@ -8,19 +8,19 @@ import Projects from '../../components/UserComponents/Projects/Projects'
 import Feedback from '../../components/UserComponents/Feedback/Feedback'
 import Contact from '../../components/UserComponents/ContactUs/Contact'
 import Footer from '../../components/UserComponents/Footer/Footer'
+import Interior from '../../components/UserComponents/Interior/Interior'
 
 function Homepage() {
   return (
     <div className='overflow-x-hidden'>
       <Header/>
       <Profile/>
-      <Services/>
       <About/>
+      <Services/>
       <Projects/>
-      {/* <Feedback/> */}
+      <Interior/>
       <Contact/>
       <Footer/>
-      {/* <Footer/> */}
     </div>
   )
 }

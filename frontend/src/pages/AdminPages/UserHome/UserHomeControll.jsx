@@ -8,7 +8,7 @@ function UserHomeControll() {
     <div>
        <Header headers="MANAGE USER HOME"/> 
        <UserHome/>
-       <div className='mt-96'>
+       <div className='mt-14'>
         <Footer/>
        </div>
 

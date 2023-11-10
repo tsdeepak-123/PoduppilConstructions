@@ -30,5 +30,5 @@ const createApiInstance = (baseURL) => {
   } catch (error) {}
 };
 
-export const UserApiInstance = createApiInstance(userApi, "");
+export const axiosUser = createApiInstance(userApi);
 export const axiosAdmin = createApiInstance(adminApi);

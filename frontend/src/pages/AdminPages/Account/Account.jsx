@@ -8,7 +8,7 @@ function Account() {
     <div>
       <Header  headers="ADMIN ACCOUNT"/>
       <AdminAccount />
-      <div className="mt-96">
+      <div className="mt-52">
         <Footer />
       </div>
     </div>
