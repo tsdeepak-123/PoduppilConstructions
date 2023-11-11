@@ -9,7 +9,7 @@ function SalaryManagement() {
     <div>
         <Header/>
         <SalaryList/>
-        <div className='mt-32'>
+        <div className='mt-14'>
         <Footer/>
         </div>
         

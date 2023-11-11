@@ -12,7 +12,7 @@ function ProjectLists() {
     <div>
         <Header headers="MATERIAL DETAILS"/>
         <ProjectList/>
-        <div className='mt-80'>
+        <div className='mt-40'>
         <Footer/>
         </div>
        

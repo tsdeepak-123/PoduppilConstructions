@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import Dropdown from "../../CommonComponents/Dropdown/Dropdown";
 import { axiosAdmin } from "../../../Api/Api";
-// import MaterialDropdown from "./MaterialDropdown";
 import Buttons from "../../CommonComponents/Button/Buttons";
 import AddMaterialModal from "./AddMaterialModal";
 import TextFields from "../../CommonComponents/TextFields/TextFields";
@@ -15,6 +14,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import Nodata from "../../CommonComponents/Nodata/Nodata"; 
+
 function PurchaseMaterial() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -149,6 +150,7 @@ function PurchaseMaterial() {
     setSelectedValues(updatedValues);
   };
 
+
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
@@ -253,24 +255,28 @@ function PurchaseMaterial() {
         </>
       ) : (
         <>
-          <div>
-            <p className="text-sm text-red-500 mt-2 flex justify-center">
-              Please select a project and a purchase date to continue.
-            </p>
-          </div>
+          {projectData && projectData.length > 0 ? (
+            <div>
+              <p className="text-sm text-red-500 mt-2 flex justify-center">
+                Please select a project and a purchase date to continue.
+              </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <TextFields
-              name="Purchase date"
-              type="date"
-              input={true}
-              onChange={handleDatechange}
-            />
-            <Dropdown
-              projects={projectData}
-              onDataPassed={handleDataReceived}
-            />
-          </div>
+              <div className="flex flex-wrap justify-center gap-4 mt-8">
+                <TextFields
+                  name="Purchase date"
+                  type="date"
+                  input={true}
+                  onChange={handleDatechange}
+                />
+                <Dropdown
+                  projects={projectData}
+                  onDataPassed={handleDataReceived}
+                />
+              </div>
+            </div>
+          ) : (
+            <Nodata/>
+          )}
         </>
       )}
     </div>

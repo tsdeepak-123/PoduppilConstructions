@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import MessageIcon from '@mui/icons-material/Message';
 import { axiosUser } from '../../../Api/Api';
 import CloseIcon from '@mui/icons-material/Close';
+import FormatDate from "../../../utils/FormatDate"
+import DeleteIcon from '@mui/icons-material/Delete';
+import toast,{Toaster} from "react-hot-toast"
 
 
 function Notifications() {
@@ -14,6 +17,21 @@ function Notifications() {
       const response = await axiosUser.get('getmessage');
       setNotifications(response?.data?.messageData);
     } catch (error) {
+      if (error?.response && error?.response?.status === 401) {
+        window.location.replace('/admin/login');
+      }
+    }
+  };
+  const DeleteMessage= async (id) => {
+    try {
+      const response = await axiosUser.patch(`deletemessage?id=${id}`);
+        if(response.data.success){
+          toast.success("Message deleted successfully")
+        }else{
+          toast.error(response.data.message)
+        }
+    } catch (error) {
+
       if (error?.response && error?.response?.status === 401) {
         window.location.replace('/admin/login');
       }
@@ -32,10 +50,11 @@ function Notifications() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [notifications]);
 
   return (
     <div className="p-4">
+      <Toaster position='top-center' reverseOrder={false}/>
       <div className="flex items-center mb-6 gap-4">
         <div className="mt-2">
           <MessageIcon />
@@ -44,13 +63,23 @@ function Notifications() {
       </div>
 
       {notifications.map((notification) => (
+        <>
         <div
           key={notification?._id}
           className="bg-blue-100 mb-4 p-4 rounded cursor-pointer"
           onClick={() => openModal(notification)}
         >
-          <p className="text-blue-800">{notification?.message}</p>
+          <div className='flex justify-between'>
+          <p className="text-blue-800">{notification?.subject}</p>
+          <p className="text-blue-800">{FormatDate(notification?.timestamp)}</p>
+          </div>
+          
         </div>
+       <div >
+        <p className='text-red-500 cursor-pointer' onClick={()=>DeleteMessage(notification._id)}><DeleteIcon/></p>
+       </div>
+       </>
+ 
       ))}
 
       {notifications.length === 0 && <p>No notifications at the moment.</p>}
