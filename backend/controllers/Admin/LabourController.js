@@ -1,6 +1,6 @@
-const Labour = require("../../models/LabourModal");
-const Attendance = require("../../models/Attendance");
-const Salary = require("../../models/SalaryModel");
+const Labour = require("../../models/Admin/LabourModal");
+const Attendance = require("../../models/Admin/Attendance");
+const Salary = require("../../models/Admin/SalaryModel");
 const cloudinary = require("../../Middleware/Cloudinary");
 const moment = require("moment");
 

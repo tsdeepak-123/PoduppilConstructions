@@ -1,4 +1,4 @@
-const Bill=require("../../models/BillModel")
+const Bill=require("../../models/Admin/BillModel")
 const cloudinary = require('../../Middleware/Cloudinary')
 
 

@@ -1,4 +1,4 @@
-const admin = require("../../models/AdminModel");
+const admin = require("../../models/Admin/AdminModel");
 const jwt = require("jsonwebtoken");
 
 const handleSignUp = async (req, res) => {
@@ -83,6 +83,7 @@ const handleSignIn = async (req, res) => {
           const payload = { id: AdminData._id };
           const expiresIn = "24h";
           let AdminToken = jwt.sign(payload, "AdminsecretKey", { expiresIn });
+  
 
           adminSignin.token = AdminToken;
           adminSignin.Status = true;

@@ -1,5 +1,5 @@
-const Project = require("../../models/ProjectModel");
-const contract = require("../../models/ContractModel");
+const Project = require("../../models/Admin/ProjectModel");
+const contract = require("../../models/Admin/ContractModel");
 const cloudinary = require("../../Middleware/Cloudinary");
 const mongoose = require("mongoose");
 
@@ -257,5 +257,6 @@ module.exports = {
   handleEditContract,
   handleCompletedContracts,
   handleWorkerCount,
+  
   handleLabourCountById,
 };

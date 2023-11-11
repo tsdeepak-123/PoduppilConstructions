@@ -1,7 +1,7 @@
-const Staff = require("../../models/StaffModel");
-const Staffattendance = require("../../models/StaffAttendance");
+const Staff = require("../../models/Admin/StaffModel");
+const Staffattendance = require("../../models/Admin/StaffAttendance");
 
-const StaffSalary = require("../../models/StaffSalaryModel");
+const StaffSalary = require("../../models/Admin/StaffSalaryModel");
 const cloudinary = require("../../Middleware/Cloudinary");
 const moment = require("moment");
 

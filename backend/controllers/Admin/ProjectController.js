@@ -1,6 +1,6 @@
-const Project = require("../../models/ProjectModel");
+const Project = require("../../models/Admin/ProjectModel");
 const cloudinary = require("../../Middleware/Cloudinary");
-const Labour = require("../../models/LabourModal");
+const Labour = require("../../models/Admin/LabourModal");
 const mongoose = require("mongoose");
 
 // This function handles Project Adding to database, taking in a request (req) and a response (res) as parameters.
