@@ -61,7 +61,7 @@ function Login() {
         <img
           src="/Images/podu.png"
           alt="Poduppil Logo"
-          style={{ width: '400px', height: 'auto' }}
+          style={{ width: '320px', height: 'auto' }}
         />
         <form>
           <div className="mb-4">

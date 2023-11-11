@@ -1,7 +1,9 @@
 const mongoose=require('mongoose')
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/poduppil').then(()=>{
+// mongoose.connect('mongodb://127.0.0.1:27017/poduppil').then(()=>{
+//     console.log("DB connected");
+mongoose.connect('mongodb+srv://DEEPAKTS:Tsdeepak589@loodieefasion.s7obwlv.mongodb.net/?retryWrites=true&w=majority').then(()=>{
     console.log("DB connected");
 })
 .catch(()=>{
