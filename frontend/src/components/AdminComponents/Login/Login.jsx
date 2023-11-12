@@ -8,6 +8,7 @@ import { axiosAdmin } from '../../../Api/Api';
 import fieldValidate from '../../../Validation/Validate'
 import { useDispatch } from 'react-redux';
 import { AdminAction } from '../../../Stores/AdminAuth';
+import toast,{Toaster} from "react-hot-toast"
 
 function Login() {
   const [cookies, setCookies] = useCookies([]);
@@ -33,8 +34,21 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-   fieldValidate(email,password,setEmailError,setPasswordError)
+  // Validate email
+  const emailError = fieldValidate('email', email);
+  setEmailError(emailError);
+  if (emailError) {
+    toast.error(emailError);
+    return; 
+  }
 
+  // Validate password
+  const passwordError = fieldValidate('password', password);
+  setPasswordError(passwordError);
+  if (passwordError) {
+    toast.error(passwordError);
+    return; 
+  }
     axiosAdmin
       .post('login', { email, password })
       .then((response) => {
@@ -46,17 +60,22 @@ function Login() {
           
           setCookies('AdminsecretKey',response?.data?.adminSignin?.token, { path: '/', expires: expirationDate });
           dispatch(AdminAction.AddAdmin({ token: response?.data?.adminSignin?.token}));
+
+          toast.success(response?.data?.messege)
           
           navigate('/admin/dashboard');
+        }else{
+          toast.error(response?.data?.messege)
         }
       })
       .catch((error) => {
-        setError(error?.response?.data?.message);
+        toast.error(error?.response?.data?.messege);
       });
   };
 
   return (
     <div>
+      <Toaster position='top-center' reverseOrder={false}/>
       <div className="flex flex-col items-center">
         <img
           src="/Images/podu.png"
@@ -71,24 +90,24 @@ function Login() {
               value={email}
               onChange={handleEmailChange}
             />
-            {emailError && (
+            {/* {emailError && (
               <p className="text-red-500 text-sm flex justify-center mb-2">{emailError}</p>
-            )}
+            )} */}
             <TextFields
               name="Password"
               type="password" 
               value={password}
               onChange={handlePasswordChange}
             />
-            {passwordError && (
+            {/* {passwordError && (
               <p className="text-red-500 text-sm flex justify-center mb-2">{passwordError}</p>
-            )}
+            )} */}
           </div>
-          {error && (
+          {/* {error && (
             <div className="flex justify-center">
               <p className="text-red-500 text-sm flex justify-center mb-2">{error}</p>
             </div>
-          )}
+          )} */}
           <div className="flex justify-center mt-11">
             <Buttons name="LOGIN" classes={'h-12 w-[150px]'} click={handleSubmit} />
           </div>

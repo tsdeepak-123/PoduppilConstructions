@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const AdminAuth = createSlice({
     name:"Admin",
     initialState:{
-        AdminToken:null
+        AdminToken:null,
     },
     reducers:{
         AddAdmin(state,action){
@@ -11,8 +11,7 @@ const AdminAuth = createSlice({
             state.AdminToken = newItem.token
         },
         AdminLogout(state,actions){
-            state.AdminToken =""
-          
+            state.AdminToken =""    
         }
     }
 })

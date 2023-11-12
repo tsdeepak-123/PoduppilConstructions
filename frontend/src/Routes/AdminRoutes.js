@@ -47,13 +47,19 @@ function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (Object.keys(cookies).length > 0) {
-      dispatch(AdminAction.AddAdmin({ token: cookies?.AdminsecretKey }));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (Object.keys(cookies).length > 0) {
+  //     dispatch(AdminAction.AddAdmin({ token: cookies?.AdminsecretKey }));
+  //   }
+  // }, [dispatch]);
 
   const adminToken = useSelector((state) => state?.Admin?.AdminToken);
+
+  useEffect((adminToken) => {
+    if (adminToken) {
+      dispatch(AdminAction.AddAdmin({ token: cookies?.AdminsecretKey }));
+    }
+  }, [dispatch, cookies]);
 
   return (
     <div>
