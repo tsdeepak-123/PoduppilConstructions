@@ -19,41 +19,17 @@ function ProjectList() {
   const fetchData = async () => {
     try {
       const response = await axiosAdmin.get('/materialtotal');
-      setPurchaseData(response?.data?.materialData);
+      setPurchaseData(response?.data?.projectTotals);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
       }
     }
   };
-
-   // Consolidate purchaseData based on project name
-   const consolidateProjects = () => {
-    const consolidatedData = {};
-    purchaseData.forEach((item) => {
-      if (consolidatedData[item.projectname]) {
-        consolidatedData[item.projectname] += item.TotalAmount;
-      } else {
-        consolidatedData[item.projectname] = item.TotalAmount;
-      }
-    });
-
-    // Transform the consolidated data into an array for rendering
-    const consolidatedArray = Object.keys(consolidatedData).map((projectname) => ({
-      projectname,
-      TotalAmount: consolidatedData[projectname],
-    }));
-    
-    setPurchaseData(consolidatedArray);
-  };
-
+  
   useEffect(() => {
-    fetchData();
-    if(purchaseData){
-      consolidateProjects()
-    }
-   
-  }, [purchaseData]);
+    fetchData(); 
+  }, []);
 
   const filteredPurchaseData = purchaseData?.filter((obj) =>
   obj.projectname?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -81,7 +57,7 @@ function ProjectList() {
                     {item.projectname}
                   </td>
                   <td className="px-6 py-4 font-medium text-green-500 whitespace-nowrap dark:text-white">
-                   <span className="flex justify-end">{item.TotalAmount}</span>         
+                   <span className="flex justify-end">{item.totalAmount}</span>         
                   </td>
                 </tr>
               )):

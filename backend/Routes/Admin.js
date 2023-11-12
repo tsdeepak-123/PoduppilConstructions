@@ -75,6 +75,7 @@ const {
   handleMaterialTotal,
   handlePurchaseById,
   handlePurchaseByDate,
+  handlePurchaseByCareOf,
 } = require("../controllers/Admin/MaterialController");
 
 //The routes for admin authentication
@@ -150,5 +151,6 @@ adminRoute.get("/recievedcash",AdminAuth,handleRecievedCash);
 adminRoute.get("/recievedcashbyproject",AdminAuth,handleRecievedCashByProject);
 adminRoute.get("/getlabourcountbyid",AdminAuth,handleLabourCountById);
 adminRoute.get("/getcontractsbyid",AdminAuth,handleContractByProjectId);
+adminRoute.get("/purchasebycareof",AdminAuth,handlePurchaseByCareOf);
 
 module.exports = adminRoute;

@@ -159,10 +159,14 @@ function PurchaseMaterial() {
 
       {projectname && date ? (
         <>
-          <p className="flex justify-center font-bold uppercase">
+        <div className="flex justify-around">
+          <p className="font-bold ">DATE&nbsp;:&nbsp;&nbsp; {date}</p>
+        <p className="font-bold uppercase">
             {" "}
             PROJECT : &nbsp;&nbsp; {projectname}
           </p>
+        </div>
+        
           <div className="flex justify-center flex-wrap gap-4 mt-8">
             <>
               {MaterialData?.length > 0 ? (
