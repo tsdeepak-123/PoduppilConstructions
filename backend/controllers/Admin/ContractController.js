@@ -250,6 +250,22 @@ const handleLabourCountById = async (req, res) => {
   }
 };
 
+
+
+const handleContractByProjectId=async(req,res)=>{
+  try {
+    const projectname=req.query.projectname;
+    console.log(projectname);
+
+    const allContractsById=await contract.find({projectname:projectname})
+    console.log(allContractsById,"WORKKKKKKKKKKKK");
+    res.json({success:true,message:"Contract with project name finded suuccessfully",allContractsById})
+    
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   handleAddContract,
   ContractList,
@@ -257,6 +273,6 @@ module.exports = {
   handleEditContract,
   handleCompletedContracts,
   handleWorkerCount,
-  
+  handleContractByProjectId,
   handleLabourCountById,
 };

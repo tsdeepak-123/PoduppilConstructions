@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
 import { useNavigate } from "react-router-dom";
 import Payments from "../../AdminComponents/Project/Payments"
+import SingleByProject from '../Contract/SingleByProject';
 
 const SingleViewProject = () => {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ const SingleViewProject = () => {
   const [materialData, setMaterialData] = useState(null);
 
   const id = location?.state?.id;
+  const projectname=location?.state?.projectname
+  console.log(projectname,"projectnameeeeeeee");
 
   // Fetching data from backend
   const fetchData = async () => {
@@ -145,6 +148,11 @@ const SingleViewProject = () => {
         <p className=' font-serif font-bold text-[30px]'>Material Used For This Project</p>
       </div>
       <SingleView materialData={materialData} />
+
+      <div className='flex flex-wrap justify-center mt-14'>
+        <p className=' font-serif font-bold text-[30px]'>Contracts works of this project</p>
+      </div>
+      <SingleByProject projectname={projectname} />
     </>
   );
 };

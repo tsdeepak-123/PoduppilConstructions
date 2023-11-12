@@ -41,8 +41,9 @@ function Project() {
     fetchData();
   }, []);
 
-  const nav=(id)=>{
-    navigate('/admin/projectview',{ state: { id } })
+  const nav=(id,projectname)=>{
+    console.log("porr",projectname);
+    navigate('/admin/projectview',{ state: { id ,projectname} })
   }
 
   const filteredProjectData = ProjectData?.filter((obj) =>
@@ -99,7 +100,7 @@ const handleSearch=(e)=>{
                 <td className="px-6 py-4">
                     {data?.status}
                 </td>
-                <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id)}>
+                <td className="px-6 py-4 text-blue-500 cursor-pointer" onClick={()=>nav(data?._id,data?.name)}>
                   View
                 </td>
                 <td class="px-6 py-4 font-medium cursor-pointer"><EditIcon onClick={()=>{handleEdit(data)}} className="text-yellow-600"/>
