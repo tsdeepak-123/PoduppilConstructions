@@ -144,7 +144,6 @@ const handleMaterialTotal = async (req, res) => {
         return acc;
       }, {});
       const projectTotalsArray = Object.values(projectTotals);
-      console.log("totallll",projectTotalsArray);
       return res.json({ success: true, message: "Material data found", projectTotals: projectTotalsArray });
     }
 

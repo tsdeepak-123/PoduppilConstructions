@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { axiosAdmin } from "../../../Api/Api";
-import FormatDate from "../../../utils/FormatDate";
 import { useNavigate } from "react-router-dom";
 import Search from "../../CommonComponents/Search/Search";
 import MaterialListModal from "./MaterialListModal";
@@ -16,7 +15,6 @@ function PurchaseByCareOf({ projectname }) {
     try {
       const response = await axiosAdmin.get(`purchasebycareof`);
       setPurchaseData(response?.data?.PurchaseList);
-      console.log(response?.data?.PurchaseList);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         window.location.replace("/admin/login");
