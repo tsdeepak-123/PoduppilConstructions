@@ -1,0 +1,48 @@
+const handlePurchaseByCareOf = async (req, res) => {
+  try {
+    const page = req.query.page;
+    const pageSize = 10; // Set your desired page size
+
+    const skip = (page - 1) * pageSize;
+
+    const PurchaseList = await Purchase.aggregate([
+      {
+        $unwind: '$Material'
+      },
+      {
+        $sort: { 'date': 1 } // Sort by date before grouping
+      },
+      {
+        $group: {
+          _id: '$Material.careof',
+          project: { $first: '$project' },
+          TotalAmount: { $sum: '$Material.total' },
+          materialList: {
+            $push: {
+              name: '$Material.name',
+              careof: '$Material.careof',
+              quantity: '$Material.quantity',
+              total: '$Material.total',
+              baseRate: '$Material.baseRate',
+              date: '$date',
+              projectname: '$projectname'
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          project: 1,
+          TotalAmount: 1,
+          materialList: { $slice: ['$materialList', skip, pageSize] }
+        }
+      }
+    ]);
+  console.log(PurchaseList);
+    return res.status(200).json({ PurchaseList  });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

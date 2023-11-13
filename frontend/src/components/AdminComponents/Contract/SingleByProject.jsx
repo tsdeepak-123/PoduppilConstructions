@@ -50,7 +50,7 @@ const handleSingleView=(id)=>{
               </tr>
             </thead>
             <tbody>
-              {ContractData ? (
+              {ContractData && ContractData.length > 0 ? (
                 ContractData.map((item, index) => (
                   <tr key={index} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">

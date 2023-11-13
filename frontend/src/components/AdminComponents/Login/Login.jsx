@@ -90,24 +90,13 @@ function Login() {
               value={email}
               onChange={handleEmailChange}
             />
-            {/* {emailError && (
-              <p className="text-red-500 text-sm flex justify-center mb-2">{emailError}</p>
-            )} */}
             <TextFields
               name="Password"
               type="password" 
               value={password}
               onChange={handlePasswordChange}
             />
-            {/* {passwordError && (
-              <p className="text-red-500 text-sm flex justify-center mb-2">{passwordError}</p>
-            )} */}
           </div>
-          {/* {error && (
-            <div className="flex justify-center">
-              <p className="text-red-500 text-sm flex justify-center mb-2">{error}</p>
-            </div>
-          )} */}
           <div className="flex justify-center mt-11">
             <Buttons name="LOGIN" classes={'h-12 w-[150px]'} click={handleSubmit} />
           </div>

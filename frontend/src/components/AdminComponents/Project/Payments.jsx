@@ -41,7 +41,7 @@ function Payments({ projectId }) {
               </tr>
             </thead>
             <tbody>
-              {cashData ? (
+              {cashData && cashData.length>0 ? (
                 cashData.map((item, index) => (
                   <tr key={index} className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">
