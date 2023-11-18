@@ -85,7 +85,7 @@ function PasswordChangeModal() {
         }
   
       } catch (error) {
-        toast.error(error?.response?.data?.message);
+        toast.error(error?.response?.error?.message);
         if (error.response && error.response.status === 401) {
           window.location.replace("/admin/login");
         }

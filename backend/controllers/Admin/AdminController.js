@@ -1,12 +1,29 @@
 const admin = require("../../models/Admin/AdminModel");
 const jwt = require("jsonwebtoken");
+const bcrypt=require("bcrypt")
+
+
+//password bcrypting
+
+const securepassword = async (password) => {
+  try {
+    const hashpassword = await bcrypt.hash(password, 10);
+    return hashpassword;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 const handleSignUp = async (req, res) => {
   try {
     const { email, password } = req.body;
+   const hashPassword=await securepassword(password)
+   console.log(hashPassword);
     const adminData = new admin({
       email,
-      password,
+      password:hashPassword
     });
     await adminData.save();
 
@@ -37,30 +54,29 @@ const updateAdminData = async (req, res) => {
   try {
     const adminId = req.query.id;
     const { email, newPassword, currentPassword } = req.body;
-    if(adminId&&email, newPassword, currentPassword){
+    if(adminId &&email ,newPassword, currentPassword){
       const adminData = await admin.findById(adminId);
       if (!adminData) {
-        return res.status(404).json({ message: "Admin not found" });
+        return res.json({success:false, message: "Admin not found" });
       }
-      if (currentPassword === adminData.password) {
+      const status = await bcrypt.compare(currentPassword, adminData.password);
+    
+      if (status) {
+        const hashPassword=await securepassword(newPassword)
         adminData.email = email;
-        adminData.password = newPassword;
-  
+        adminData.password = hashPassword;
+
         await adminData.save();
-        return res
-          .status(200)
-          .json({success:true, message: "Admin data updated successfully" })
+        return res.json({success:true, message: "Admin data updated successfully" })
       } else {
-        return res
-          .status(400)
-          .json({ message: "Please provide a correct password" });
+        return res.json({success:false, message: "Please provide a correct password" });
       }
     }else{
       res.json({success:false,message:"All fields required"})
     }
    
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json({ error: error.message });
   }
 };
 
@@ -79,7 +95,8 @@ const handleSignIn = async (req, res) => {
       if (!AdminData) {
         res.status(404).json({ success: false, messege: "Invalid email" });
       } else {
-        if (password === AdminData.password) {
+        const status = await bcrypt.compare(password, AdminData.password);
+        if (status) {
           const payload = { id: AdminData._id };
           const expiresIn = "24h";
           let AdminToken = jwt.sign(payload, "AdminsecretKey", { expiresIn });
