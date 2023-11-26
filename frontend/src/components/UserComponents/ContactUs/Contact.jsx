@@ -45,14 +45,14 @@ function Contact() {
         CONTACT US
       </h1>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="container my-6 ml-5 md:ml-24 max-w-7xl mt-10 flex flex-col md:flex-row">
+      <div className="container my-6 md:ml-24 max-w-7xl mt-10 flex flex-col md:flex-row">
         <div className="md:w-2/3">
           <form
             className="w-full mx-auto flex flex-col justify-center"
             onSubmit={handleSubmit}
             noValidate
           >
-            <div className="flex flex-col space-y-5">
+            <div className="flex flex-col mx-4 space-y-5">
               <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 gap-4">
                 <div className="w-full md:w-1/2">
                   <label
