@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { axiosUser } from "../../../Api/Api";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-
+import CloseIcon from '@mui/icons-material/Close';
 function Header() {
   const [bannerData, setBannerData] = useState([]);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -19,20 +20,57 @@ function Header() {
     fetchData();
   }, []);
 
-  const filteredBanners = bannerData.filter(banner => !banner.IsBlocked);
+  const filteredBanners = bannerData.filter((banner) => !banner.IsBlocked);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <>
       <header className="text-white p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-10 bg-transparent">
         <nav className="container mx-auto flex items-center justify-between">
-          <div className="md:flex md:items-center">
-            <div className="mr-4">
+             <div className="mr-4">
               <img src="/Images/podu.png" alt="Logo" className="h-24 w-24" />
+            </div>  
+          <div className="md:flex md:items-center">
+            <div className="hidden md:flex space-x-4">
+              <a
+                href="#home"
+                className="text-white hover:text-yellow-500 font-bold"
+              >  
+                Home
+              </a>
+              <a
+                href="#Services"
+                className="text-white hover:text-yellow-500 font-bold"
+              >
+                Services
+              </a>
+              <a
+                href="#About"
+                className="text-white hover:text-yellow-500 font-bold"
+              >
+                About
+              </a>
+              <a
+                href="#Projects"
+                className="text-white hover:text-yellow-500 font-bold"
+              >
+                Projects
+              </a>
+              <a
+                href="#Contact"
+                className="text-black bg-yellow-500 hover:text-white font-bold rounded-lg text-sm px-5 py-2"
+              >
+                Contact
+              </a>
             </div>
           </div>
           <div className="md:hidden relative">
             <button
               id="mobileMenuButton"
+              onClick={toggleMobileMenu}
               className="transition ease-in delay-150 text-white hover:text-yellow-500"
             >
               <svg
@@ -51,42 +89,52 @@ function Header() {
               </svg>
             </button>
           </div>
-          <div id="mobileMenu" className="hidden md:block space-x-4">
-            <a
-              href="#home"
-              className="transition ease-in delay-150 hover:text-yellow-500 font-bold"
-            >
-              Home
-            </a>
-            <a
-              href="#Services"
-              className="transition ease-in delay-150 hover:text-yellow-500 font-bold"
-            >
-              Services
-            </a>
-            <a
-              href="#About"
-              className="transition ease-in delay-150 hover:text-yellow-500 font-bold"
-            >
-              About
-            </a>
-            <a
-              href="#Projects"
-              className="transition ease-in delay-150 hover:text-yellow-500 font-bold"
-            >
-              Projects
-            </a>
-            <a
-              href="#Contact"
-              className="hidden md:inline-block text-black bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-600 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Contact
-            </a>
+          <div
+            id="mobileMenu"
+            className={`${
+              isMobileMenuOpen ? "block" : "hidden"
+            } md:hidden absolute top-0 left-0 w-full bg-white`}
+          >
+            <div className="flex justify-end p-4">
+               <CloseIcon className="text-black hover:text-yellow-500" onClick={toggleMobileMenu}/>
+            </div>
+            <div className="flex flex-col items-center py-4">
+              <a
+                href="#home"
+                className="text-black hover:text-yellow-500 font-bold py-2"
+              >
+                Home
+              </a>
+              <a
+                href="#Services"
+                className="text-black hover:text-yellow-500 font-bold py-2"
+              >
+                Services
+              </a>
+              <a
+                href="#About"
+                className="text-black hover:text-yellow-500 font-bold py-2"
+              >
+                About
+              </a>
+              <a
+                href="#Projects"
+                className="text-black hover:text-yellow-500 font-bold py-2"
+              >
+                Projects
+              </a>
+              <a
+                href="#Contact"
+                className="text-black bg-yellow-500 hover:text-white font-bold rounded-lg text-sm px-5 py-2.5 mt-4"
+              >
+                Contact
+              </a>
+            </div>
           </div>
         </nav>
       </header>
-      <div className="relative max-h-screen">
-        {filteredBanners.length > 0 &&  (
+      <div className="">
+        {filteredBanners.length > 0 && (
           <Carousel
             autoPlay
             infiniteLoop
@@ -95,7 +143,7 @@ function Header() {
             showArrows={false}
             showStatus={false}
           >
-            {filteredBanners && filteredBanners.map((banner, index) => (
+            {filteredBanners.map((banner, index) => (
               <div key={index}>
                 <img
                   src={banner.photo}
@@ -103,20 +151,19 @@ function Header() {
                   className="sm:max-h-[680px] object-cover"
                 />
                 <div
-                  class="absolute z-40 top-[30%] left-0 flex flex-col justify-center h-fit "
+                  className="absolute z-40 top-[30%] left-0 flex flex-col justify-center h-fit "
                   id="home"
                 >
-                  <div className="flex flex-col justify-center items-center  ml-40 md:ml-80">
-                  <h1 class="text-4xl md:text-8xl font-extrabold text-yellow-500 ">
-                    PODUPPIL
-                  </h1>
-                  <h1 class="text-4xl md:text-8xl font-extrabold">
-                    <span class="bg-gradient-to-r from-yellow-500 to-red-500 text-transparent bg-clip-text">
-                      CONSTRUCTIONS
-                    </span>
-                  </h1> 
+                  <div className="flex flex-col justify-center items-center md:ml-8 lg:ml-40">
+                    <h1 className="text-4xl md:text-8xl font-extrabold text-yellow-500">
+                      PODUPPIL
+                    </h1>
+                    <h1 className="text-4xl md:text-8xl font-extrabold">
+                      <span className="bg-gradient-to-r from-yellow-500 to-red-500 text-transparent bg-clip-text">
+                        CONSTRUCTIONS
+                      </span>
+                    </h1>
                   </div>
-
                 </div>
               </div>
             ))}
