@@ -141,7 +141,7 @@ function SingleView({ materialData }) {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center py-4">
+                  <td colSpan="12" className="text-center py-4">
                     No matches found
                   </td>
                 </tr>

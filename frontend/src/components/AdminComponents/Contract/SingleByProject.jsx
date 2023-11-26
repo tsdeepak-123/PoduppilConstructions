@@ -69,7 +69,7 @@ const handleSingleView=(id)=>{
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="text-center py-4">
+                  <td colSpan="12" className="text-center py-4">
                     No data available
                   </td>
                 </tr>

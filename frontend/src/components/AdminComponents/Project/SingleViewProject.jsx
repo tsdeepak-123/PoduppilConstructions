@@ -10,6 +10,7 @@ import CommonCard from "../../CommonComponents/CommonCard/CommonCard";
 import { useNavigate } from "react-router-dom";
 import Payments from "../../AdminComponents/Project/Payments"
 import SingleByProject from '../Contract/SingleByProject';
+import Loading from "../../CommonComponents/Loading/Loading";
 
 const SingleViewProject = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const SingleViewProject = () => {
 
   const id = location?.state?.id;
   const projectname=location?.state?.projectname
-  console.log(projectname,"projectnameeeeeeee");
 
   // Fetching data from backend
   const fetchData = async () => {
@@ -83,7 +83,12 @@ const SingleViewProject = () => {
   return (
     <>
       <ReturnButton />
-      <div className=''>
+      {
+        projectData ===null || materialData===null ?(
+          <Loading/>
+        ):(
+        <>
+          <div>
         {projectData && projectData.map((project, index) => (
           <div key={index} className="max-w-4xl mx-auto p-6 mt-6 bg-white rounded-lg shadow-lg">
             <h1 className='flex justify-center font-bold text-3xl uppercase'> {project.name}</h1>
@@ -152,7 +157,9 @@ const SingleViewProject = () => {
       <div className='flex flex-wrap justify-center mt-14'>
         <p className=' font-serif font-bold text-[30px]'>Contracts works of this project</p>
       </div>
-      <SingleByProject projectname={projectname} />
+      <SingleByProject projectname={projectname} /></>
+        )
+      }
     </>
   );
 };
