@@ -19,7 +19,7 @@ function Profile() {
 
   const filteredOwners = OwnerData.filter(owner => !owner.IsBlocked);
   return (
-    <div className="pt-24">
+    <div className="pt-4 md:pt-24">
       <h1 className="text-2xl md:text-5xl font-extrabold ml-5 md:ml-64">
       Meet Ratheeb P, Our Visionary Leader
       </h1>
