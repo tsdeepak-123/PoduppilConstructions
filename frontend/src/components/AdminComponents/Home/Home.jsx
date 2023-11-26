@@ -13,12 +13,14 @@ function Home() {
   return (
 <div>
   <div className="flex flex-col items-center">
+    <div className="relative top-32 sm:top-0">
     <img
       src="/Images/poduppilLogo.jpg"
       alt=""
-      style={{ maxWidth: "100%", height: "83vh" }}
+      className="max-w-[100%] sm:h-[500px] h-[300px]"
     />
-    <div className="relative bottom-32">
+    </div> 
+    <div className="relative bottom-[-110px] sm:bottom-28">
       <Buttons name="LOGIN TO CONTINUE" classes={'h-14 w-[300px]'} click={handleLoginClick}/>
     </div>
   </div>

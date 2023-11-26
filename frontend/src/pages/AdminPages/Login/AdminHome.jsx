@@ -6,7 +6,9 @@ function AdminHome() {
   return (
     <div>
       <Home/>
+      <div className="mt-48 sm:mt-0">
       <Footer />
+      </div>
     </div>
   );
 }
