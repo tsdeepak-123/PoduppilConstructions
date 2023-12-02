@@ -1,10 +1,16 @@
 import React from "react";
 import FormatDate from "../../../utils/FormatDate";
+import Loading from "../../CommonComponents/Loading/Loading";
 
 function AttendanceDisplay({ attendanceData }) {
   return (
     <>
-      <div className="flex justify-center mb-14 font-bold">
+    {
+      attendanceData === null ?(
+<Loading/>
+      ):(
+        <>
+        <div className="flex justify-center mb-14 font-bold">
         Date &nbsp;&nbsp; : &nbsp;&nbsp;{FormatDate(attendanceData[0]?.date)}
       </div>
       <div className="flex justify-center ">
@@ -70,6 +76,10 @@ function AttendanceDisplay({ attendanceData }) {
           </table>
         </div>
       </div>
+      </>
+      )
+    }
+
     </>
   );
 }

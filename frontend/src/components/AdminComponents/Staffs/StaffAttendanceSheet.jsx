@@ -6,6 +6,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import AttendanceDisplay from "../Labour/AttendanceDisplay";
 import AttendanceBar from "../Attendance/AttendanceBar";
 import Nodata from "../../CommonComponents/Nodata/Nodata";
+import Loading from "../../CommonComponents/Loading/Loading";
 
 function StaffAttendanceSheet() {
   const [selectedValues, setSelectedValues] = useState({});
@@ -95,7 +96,10 @@ function StaffAttendanceSheet() {
       ) : attendanceData ? (
         <AttendanceDisplay attendanceData={attendanceData} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        !searchResults ? (
+<Loading/>
+        ):(
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {searchResults?.map((item) => (
             <div key={item._id} className="rounded-lg shadow-md p-3">
               <img className="w-16 h-16 rounded-full mx-auto mb-2" src={item.photo} alt="labour photo" />
@@ -146,6 +150,8 @@ function StaffAttendanceSheet() {
             />
           </div>
         </div>
+        )
+       
       )}
 
        
