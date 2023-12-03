@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { axiosAdmin } from "../../../Api/Api";
 import FormatDate from "../../../utils/FormatDate"
 import { useNavigate } from "react-router-dom";
+import Loading from "../../CommonComponents/Loading/Loading";
+
 
 function SingleByProject({ projectname}) {
   const [ContractData, setContractData] = useState();
@@ -30,7 +32,11 @@ const handleSingleView=(id)=>{
 
   return (
     <>
-      <div className="flex justify-center mt-14">
+    {
+      !ContractData ?(
+<Loading/>
+      ):(
+        <div className="flex justify-center mt-14">
         <div className="w-[90%] relative overflow-y-scroll overflow-x-auto shadow-md sm:rounded-lg max-h-[500px]">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -78,6 +84,9 @@ const handleSingleView=(id)=>{
           </table>
         </div>
       </div>
+      )
+    }
+     
     </>
   );
 }

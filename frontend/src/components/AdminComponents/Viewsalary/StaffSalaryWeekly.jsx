@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import { axiosAdmin } from "../../../Api/Api";
 import SalaryStatusDrodown from "./SalaryStatusDrodown";
+import Loading from "../../CommonComponents/Loading/Loading";
 
 function StaffSalaryWeekly() {
     const [salaryData, setSalaryData] = useState();
@@ -25,7 +25,12 @@ function StaffSalaryWeekly() {
       <h2>STAFFS SALARY</h2>
       </div>
 
-      <div className="flex justify-center mt-8">
+      {
+        !salaryData ? (
+<Loading/>
+        ):(
+<>
+       <div className="flex justify-center mt-8">
         <div class="w-[90%] overflow-y-scroll relative overflow-x-auto shadow-md sm:rounded-lg max-h-[500px] ">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -73,6 +78,11 @@ function StaffSalaryWeekly() {
           </table>
         </div>
       </div>
+</>
+        )
+      }
+
+    
     </>
   )
 }

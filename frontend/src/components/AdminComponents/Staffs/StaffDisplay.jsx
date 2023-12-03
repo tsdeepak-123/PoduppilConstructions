@@ -4,6 +4,7 @@ import { axiosAdmin } from "../../../Api/Api";
 import AddNav from '../../CommonComponents/AddNav/AddNav';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Loading from "../../CommonComponents/Loading/Loading";
 
 
 
@@ -53,6 +54,10 @@ function StaffDisplay() {
   return (
     <>
 <AddNav name="+ ADD NEW STAFF" click={handleAddStaffClick} value={searchTerm} onChange={handleSearch}/>
+{
+  !filteredstaffData ? (
+<Loading/>
+  ):(
     <div class="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 max-h-[500px]">
     <table class="w-full  text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -137,6 +142,9 @@ function StaffDisplay() {
         </tbody>
     </table>
 </div>
+  )
+}
+
 </>
   )
 }

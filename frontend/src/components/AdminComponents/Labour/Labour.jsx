@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosAdmin } from "../../../Api/Api";
 import AddNav from "../../CommonComponents/AddNav/AddNav";
 import EditIcon from '@mui/icons-material/Edit';
+import Loading from "../../CommonComponents/Loading/Loading";
 
 function Labour() {
   const navigate = useNavigate();
@@ -51,7 +52,11 @@ function Labour() {
   return (
     <>
     <AddNav name="+ ADD NEW LABOUR" click={handleAddLabourClick} value={searchTerm} onChange={handleSearch}/>
-      <div class="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 max-h-[500px]">
+    {
+      !filteredLabourData ? (
+<Loading/>
+      ):(
+        <div class="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg mt-11 ms-6 me-6 max-h-[500px]">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -136,6 +141,9 @@ function Labour() {
           </tbody>
         </table>
       </div>
+      )
+    }
+     
     </>
   );
 }

@@ -84,7 +84,7 @@ const SingleViewProject = () => {
     <>
       <ReturnButton />
       {
-        projectData ===null || materialData===null ?(
+        projectData ===null?(
           <Loading/>
         ):(
         <>

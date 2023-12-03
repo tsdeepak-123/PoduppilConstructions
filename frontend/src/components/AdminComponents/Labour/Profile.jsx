@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FormatDate from "../../../utils/FormatDate";
 import ReturnButton from "../../CommonComponents/Return/ReturnButton";
 import AttendanceEdit from "../Attendance/AttendanceEdit";
+import Loading from "../../CommonComponents/Loading/Loading";
 
 function Profile() {
   const navigate = useNavigate();
@@ -37,7 +38,11 @@ function Profile() {
     <>
       <ReturnButton />
       <>
-        <div class="container mx-auto my-5 p-5">
+      {
+        !LabourData ?(
+        <Loading/>
+        ):(
+          <div class="container mx-auto my-5 p-5">
           <div className="flex justify-end">
             <AttendanceEdit labourData={LabourData} />
           </div>
@@ -153,6 +158,10 @@ function Profile() {
             </div>
           </div>
         </div>
+        )
+
+      }
+    
       </>
     </>
   );
