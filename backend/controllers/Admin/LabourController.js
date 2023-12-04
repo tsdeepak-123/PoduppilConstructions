@@ -108,6 +108,52 @@ const handleLabourAdding = async (req, res) => {
   }
 };
 
+
+const handleLabourEditing = async (req, res) => {
+  try {
+    console.log("hiiiiiiiiiiiiiii");
+    const id = req.params.id;
+
+    if (
+      !req.body.name ||
+      !req.body.age ||
+      !req.body.phone ||
+      !req.body.street ||
+      !req.body.post ||
+      !req.body.town ||
+      !req.body.district ||
+      !req.body.state ||
+      !req.body.pincode ||
+      !req.body.salary ||
+      !req.body.adhar ||
+      !req.body.date
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, messege: "All fields must be field " });
+    }
+   
+    const updatedLabour = await Labour.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedLabour) {
+      return res.status(404).json({ error: "Labour not found" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, messege: "Labour Updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+
+
 // This function handles Labour Details pic from data base, taking in a request (req) and a response (res) as parameters.
 
 const handleLabourDetails = async (req, res) => {
@@ -568,6 +614,7 @@ const handleSalaryControll = async (req, res) => {
 
 module.exports = {
   handleLabourAdding,
+  handleLabourEditing,
   handleLabourDetails,
   handleLabourById,
   handleAttendance,

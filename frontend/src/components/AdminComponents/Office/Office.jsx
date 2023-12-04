@@ -30,13 +30,13 @@ function Office() {
   return (
     <>
 <ReturnButton/>
-<div className='flex flex-wrap mx-9'>
-      <ItemCard classes={'mx-10 mt-8'} name="ATTENDANCE" discription="" navigation={handleAttendance}/>
-      <ItemCard classes={'mx-10 mt-8'} name="UTILITY BILLS" discription="" navigation={handleUtilitybills}/>
-      <ItemCard classes={'mx-10 mt-8'} name="SALARY MANAGEMENT" discription="" navigation={handleSalaryClick}/>
-      <ItemCard classes={'mx-10 mt-8'} name="RECIEVED CASH" discription="" navigation={handleRecievedCash}/>
-      <ItemCard classes={'mx-10 mt-8'} name="USER HOME CONTROLL" discription="" navigation={handleUserHome}/>
-      <ItemCard classes={'mx-10 mt-8'} name="ADMIN ACCOUNT" discription="" navigation={ handleAdminAccount}/>
+<div className='flex flex-wrap mx-auto'>
+      <ItemCard classes={'mx-auto mt-8'} name="ATTENDANCE" discription="" navigation={handleAttendance}/>
+      <ItemCard classes={'mx-auto mt-8'} name="UTILITY BILLS" discription="" navigation={handleUtilitybills}/>
+      <ItemCard classes={'mx-auto mt-8'} name="SALARY MANAGEMENT" discription="" navigation={handleSalaryClick}/>
+      <ItemCard classes={'mx-auto mt-8'} name="RECIEVED CASH" discription="" navigation={handleRecievedCash}/>
+      <ItemCard classes={'mx-auto mt-8'} name="USER HOME CONTROLL" discription="" navigation={handleUserHome}/>
+      <ItemCard classes={'mx-auto mt-8'} name="ADMIN ACCOUNT" discription="" navigation={ handleAdminAccount}/>
 
     </div>
 </>

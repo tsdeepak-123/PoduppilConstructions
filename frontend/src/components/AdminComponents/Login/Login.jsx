@@ -97,7 +97,7 @@ function Login() {
               onChange={handlePasswordChange}
             />
           </div>
-          <div className="flex justify-center mt-11">
+          <div className="flex justify-center mb-7">
             <Buttons name="LOGIN" classes={'h-12 w-[150px]'} click={handleSubmit} />
           </div>
         </form>

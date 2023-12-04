@@ -4,12 +4,10 @@ import Home from "../../../components/AdminComponents/Home/Home";
 
 function AdminHome() {
   return (
-    <div>
+    <div className='min-h-screen'>
       <Home/>
-      <div className="mt-48 sm:mt-0">
       <Footer />
       </div>
-    </div>
   );
 }
 

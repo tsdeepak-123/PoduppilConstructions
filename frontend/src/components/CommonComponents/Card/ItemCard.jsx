@@ -17,7 +17,7 @@ function ItemCard({classes,name,discription,navigation}) {
         alt="green iguana"
       /> */}
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h6" component="div">
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">

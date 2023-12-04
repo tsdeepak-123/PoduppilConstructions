@@ -23,13 +23,13 @@ function Dashboard() {
     navigate('/admin/projectlist')
   }
   return (
-    <div className='flex flex-wrap mx-5 mt-20'>
-      <ItemCard classes={'mx-10 mt-16'} name="PROJECTS" discription="" navigation={handleProjectView}/>
-      <ItemCard classes={'mx-10 mt-16'} name="LABOURS" discription="" navigation={handleLabourView}/>
-      <ItemCard classes={'mx-10 mt-16'} name="STAFFS" discription="" navigation={handleStaffView}/>
-      <ItemCard classes={'mx-10 mt-16'} name="OFFICE" discription="" navigation={handleOfficeView}/>
-      <ItemCard classes={'mx-10 mt-16'} name="CONTRACT WORK" discription="" navigation={handleContractView}/>
-      <ItemCard classes={'mx-10 mt-16'} name="MATERIAL PURCHASE" discription="" navigation={handleMaterialView}/>
+    <div className='flex flex-wrap mx-auto mt-20'>
+      <ItemCard classes={'mx-auto mt-16'} name="PROJECTS" discription="" navigation={handleProjectView}/>
+      <ItemCard classes={'mx-auto mt-16'} name="LABOURS" discription="" navigation={handleLabourView}/>
+      <ItemCard classes={'mx-auto mt-16'} name="STAFFS" discription="" navigation={handleStaffView}/>
+      <ItemCard classes={'mx-auto mt-16'} name="OFFICE" discription="" navigation={handleOfficeView}/>
+      <ItemCard classes={'mx-auto mt-16'} name="CONTRACT WORK" discription="" navigation={handleContractView}/>
+      <ItemCard classes={'mx-auto mt-16'} name="MATERIAL PURCHASE" discription="" navigation={handleMaterialView}/>
     </div>
   )
 }

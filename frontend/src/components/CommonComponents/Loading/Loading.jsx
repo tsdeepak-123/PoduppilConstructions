@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 export default function CircularIndeterminate() {
   return (
-    <div className='flex justify-center mt-14'>
+    <div className='flex justify-center items-center h-[64vh]'>
     <Box sx={{ display: 'flex' }}>
       <CircularProgress />
     </Box> 

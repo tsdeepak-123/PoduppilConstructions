@@ -9,6 +9,7 @@ import StaffControll from '../pages/AdminPages/Staff/StaffControll'
 import OfficeControll from '../pages/AdminPages/Office/OfficeControll'
 import ContractControll from '../pages/AdminPages/Contract/ContractControll'
 import LabourAdding from '../pages/AdminPages/Labour/LabourAdding'
+import LabourEditing from '../pages/AdminPages/Labour/LabourEditing'
 import ContractAdding from '../pages/AdminPages/Contract/ContractAdding'
 import ContractEdit from '../pages/AdminPages/Contract/ContractEdit'
 import Addbills from '../pages/AdminPages/Office/Addbills'
@@ -73,6 +74,7 @@ function AdminRoutes() {
        <Route path='/officedetails' element={adminToken?<OfficeControll/>:<LoginPage/>}/>
        <Route path='/contractdetails' element={adminToken?<ContractControll/>:<LoginPage/>}/>
        <Route path='/addlabour' element={adminToken?<LabourAdding/>:<LoginPage/>}/>
+       <Route path='/editlabour' element={adminToken?<LabourEditing/>:<LoginPage/> }/>{/*edited*/}
        <Route path='/addcontract' element={adminToken?<ContractAdding/>:<LoginPage/>}/>
        <Route path='/addbills' element={adminToken?<Addbills/>:<LoginPage/>}/>
        <Route path='/addproject' element={adminToken?<ProjectAdding/>:<LoginPage/>}/>

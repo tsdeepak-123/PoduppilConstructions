@@ -20,7 +20,8 @@ const {
   labourAttendanceEdit,
   handleAllLabourHIstory,
   handleSalaryControll,
-  handleLabourSalaryById
+  handleLabourSalaryById,
+  handleLabourEditing
 } = require("../controllers/Admin/LabourController");
 const {
   handleStaffAdding,
@@ -83,6 +84,7 @@ const {
 adminRoute.post("/login", handleSignIn);
 adminRoute.post("/signup", handleSignUp);
 adminRoute.post(  "/addlabour",AdminAuth,upload.fields([{ name: "proof", maxCount: 2 },{ name: "photo", maxCount: 1 },]),handleLabourAdding);
+adminRoute.patch("/editlabour/:id",AdminAuth,handleLabourEditing)
 adminRoute.get("/labourslist", AdminAuth, handleLabourDetails);
 adminRoute.get("/labourbyid", AdminAuth, handleLabourById);
 adminRoute.post(

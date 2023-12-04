@@ -6,10 +6,11 @@ import Profile from '../../../components/AdminComponents/Labour/Profile'
 
 function ProfilePage() {
   return (
-    <div>
+    <div >
         <Header headers='LABOUR PROFILE'/>
         <Profile/>
         <Footer/>
+        
     </div>
   )
 }

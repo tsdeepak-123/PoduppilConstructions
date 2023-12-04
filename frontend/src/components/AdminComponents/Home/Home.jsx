@@ -20,7 +20,7 @@ function Home() {
       className="max-w-[100%] sm:h-[500px] h-[300px]"
     />
     </div> 
-    <div className="relative bottom-[-110px] sm:bottom-28">
+    <div className="relative bottom-[-110px] sm:bottom-20">
       <Buttons name="LOGIN TO CONTINUE" classes={'h-14 w-[300px]'} click={handleLoginClick}/>
     </div>
   </div>
