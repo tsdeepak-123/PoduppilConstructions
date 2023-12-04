@@ -36,7 +36,8 @@ const {
   handleAllStaffHIstory,
   StaffAttendanceById,
   handleStaffSalaryControll,
-  handleStaffSalaryById
+  handleStaffSalaryById,
+  handleStaffEditing
 } = require("../controllers/Admin/StaffController");
 const {
   handleProjectAdding,
@@ -96,6 +97,7 @@ adminRoute.post(
   ]),
   handleStaffAdding
 );
+adminRoute.patch("/editstaff/:id",AdminAuth,handleStaffEditing)
 adminRoute.get("/staffslist", AdminAuth, handleStaffDetails);
 adminRoute.get("/staffByid", AdminAuth, handleStaffById);
 adminRoute.post("/labourattendance", AdminAuth, handleAttendance);

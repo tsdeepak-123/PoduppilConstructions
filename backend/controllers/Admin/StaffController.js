@@ -109,6 +109,53 @@ const handleStaffAdding = async (req, res) => {
   }
 };
 
+
+
+//-----------------------------------edit staff-----------------------------
+
+const handleStaffEditing = async (req, res) => {
+  try {
+    console.log("hiiiiiiiiiiiiiii");
+    const id = req.params.id;
+
+    if (
+      !req.body.name ||
+      !req.body.age ||
+      !req.body.phone ||
+      !req.body.street ||
+      !req.body.post ||
+      !req.body.town ||
+      !req.body.district ||
+      !req.body.state ||
+      !req.body.pincode ||
+      !req.body.salary ||
+      !req.body.adhar ||
+      !req.body.date
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, messege: "All fields must be field " });
+    }
+   
+    const updatedStaff = await Staff.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedStaff) {
+      return res.status(404).json({ error: "Staff not found" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, messege: "Staff Updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
 // This function handles Staff Details pic from data base, taking in a request (req) and a response (res) as parameters.
 
 const handleStaffDetails = async (req, res) => {
@@ -464,7 +511,7 @@ const stafffAttendanceEdit = async (req, res) => {
   }
 };
 
-//...........................  salary history of all labour ...............................
+//...........................  salary history of all Staff ...............................
 
 const handleAllStaffHIstory = async (req, res) => {
   try {
@@ -582,4 +629,5 @@ module.exports = {
   StaffAttendanceById,
   handleStaffSalaryControll,
   handleStaffSalaryById,
+  handleStaffEditing
 };

@@ -43,6 +43,7 @@ import ContractsCompleted from '../pages/AdminPages/Contract/ContractsCompleted'
 import RecievedCashes from '../pages/AdminPages/Project/RecievedCashes'
 import Account from '../pages/AdminPages/Account/Account'
 import UserHomeControll from '../pages/AdminPages/UserHome/UserHomeControll'
+import EditStaff from '../pages/AdminPages/Staff/EditStaff'
 
 function AdminRoutes() {
   const [cookies, setCookies] = useCookies(['AdminsecretKey']);
@@ -80,6 +81,7 @@ function AdminRoutes() {
        <Route path='/addproject' element={adminToken?<ProjectAdding/>:<LoginPage/>}/>
        <Route path='/editproject' element={adminToken?<ProjectEditing/>:<LoginPage/> }/>{/*edited*/}
        <Route path='/addstaff' element={adminToken?<StaffAdding/>:<LoginPage/>}/>
+       <Route path='/editstaff' element={adminToken?<EditStaff/>:<LoginPage/> }/>{/*edited*/}
        <Route path='/projectlist' element={adminToken?<ProjectLists/>:<LoginPage/>}/>
        
        {/* start */}

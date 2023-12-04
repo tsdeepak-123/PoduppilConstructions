@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import TextFields from '../../CommonComponents/TextFields/TextFields';
 import Buttons from '../../CommonComponents/Button/Buttons';
 import { useState } from 'react'
@@ -11,22 +11,24 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function AddStaff() {
     const navigate= useNavigate()
-
-    const [name,setName]=useState("")
-    const [age,setAge]=useState("")
-    const [phone,setPhone] = useState('')
-    const [street,setStreet] = useState('')
-    const [post,setPost] = useState('')
-    const [town,setTown] = useState('')
-    const [district,setDistrict] = useState('')
-    const [state,setState] = useState('')
-    const [adhar,setAdhar] = useState('')
-    const [pincode,setPincode] = useState('')
-    const [salary,setSalary] = useState('')
-    const [date,setDate] = useState('')
-    const [idproof,setIdproof] = useState([])
-    const [photo,setphoto] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const location = useLocation();
+  const { staffData } = location.state || {};
+   
+  const [name, setName] = useState(staffData?.name || "");
+  const [age, setAge] = useState(staffData?.age || "");
+  const [phone, setPhone] = useState(staffData?.phone || "");
+  const [street, setStreet] = useState(staffData?.address?.[0]?.street || "");
+  const [post, setPost] = useState(staffData?.address?.[0]?.post || "");
+  const [town, setTown] = useState(staffData?.address?.[0]?.town || "");
+  const [district, setDistrict] = useState(staffData?.address?.[0]?.district || "");
+  const [state, setState] = useState(staffData?.address?.[0]?.state || "");
+  const [adhar, setAdhar] = useState(staffData?.adhar || "");
+  const [pincode, setPincode] = useState(staffData?.address?.[0]?.pincode || "");
+  const [salary, setSalary] = useState(staffData?.salary || "");
+  const [date, setDate] = useState(staffData?.date || "");
+  const [idproof, setIdproof] = useState([]);
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
 
     const handleNameChange=(e)=>{
       setName(e.target.value)
@@ -74,13 +76,41 @@ function AddStaff() {
     }
     const handleImageChange=(e)=>{
       const file = e.target.files[0];
-      setphoto(file)
+      setPhoto(file)
     }
     const handleSubmit=(e)=>{
       e.preventDefault()
       setLoading(true)
+
+
+      if(staffData){
+        //update operation with the edited values
+        axiosAdmin.patch(`editstaff/${staffData._id}`, {
+         name,
+         age,
+         phone,
+         street,
+         post,
+         town,
+         district,
+         state,
+         pincode,
+         salary,
+         adhar,
+         date
+        })
+        .then((response) => {
+          navigate("/admin/staffdetails");
+          Swal.fire('staff updated successfully')
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            window.location.replace("/admin/login")
+          }
+        });
+     }else{
   
-      const LabourData={
+      const staffData={
         name,
         age,
         phone,
@@ -96,7 +126,7 @@ function AddStaff() {
       }
       const formData = new FormData();
       
-      Object.entries(LabourData).forEach(([key, value]) => {
+      Object.entries(staffData).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
@@ -122,6 +152,7 @@ function AddStaff() {
           window.location.replace("/admin/login");
         }
       })
+     }
     }
 
   return (
@@ -155,8 +186,7 @@ function AddStaff() {
             />
 
     <div className='flex justify-center mt-3'>
-    {/* <button type="submit" className="text-[#fff] bg-[#3ef112] rounded-md font-medium my-6 px-6 py-3 w-auto items-center self-center">submit</button> */}
-    <Buttons type="submit" name={loading ?"LOADING...":"ADD STAFF"} classes={'sm:w-96 '} />
+    <Buttons type="submit" name={loading ?"LOADING...": staffData ? "UPDATE STAFF" : "ADD STAFF"} classes={'sm:w-96 '} />
     </div>
     </form>
    </div>
